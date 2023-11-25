@@ -1,15 +1,18 @@
 import React from 'react';
-import Footer from './Footer/Footer';
-import Header from './Header/Header';
+import Footer from '../../components/Footer/Footer';
+import Header from '../../components/Header/Header';
+import { Box, Container } from '@mui/material';
 
 function DefaultLayout({ children }) {
 
     return (
-        <>
-            <Header></Header>
-            {children}
+        <Box component="main" >
+            <Header />
+            <Container sx={{ py: { xs: 2, md: 3 } }}>
+                {children}
+            </Container>
             <Footer />
-        </>
+        </Box>
     );
 }
 
