@@ -1,9 +1,11 @@
+import DefaultLayout from "../layouts/DefaultLayout/DefaultLayout";
 import Home from "../pages/Home";
+import Login from "../pages/Login";
 
 // Route khong can dang nhap
 const publicRoutes = [
-    { path: '/', component: Home, },
-    // { path: '/list-faculty', component: Shop,},
+    { path: '/', component: Home, layout: DefaultLayout},
+    { path: '/login', component: Login,},
     // not found page
     // { path: '/*', component: PageNotFound },
 ];
