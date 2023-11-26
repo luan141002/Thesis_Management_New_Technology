@@ -196,7 +196,7 @@ function Home() {
               </Box>
             </Box>
             <Box sx={{ lineHeight: 0 }}>
-              <img src="https://i.postimg.cc/k46y17qj/home-hero.jpg" width={468} height={489} alt="Hero img" />
+              <img src="https://i.postimg.cc/k46y17qj/home-hero.jpg" width={490} height={489} alt="Hero img" />
             </Box>
           </Grid>
         </Grid>

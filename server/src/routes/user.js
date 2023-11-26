@@ -3,7 +3,7 @@ const router = express.Router();
 const authToken = require('../middleware/authToken');
 const userController = require ('../controllers/UserController');
 
-// router.post('/create', userController.create);
+router.get('/faculties', userController.getAllFaculty);
 
 router.put('/:id/lock',  userController.lock);
 router.put('/:id',  userController.update);

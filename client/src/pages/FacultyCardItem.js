@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useNavigate } from 'react-router-dom';
 
-const ThesisCardItem = ({ item }) => {
+const FacultyCardItem = ({ item }) => {
 
   const navigate = useNavigate();
 
@@ -39,26 +39,26 @@ const ThesisCardItem = ({ item }) => {
             mb: 2,
           }}
         >
-          <img src="https://i.postimg.cc/3rnLfY4Y/download.png" width={300} height={300} alt={item.title} />
+          <img src="https://i.postimg.cc/3rnLfY4Y/download.png" width={300} height={300} alt={item.name} />
         </Box>
         <Box sx={{ mb: 2 }}>
           <Typography component="h2" variant="h4" 
           sx={{ fontSize: '1.4rem', '&:hover': { cursor:"pointer" }, }} 
           onClick={()=>handlieClick(item._id)}>
-            {item.title}
+            {item.firstName + " " + item.lastName}
           </Typography>
-          <Typography sx={{ mt: 2, color: 'text.secondary' }}>{item.authors.length > 0 ? item.authors[0]:"chưa có tác giả"}</Typography>
-          <Typography sx={{ mb: 2, color: 'text.secondary' }}>{item.advisers}</Typography>
+          <Typography sx={{ mt: 2, mb: 2, color: 'text.secondary' }}>{item.email}</Typography>
+          <Typography sx={{ mb: 2, color: 'text.secondary' }}>{item.phone}</Typography>
           <Typography sx={{ mb: 2, color: 'text.secondary' }} variant="subtitle1">
-            {item.description}
+            {item.isHeadDep? 'Head of Department': item.type}
           </Typography>
-          <Box sx={{ '& img': { height: 26 } }}>
+          {/* <Box sx={{ '& img': { height: 26 } }}>
 
             <Typography>{item.major}</Typography>
-          </Box>
+          </Box> */}
         </Box>
       </Box>
     </Box>
   )
 }
-export default ThesisCardItem
+export default FacultyCardItem

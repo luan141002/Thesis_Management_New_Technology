@@ -20,6 +20,14 @@ const userService = {
             console.error(error);
         }
     },
+    getAllFaculty: async () => {
+        try {
+            const respone = await axios.get(apiUrl + '/faculties');
+            return respone.data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
     createUser: async (data) => {
         try {
             const respone = await axios.post(apiUrl + '/', data);

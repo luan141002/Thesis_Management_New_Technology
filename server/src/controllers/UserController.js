@@ -4,8 +4,19 @@ const {User, Student, Faculty, Administrator} = require('../models/User');
 const UserController = {
     
     getAll: (req, res) => {
-        
         User.find({})
+        .then ((users)=> res.status(200).json(users))
+        .catch(() => res.status(404).json('Không tìm thấy danh sách người dùng.'));
+    },
+
+    getAllFaculty: (req, res) => {
+        User.find({type: 'faculty'})
+        .then ((users)=> res.status(200).json(users))
+        .catch(() => res.status(404).json('Không tìm thấy danh sách người dùng.'));
+    },
+
+    getFacultyById: (req, res) => {
+        User.find({type: 'faculty'})
         .then ((users)=> res.status(200).json(users))
         .catch(() => res.status(404).json('Không tìm thấy danh sách người dùng.'));
     },

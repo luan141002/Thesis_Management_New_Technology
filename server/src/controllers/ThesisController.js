@@ -4,7 +4,7 @@ const ThesisController = {
     
     getAll: (req, res) => {
         Thesis.find({})
-        .then ((thesis)=> res.status(200).json(thesis))
+        .then ((theses)=> res.status(200).json(theses))
         .catch(() => res.status(404).json('Không tìm thấy danh sách luận văn.'));
     },
 

@@ -14,7 +14,7 @@ const Header =  () => {
   const [visibleMenu, setVisibleMenu] = useState(false)
   const { breakpoints } = useTheme()
   const matchMobileView = useMediaQuery(breakpoints.down('md'))
-  const user = localStorage.getItem('token');
+  const user = JSON.parse(localStorage.getItem('token'));
   return (
     <Box sx={{ backgroundColor: 'background.paper' }}>
       <Container sx={{ py: { xs: 2, md: 3 } }}>
@@ -47,7 +47,7 @@ const Header =  () => {
           >
             <Box /> {/* Magic space */}
             <Navigation />
-            {user? <AuthUser/>:<AuthNavigation />}
+            {user? <AuthUser user={user}/>:<AuthNavigation />}
           
             {visibleMenu && matchMobileView && (
               <IconButton
