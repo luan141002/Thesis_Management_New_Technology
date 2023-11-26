@@ -4,7 +4,7 @@ const authToken = require('../middleware/authToken');
 const userController = require ('../controllers/UserController');
 
 router.get('/faculties', userController.getAllFaculty);
-
+router.get('/students', userController.getAllStudent);
 router.put('/:id/lock',  userController.lock);
 router.put('/:id',  userController.update);
 router.delete('/:id', userController.delete);

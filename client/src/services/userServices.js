@@ -28,6 +28,14 @@ const userService = {
             console.error(error);
         }
     },
+    getAllStudent: async () => {
+        try {
+            const respone = await axios.get(apiUrl + '/students');
+            return respone.data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
     createUser: async (data) => {
         try {
             const respone = await axios.post(apiUrl + '/', data);

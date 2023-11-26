@@ -15,6 +15,12 @@ const UserController = {
         .catch(() => res.status(404).json('Không tìm thấy danh sách người dùng.'));
     },
 
+    getAllStudent: (req, res) => {
+        User.find({type: 'student'})
+        .then ((users)=> res.status(200).json(users))
+        .catch(() => res.status(404).json('Không tìm thấy danh sách người dùng.'));
+    },
+
     getFacultyById: (req, res) => {
         User.find({type: 'faculty'})
         .then ((users)=> res.status(200).json(users))
