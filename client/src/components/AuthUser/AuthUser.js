@@ -57,9 +57,10 @@ function AuthUser({user}) {
         } else if (selectedSetting === 'Dashboard') {
             navigate('/dashboard');
         } else if (selectedSetting === 'Logout') {
-            await authService.logout(user);
-            localStorage.removeItem('token');
-            navigate('/login');
+          console.log(user);
+          await authService.logout(user);
+          localStorage.removeItem('token');
+          navigate('/login');
         }
     };
     
