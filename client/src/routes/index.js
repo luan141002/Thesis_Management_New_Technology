@@ -15,11 +15,13 @@ import Schedule from "../pages/admin/Schedule/Schedule";
 import Thesis from "../pages/admin/Thesis/Thesis";
 import Term from "../pages/admin/Term/Term";
 import Major from "../pages/admin/Major/Major";
+import RegisterAccount from "../pages/RegisterAccount";
 
 // Route khong can dang nhap
 const publicRoutes = [
     { path: '/', component: Home, layout: DefaultLayout},
     { path: '/login', component: Login, },
+    { path: '/register-account', component: RegisterAccount, },
     { path: '/list-thesis', component: ListThesis, layout: DefaultLayout},
     { path: '/list-thesis/:id', component: ThesisDetail, layout: DefaultLayout},
     { path: '/list-faculty', component: ListFaculty, layout: DefaultLayout},
