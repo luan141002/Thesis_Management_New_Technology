@@ -135,8 +135,7 @@ export default function FormStudent({handleClose, id, type}) {
         async function fetchStudent() {
             const student = await userService.getUserById(id);
             setStudent(student);
-            if (type == 'edit' ) {
-              
+            if (type === 'edit' ) {
                 setStudentId({ value: student.studentId || '', message: '' });
                 setFirstName({ value: student.firstName || '', message: '' });
                 setLastName({ value: student.lastName || '', message: '' });
@@ -151,7 +150,7 @@ export default function FormStudent({handleClose, id, type}) {
         fetchStudent();
     },[])
 
-    const handleCreate = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!checkError()) {
             const data = {
@@ -166,17 +165,38 @@ export default function FormStudent({handleClose, id, type}) {
                 birthday: birthday.value,
                 major: major.value,
             };
-            const respone = await userService.createUser(data);
-
-            // call api to create new user
-            if (respone.status === 201) {
-                setMessage('Tạo user thành công');
-                setTypeMessage('success');
-               
-            } else {
-                setMessage('Tạo user thất bại');
-                setTypeMessage('error');
+            if (type === 'create') {
+                const respone = await userService.createUser(data);
+                // call api to create new user
+                if (respone.status === 201) {
+                    setMessage('Tạo student thành công');
+                    setTypeMessage('success');
+                    setFirstName({ value: '', message: '' });
+                    setLastName({ value: '', message: '' });
+                    setEmail({ value: '', message: '' });
+                    setPassword({ value: '', message: '' });
+                    setAddress({ value: '', message: '' });
+                    setPhone({ value: '', message: '' });
+                    setBirthday({ value: '', message: '' });
+                    setStudentId({ value: '', message: '' });
+                    setMajor({ value: '', message: '' });
+                } else {
+                    setMessage('Tạo student thất bại');
+                    setTypeMessage('error');
+                }
             }
+            else {
+                const respone = await userService.updateUser(id, data);
+                if (respone.status === 200) {
+                    setMessage('Update student thành công');
+                    setTypeMessage('success');
+                   
+                } else {
+                    setMessage('Update student thất bại');
+                    setTypeMessage('error');
+                }
+            }
+
         } else {
             setMessage('Vui lòng kiểm tra các trường đã nhập');
             setTypeMessage('error');
@@ -191,7 +211,7 @@ export default function FormStudent({handleClose, id, type}) {
     return (
         <React.Fragment>
         <Dialog open={true} onClose={handleClose}>
-        <form onSubmit={handleCreate}>
+        <form onSubmit={handleSubmit}>
             <DialogTitle>{type === 'create' ?'Add New Student':'Update Student'}</DialogTitle>
             <DialogContent sx={{ width:"600px" }}>
                 <ToastMessage message={message} type={typeMessage} />
@@ -371,7 +391,11 @@ export default function FormStudent({handleClose, id, type}) {
             </DialogContent>
             <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button type='submit'>Add</Button>
+            {
+                type === 'create' ? 
+                (<Button type='submit'>Add</Button>) : 
+                (<Button type='submit'>Update</Button>)
+            }
             </DialogActions>
             </form>
         </Dialog>

@@ -39,59 +39,57 @@ const UserController = {
 
     create: async (req, res) =>  {
         try {
-            let isAdmin = false;
-            const {email, type, password} = req.body;
-            const existentUser = await User.findOne({ email });
+            let isAdmin = false;                                    // 1
+            const {email, type, password} = req.body;               // 2
+            const existentUser = await User.findOne({ email });     // 3
 
-            if (!existentUser) {
-                const hashPassword = await bcrypt.hash(password, 10);
-                if (type === 'administrator' || type === 'admin') {
-                    isAdmin = true;
-                    const admin = await Administrator.create({
+            if (!existentUser) {                                        // 4
+                const hashPassword = await bcrypt.hash(password, 10);   // 5
+                if (type === 'administrator' || type === 'admin') {     // 6
+                    isAdmin = true;                                     // 7
+                    const admin = await Administrator.create({          // 8
                         ...req.body,
                         type: type,
                         password: hashPassword,
                         isAdmin
                     })
-                    return res.status(201).json(admin)
+                    return res.status(201).json(admin)                  // 9
                 }
-                else if (type === 'faculty') {
-                    const isHeadDep = req.body.headDepartment;
-                    if (isHeadDep === "true") {
-                        const facultyHead = await Faculty.create({
+                else if (type === 'faculty') {                          // 10
+                    const isHeadDep = req.body.headDepartment;          // 11
+                    if (isHeadDep === "true") {                         // 12
+                        const facultyHead = await Faculty.create({      // 13
                             ...req.body,
                             type: type,
                             password: hashPassword,
                             isHeadDep: true
                         })
-                        return res.status(201).json(facultyHead)
+                        return res.status(201).json(facultyHead)        // 14
                     }
-                    const faculty = await Faculty.create({
+                    const faculty = await Faculty.create({              // 15
                         ...req.body,
                         type: type,
                         password: hashPassword,
                     })
-                    return res.status(201).json(faculty)
+                    return res.status(201).json(faculty)                // 16
                 }
-                else if (type === 'student') {
-                    const student = await Student.create({
+                else if (type === 'student') {                          // 17
+                    const student = await Student.create({              // 18
                         ...req.body,
                         type: type,
                         password: hashPassword,
                     })
-                    return res.status(201).json(student)
+                    return res.status(201).json(student)                // 19
                 }
                 else {
-                    return res.status(400).json(`Có lỗi trong quá trình tạo user`)
+                    return res.status(400).json(`Có lỗi trong quá trình tạo user`)  // 20
                 }    
             }
             else {
-                return res.status(400).json({
-                    message:'Email đã tồn tại!',
-                })
+                return res.status(400).json('Email đã tồn tại!')        // 21
             }
-        } catch (err) {
-            return res.status(400).json(`Có lỗi trong quá trình tạo user :  ${err}`)
+        } catch (err) {                                                 // 22              
+            return res.status(400).json(`Có lỗi trong quá trình tạo user :  ${err}`)    // 23
         }
     },
 

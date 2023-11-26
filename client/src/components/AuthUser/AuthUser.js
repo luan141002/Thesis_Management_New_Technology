@@ -17,14 +17,14 @@ function AuthUser({user}) {
     const navigate = useNavigate();
     React.useEffect(()=>{
         
-        if (user.type == "student")
+        if (user.type === "student")
             setSettings(['Profile', 'Register Thesis', 'Manage Thesis', 'Logout']);
-        else if (user.type == "faculty") {
+        else if (user.type === "faculty") {
             if (user.isHeadDep)
                 setSettings(['Profile', 'Register Thesis', 'Manage Thesis', 'Approval Thesis', 'Distribute Faculty', 'Logout']);
             else setSettings(['Profile', 'Register Thesis', 'Manage Thesis', 'Logout']);
         }
-        else if (user.type == "admin") {
+        else if (user.type === "admin") {
             setSettings(['Profile', 'Dashboard', 'Logout']);
         }
     },[])
