@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
+import {IconButton} from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -13,10 +14,14 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import {useNavigate} from 'react-router-dom';
 import authService from '../services/authServices';
+import { ArrowBackIos } from '@mui/icons-material';
 
 
-export default function Login() {
+export default function RegisterAccount() {
     const navigate = useNavigate()
+    const handleBack = () => {
+        navigate('/login');
+    }
     const handleSubmit = async (event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
@@ -67,9 +72,27 @@ export default function Login() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5" >
-              Sign in
+              Reigster Account
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="first-name"
+                label="First Name"
+                name="first-name"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="last-name"
+                label="Last Name"
+                name="last-name"
+                autoFocus
+              />
               <TextField
                 margin="normal"
                 required
@@ -90,29 +113,25 @@ export default function Login() {
                 id="password"
                 autoComplete="current-password"
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+              
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Reigster
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
+                  <Box>
+                    
+                    <Link href="/login" variant="body2">
+                        Have An Account? 
+                    </Link>
+                  </Box>
                 </Grid>
-                <Grid item>
-                  <Link href="/register-account" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
+                
               </Grid>
             </Box>
           </Box>
