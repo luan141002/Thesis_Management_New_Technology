@@ -7,6 +7,14 @@ import Login from "../pages/Login";
 import Home from "../pages/Home";
 import ThesisDetail from "../pages/ThesisDetails";
 import FacultyDetail from "../pages/FacultyDetail";
+import Dashboard from "../pages/admin/Dashboard";
+import AdminLayout from "../layouts/AdminLayout/AdminLayout";
+import Student from "../pages/admin/Student/Student";
+import Faculty from "../pages/admin/Faculty/Faculty";
+import Schedule from "../pages/admin/Schedule/Schedule";
+import Thesis from "../pages/admin/Thesis/Thesis";
+import Term from "../pages/admin/Term/Term";
+import Major from "../pages/admin/Major/Major";
 
 // Route khong can dang nhap
 const publicRoutes = [
@@ -29,10 +37,14 @@ const privateRoutes = [
     // for authenticated
     // { path: '/profile', component: PersonalAccount },
     // { path: '/change-password', component: ChangePassword },
-    // { path: '/dashboard', component: Dashboard, layout: AdminLayout },
-    // { path: '/manage-product', component: Product, layout: AdminLayout },
-    // { path: '/manage-product/create', component: AddProduct, layout: AdminLayout },
-    // { path: '/manage-product/:id/edit', component: EditProduct, layout: AdminLayout },
+    { path: '/dashboard', component: Dashboard, layout: AdminLayout },
+    { path: '//manage-student', component: Student, layout: AdminLayout },
+    { path: '/manage-faculty', component: Faculty, layout: AdminLayout },
+    { path: '/manage-schedule', component: Schedule, layout: AdminLayout },
+    { path: '/manage-thesis', component: Thesis, layout: AdminLayout },
+    { path: '/manage-term', component: Term, layout: AdminLayout },
+    { path: '/manage-major', component: Major, layout: AdminLayout },
+
 ];
 
 export { publicRoutes, privateRoutes };
