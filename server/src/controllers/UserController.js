@@ -42,25 +42,25 @@ const UserController = {
             let isAdmin = false;
             const {email, type, password} = req.body;
             const existentUser = await User.findOne({ email });
+
             if (!existentUser) {
                 const hashPassword = await bcrypt.hash(password, 10);
-
-                if (type.toLowerCase() === 'administrator' || type.toLowerCase() === 'admin') {
+                if (type === 'administrator' || type === 'admin') {
                     isAdmin = true;
                     const admin = await Administrator.create({
                         ...req.body,
-                        type: type.toLowerCase(),
+                        type: type,
                         password: hashPassword,
                         isAdmin
                     })
                     return res.status(201).json(admin)
                 }
-                else if (type.toLowerCase() === 'faculty') {
+                else if (type === 'faculty') {
                     const isHeadDep = req.body.headDepartment;
                     if (isHeadDep === "true") {
                         const facultyHead = await Faculty.create({
                             ...req.body,
-                            type: type.toLowerCase(),
+                            type: type,
                             password: hashPassword,
                             isHeadDep: true
                         })
@@ -68,21 +68,21 @@ const UserController = {
                     }
                     const faculty = await Faculty.create({
                         ...req.body,
-                        type: type.toLowerCase(),
+                        type: type,
                         password: hashPassword,
                     })
                     return res.status(201).json(faculty)
                 }
-                else if (type.toLowerCase() === 'student') {
+                else if (type === 'student') {
                     const student = await Student.create({
                         ...req.body,
-                        type: type.toLowerCase(),
+                        type: type,
                         password: hashPassword,
                     })
                     return res.status(201).json(student)
                 }
                 else {
-                    return res.status(400).json(`Có lỗi trong quá trình tạo user :  ${err}`)
+                    return res.status(400).json(`Có lỗi trong quá trình tạo user`)
                 }    
             }
             else {
@@ -115,21 +115,22 @@ const UserController = {
         }
     },
 
-    lock: (req, res) => {
-        User.findOne({_id: req.params.id})
-        .then((user)=> {
-            user.isActived = false;
-            User.updateOne({_id: user._id}, user)
-            .then(()=>{
-                res.status(204).json('Xóa người dùng thành công.');
-            })
-            .catch((err)=> {
-                res.status(500).json('Có lỗi khi xóa người dùng.');
-            });
-        })
-        .catch(()=> {
-            res.status(404).json('Không tìm thấy người dùng.');
-        })
+    lock: async (req, res) => {
+        try {
+            const user = await User.findOne({_id: req.params.id});
+            if (user) {
+                user.isActived = false;
+                const result = await User.updateOne({_id: user._id}, user);
+                if (result) 
+                    res.status(200).json('KHóa người dùng thành công.');
+                else 
+                    res.status(500).json('Có lỗi khi khóa người dùng.');
+            }
+            else 
+                res.status(404).json('Không tìm thấy người dùng.');
+        } catch (error) {
+            return res.status(500).json(`Có lỗi trong quá trình khóa user :  ${err}`)
+        }
     },
 
     delete: async (req, res) => {

@@ -22,14 +22,21 @@ const UserSchema = new Schema({
 })
 
 const FacultySchema = new Schema({
-    // Trường dữ liệu của Faculty
     isHeadDep: { type: Boolean, default: false },
+    facultyId:  { type: String, required: true },
+    major: { type: Schema.Types.ObjectId, ref:'Major'}
   }, {
     discriminatorKey: 'type',
-  });
+});
+
+const StudentSchema = new Schema({
+    studentId:  { type: String, required: true },
+    birthday:  { type: Date },
+    major: { type: String, ref:'Major'}
+})
 
 const User = mongoose.model('User', UserSchema);
-const Student = User.discriminator('Student', UserSchema);
+const Student = User.discriminator('Student', StudentSchema);
 const Faculty = User.discriminator('Faculty', FacultySchema);
 const Administrator = User.discriminator('Administrator', UserSchema);
 module.exports = {

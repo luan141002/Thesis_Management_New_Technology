@@ -78,8 +78,8 @@ const AuthController = {
 
     logout: async (req, res) => {
         try {
-            const {email} = req.body;
-            const user = await User.findOne({email: email});
+            const {_id} = req.body;
+            const user = await User.findOne({_id: _id});
             if ( !user ) {
                 return res.status(404).json('Không tìm thấy người dùng');
             }

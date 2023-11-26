@@ -27,7 +27,7 @@ function ListFaculty() {
 
   const settings = {
     infinite: true,
-    // autoplay: true,
+    autoplay: true,
     speed: 300,
     slidesToShow: matchMobileView ? 1 : (faculties.length < 3 ? faculties.length : 3 ),
     slidesToScroll: 1,
