@@ -19,6 +19,30 @@ const thesisService = {
             console.error(error);
         }
     },
+    createThesis: async (data) => {
+        try {
+            const respone = await axios.post(apiUrl + '/', data);
+            return respone;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    updateThesis: async (id, data) => {
+        try {
+            const respone = await axios.put(apiUrl + `/${id}`, data);
+            return respone;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    deleteThesis: async (id) => {
+        try {
+            const respone = await axios.delete(apiUrl + `/${id}`);
+            return respone;
+        } catch (error) {
+            console.log(error);
+        }
+    },
     
 };
 

@@ -1,5 +1,17 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Box,
+  Typography,
+  Button,
+  Tooltip,
+  IconButton,
+  DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Divider,
+} from "@mui/material";
 import {
   Page,
   Text,
@@ -53,26 +65,102 @@ const DocumentHowToUse = () => {
     </Document>
   );
 };
-
 function Instruction() {
+  const [openConfirmation, setOpenConfirmation] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // const handleConfirmDownload = () => {
+  //   setOpenConfirmation(false);
+  //   // Trigger download of DocumentHowToUse
+  //   // downloadDocument();
+  // };
+
+  const handleCancelDownload = () => {
+    setOpenConfirmation(false);
+  };
+
+  const handleDownloadClick = () => {
+    setOpenConfirmation(true);
+  };
+
+  const handleConfirmDownload = () => {
+    setOpenConfirmation(false);
+
+    // Trigger download of DocumentHowToUse
+    setLoading(true);
+
+    // Create a Blob from the PDF content
+    const pdfBlob = new Blob([<DocumentHowToUse />], {
+      type: "application/pdf",
+    });
+
+    // Create a temporary anchor element
+    const anchor = document.createElement("a");
+    anchor.href = URL.createObjectURL(pdfBlob);
+
+    // Set the download attribute
+    anchor.download = "howtouse.pdf";
+
+    // Trigger a click on the anchor element
+    document.body.appendChild(anchor);
+    anchor.click();
+
+    // Clean up and remove the anchor element
+    document.body.removeChild(anchor);
+
+    setLoading(false);
+  };
+
   return (
     <Box>
       <Typography sx={{ textTransform: "capitalize", mb: 2 }}>
-        click button below to download file instruction.
-      </Typography>
-      <PDFDownloadLink document={<DocumentHowToUse />} fileName="howtouse.pdf">
-        {({ loading }) =>
-          loading ? (
+        Click the button below to download the instruction file.
+</Typography>
+
+      <Box>
+        <Tooltip
+          arrow
+          title={<Typography sx={{ fontSize: "12px" }}>Download</Typography>}
+        >
+          {loading ? (
             <button style={styles.button} disabled>
               Loading Documentation...
             </button>
           ) : (
-            <button style={styles.button}>Download</button>
-          )
-        }
-      </PDFDownloadLink>
+            <Button style={styles.button} onClick={handleDownloadClick}>
+              Download
+            </Button>
+          )}
+        </Tooltip>
+        <PopUpMessage
+          open={openConfirmation}
+          title="Confirm Download"
+          message="Are you sure you want to download the instruction file?"
+          onCancel={handleCancelDownload}
+          onConfirm={handleConfirmDownload}
+        />
+      </Box>
     </Box>
   );
 }
 
 export default Instruction;
+
+export function PopUpMessage({ open, title, message, onCancel, onConfirm }) {
+  return (
+    <Dialog open={open} onClose={onCancel}>
+      <DialogTitle>{title}</DialogTitle>
+      <DialogContent>
+        <DialogContentText>{message}</DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onCancel} color="primary">
+          Cancel
+        </Button>
+        <Button onClick={onConfirm} color="primary">
+          Yes
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
