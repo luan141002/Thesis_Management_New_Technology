@@ -19,7 +19,7 @@ const authService = {
     logout: (data) => {
         try {
             const respone = axios.post(apiUrl + '/logout', data);
-            console.log(respone.data);
+            console.log(respone.datap);
             return respone.data;
         } catch (error) {
             console.error(error);
