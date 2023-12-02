@@ -24,7 +24,8 @@ const UserSchema = new Schema({
 const FacultySchema = new Schema({
     isHeadDep: { type: Boolean, default: false },
     facultyId:  { type: String, required: true },
-    major: { type: Schema.Types.ObjectId, ref:'Major'}
+    birthday:  { type: Date },
+    major: { type:String, ref:'Major'}
   }, {
     discriminatorKey: 'type',
 });

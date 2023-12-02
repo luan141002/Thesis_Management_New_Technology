@@ -1,16 +1,16 @@
-const Major = require('../models/Major');
+const Schedule = require('../models/Schedule');
 
-const MajorController = {
+const ScheduleController = {
     getAll: (req, res) => {
-        Major.find({})
-        .then ((majors)=> res.status(200).json(majors))
+        Schedule.find({})
+        .then ((schedules)=> res.status(200).json(schedules))
         .catch(() => res.status(404).json('Không tìm thấy danh sách khoa.'));
     },
 
     getById: (req, res) => {
-        Major.findOne({_id: req.params.id})
-        .then((major) => {
-            res.status(200).json(major);
+        Schedule.findOne({_id: req.params.id})
+        .then((schedule) => {
+            res.status(200).json(schedule);
         })
         .catch(()=>{
             res.status(404).json('Không tìm thấy khoa.');
@@ -19,36 +19,36 @@ const MajorController = {
 
     create: (req, res) => {
         try {
-            const major = Major.create({
+            const schedule = Schedule.create({
                 ...req.body
             });
-            res.status(201).json(major);
+            res.status(201).json(schedule);
         } catch (error) {
             console.log(error);
         }
-    },    
+    },
 
     update: async (req, res) => {
         try {
-            const major = await Major.findOne({_id: req.params.id});
-            if (major) {
-                const majorUpdated = {
+            const schedule = await Schedule.findOne({_id: req.params.id});
+            if (schedule) {
+                const scheduleUpdated = {
                     ...req.body
                 }
-                await Major.updateOne({_id: major._id}, majorUpdated)
-                return res.status(200).json("Cập nhật major thành công")
+                await Schedule.updateOne({_id: schedule._id}, scheduleUpdated)
+                return res.status(200).json("Cập nhật schedule thành công")
             }
             else {
-                return res.status(404).json('Không tìm thấy major!')
+                return res.status(404).json('Không tìm thấy schedule!')
             }
         } catch (err) {
-            return res.status(400).json(`Có lỗi trong quá trình cập nhật major :  ${err}`)
+            return res.status(400).json(`Có lỗi trong quá trình cập nhật schedule :  ${err}`)
         }
     },
 
     delete: async (req, res) => {
         try {
-            const result = await Major.deleteOne({_id: req.params.id});
+            const result = await Schedule.deleteOne({_id: req.params.id});
             if (result.deletedCount===0) {
                 res.status(404).json('Không tìm thấy luận văn.');
             }
@@ -62,4 +62,4 @@ const MajorController = {
 
 }
 
-module.exports = MajorController
+module.exports = ScheduleController

@@ -56,7 +56,7 @@ const ThesisSchema = new Schema({
             }
         }
     ],
-    approved: { type: Boolean, required: true, default: false }
+    approved: { type: Boolean, required: true, default: true }
 }, 
 {
     timestamps: true
