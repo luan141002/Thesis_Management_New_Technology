@@ -15,11 +15,11 @@ const ThesisSchema = new Schema({
         ref: 'Student', 
         required: true 
     },  // Authors of the thesis
-    advisers: { 
+    adviser: { 
         type: Schema.Types.ObjectId, 
         ref: 'Faculty', 
         required: true,
-        default: [] 
+        default: null
     },   // Advisers or supervisors of the thesis
     panelists: { 
         type: [Schema.Types.ObjectId], 
@@ -32,16 +32,13 @@ const ThesisSchema = new Schema({
     status: {
         type: String,
         enum: [
-            'new',
-            'for_checking',
-            'checked',
-            'endorse',
-            'redefense',
-            'pass',
-            'fail',
-            'final'
+            'New',
+            'Endorse',
+            'Redefense',
+            'Pass',
+            'Fail',
         ],
-        default: 'new'
+        default: 'New'
     },
     faculty_approval: [
         {
@@ -49,10 +46,10 @@ const ThesisSchema = new Schema({
             status: {
                 type: String,
                 enum: [
-                    'approved',
-                    'denied'
+                    'Approved',
+                    'Denied'
                 ],
-                default: 'approved'
+                default: 'Approved'
             }
         }
     ],
