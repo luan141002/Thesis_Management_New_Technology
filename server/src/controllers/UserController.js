@@ -96,14 +96,21 @@ const UserController = {
     update: async (req, res) => {
         try {
             const user = await User.findOne({_id: req.params.id});
+            const {type} = req.body;
             if (user) {
                 const hashPassword = await bcrypt.hash(req.body.password, 10)
                 const userUpdated = {
                     ...req.body,
                     password: hashPassword,
                 }
-                await User.updateOne({_id: user._id}, userUpdated)
-                return res.status(200).json("Cập nhật user thành công")
+                if (type === 'student'){
+                    await Student.updateOne({_id: user._id}, userUpdated);
+                    return res.status(200).json("Cập nhật user thành công");
+                }
+                else if (type==='faculty') {
+                    await Faculty.updateOne({_id: user._id}, userUpdated)
+                    return res.status(200).json("Cập nhật user thành công");
+                }
             }
             else {
                 return res.status(404).json('Không tìm thấy user!')

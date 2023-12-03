@@ -1,4 +1,5 @@
 import * as React from 'react';
+import dayjs from 'dayjs';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -8,12 +9,20 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormHelperText from '@mui/material/FormHelperText';
 import ToastMessage from '../../../components/ToastMessage/ToastMessage';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import MenuItem from '@mui/material/MenuItem';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useNavigate } from 'react-router-dom';
 import userService from '../../../services/userServices';
+import majorService from '../../../services/majorService';
 
 
 
@@ -50,10 +59,8 @@ export default function FormFaculty({handleClose, id, type}) {
         value: '',
         message: '',
     });
-    const [birthday, setBirthday] = React.useState({
-        value: '',
-        message: '',
-    });
+    const [birthday, setBirthday] = React.useState(null);
+    const [majors, setMajors] = React.useState([]);
     const [major, setMajor] = React.useState({
         value: '',
         message: '',
@@ -135,6 +142,8 @@ export default function FormFaculty({handleClose, id, type}) {
         async function fetchFaculty() {
             const faculty = await userService.getUserById(id);
             setFaculty(faculty);
+            const majors = await majorService.getAllMajor();
+            setMajors(majors);
             if (type === 'edit' ) {
                 setFacultyId({ value: faculty.facultyId || '', message: '' });
                 setFirstName({ value: faculty.firstName || '', message: '' });
@@ -143,7 +152,7 @@ export default function FormFaculty({handleClose, id, type}) {
                 setPassword({ value: faculty.password || '', message: '' });
                 setAddress({ value: faculty.address || '', message: '' });
                 setPhone({ value: faculty.phone || '', message: '' });
-                setBirthday({ value: faculty.phone || '', message: '' });
+                setBirthday(dayjs(faculty.birthday));
                 setMajor({ value: faculty.major || '', message: '' });
             }
         }
@@ -162,7 +171,7 @@ export default function FormFaculty({handleClose, id, type}) {
                 password: password.value,
                 address: address.value,
                 phone: phone.value,
-                birthday: birthday.value,
+                birthday: birthday,
                 major: major.value,
             };
             if (type === 'create') {
@@ -177,7 +186,7 @@ export default function FormFaculty({handleClose, id, type}) {
                     setPassword({ value: '', message: '' });
                     setAddress({ value: '', message: '' });
                     setPhone({ value: '', message: '' });
-                    setBirthday({ value: '', message: '' });
+                    setBirthday(null);
                     setFacultyId({ value: '', message: '' });
                     setMajor({ value: '', message: '' });
                 } else {
@@ -346,47 +355,35 @@ export default function FormFaculty({handleClose, id, type}) {
                       sx={{ width: '100%', mb:2 }}
                     //   onBlur={validateLastName}
                       onChange={(e) =>
-                          setBirthday({ ...address, value: e.target.value })
+                          setAddress({ ...address, value: e.target.value })
                       }
                     />
                     <FormHelperText error>
                         {address.message}
                     </FormHelperText>
                 </Box>
-                <Box>
-                    <TextField
-                      label="Birthday"
-                      value={birthday.value}
-                      error={birthday.message ? true : false}
-                      variant="outlined"
-                      placeholder="Enter Birthday"
-                      sx={{ width: '100%', mb:2 }}
-                    //   onBlur={validateLastName}
-                      onChange={(e) =>
-                          setBirthday({ ...lastName, value: e.target.value })
-                      }
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                    label="Select Birth Date"
+                    value={birthday}
+                    onChange={(newDay)=> setBirthday(newDay)}
+                    renderInput={(params) => <TextField {...params} />}
                     />
-                    <FormHelperText error>
-                        {birthday.message}
-                    </FormHelperText>
-                </Box>
-                <Box>
-                    <TextField
-                      label="Major"
-                      value={major.value}
-                      error={major.message ? true : false}
-                      variant="outlined"
-                      placeholder="Enter Major"
-                      sx={{ width: '100%', mb:2 }}
-                    //   onBlur={validateLastName}
-                      onChange={(e) =>
-                          setMajor({ ...major, value: e.target.value })
-                      }
-                    />
-                    <FormHelperText error>
-                        {major.message}
-                    </FormHelperText>
-                </Box>
+                </LocalizationProvider> 
+                <FormControl sx={{ minWidth: '100%', mt:2 }}>
+                    <InputLabel htmlFor="grouped-select">Major</InputLabel>
+                    <Select 
+                        value={major.value}
+                        labelId="demo-controlled-open-select-label"
+                        id="demo-controlled-open-select"
+                        label="Select Status"
+                        onChange={(e)=> setMajor({...major, value:e.target.value})}
+                    >
+                        {majors.length> 0 && majors.map(major =>  (
+                        <MenuItem value={major._id}>{major.name}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
                 
             </DialogContent>
             <DialogActions>
