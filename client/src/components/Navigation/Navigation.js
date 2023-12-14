@@ -26,7 +26,7 @@ export const navigations = [
 ];
 
 function Navigation() {
-  const [selectedLabel, setSelectedLabel] = useState('');
+  const [selectedLabel, setSelectedLabel] = useState('Home');
 
   const handleSelectLabel = (label) => {
     setSelectedLabel(label);

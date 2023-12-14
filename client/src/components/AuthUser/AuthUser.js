@@ -49,7 +49,7 @@ function AuthUser({user}) {
         } else if (selectedSetting === 'Register Thesis') {
           navigate('/register-thesis');
         } else if (selectedSetting === 'Manage Thesis') {
-          navigate('/manage-thesis');
+          navigate('/faculty-manage-thesis');
         } else if (selectedSetting === 'Approval Thesis') {
           navigate('/approval-thesis');
         } else if (selectedSetting === 'Distribute Faculty') {

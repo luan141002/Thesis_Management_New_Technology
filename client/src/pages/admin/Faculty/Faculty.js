@@ -17,7 +17,7 @@ import userService from '../../../services/userServices';
 export default function Faculty() {
     
     const columns = [
-        { field: 'facultyId', headerName: 'Faculty ID', width: 100 },
+        { field: 'facultyId', headerName: 'ID', width: 100 },
         {
         field: 'firstName',
         headerName: 'First name',
@@ -116,9 +116,8 @@ export default function Faculty() {
                     marginBottom: '16px',
                 }}
             >
-                
                 <Box>
-                    <Typography sx={{ fontSize: '2rem', fontWeight: 600 }}>Faculties</Typography>
+                    <Typography sx={{ fontSize: '2rem', fontWeight: 600 }}>Faculty</Typography>
                     <Stack spacing={1} direction="row">
                         <Button sx={{ fontSize: '1rem', textTransform: 'none' }}>
                             <UploadIcon sx={{ mr: 1 }} />

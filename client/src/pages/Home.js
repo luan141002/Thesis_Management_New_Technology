@@ -137,12 +137,12 @@ function Home() {
                 </Typography>
               </Box>
               <Box sx={{ '& button': { mr: 2 } }}>
-                <Link to="popular-course" spy={true} smooth={true} offset={0} duration={350}>
+                <Link to="#" spy={true} smooth={true} offset={0} duration={350}>
                   <Button color="primary" size="large" variant="contained">
                     Get Started
                   </Button>
                 </Link>
-                <Link to="video-section" spy={true} smooth={true} offset={0} duration={350}>
+                <Link to="#" spy={true} smooth={true} offset={0} duration={350}>
                   <Button color="primary" size="large" variant="outlined" startIcon={<PlayArrowIcon />}>
                     Watch Video
                   </Button>

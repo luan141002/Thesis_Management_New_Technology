@@ -95,46 +95,46 @@ const UserController = {
 
     update: async (req, res) => {
         try {
-            const user = await User.findOne({_id: req.params.id});
-            const {type} = req.body;
-            if (user) {
-                const hashPassword = await bcrypt.hash(req.body.password, 10)
-                const userUpdated = {
+            const user = await User.findOne({_id: req.params.id});      // 1
+            const {type} = req.body;                                    // 2
+            if (user) {                                                 // 3
+                const hashPassword = await bcrypt.hash(req.body.password, 10)   // 4
+                const userUpdated = {                                   // 5
                     ...req.body,
                     password: hashPassword,
                 }
-                if (type === 'student'){
-                    await Student.updateOne({_id: user._id}, userUpdated);
-                    return res.status(200).json("Cập nhật user thành công");
+                if (type === 'student'){                                // 6
+                    await Student.updateOne({_id: user._id}, userUpdated);      // 7
+                    return res.status(200).json("Cập nhật user thành công");    //8
                 }
-                else if (type==='faculty') {
-                    await Faculty.updateOne({_id: user._id}, userUpdated)
-                    return res.status(200).json("Cập nhật user thành công");
+                else if (type==='faculty') {                                    // 9
+                    await Faculty.updateOne({_id: user._id}, userUpdated)       // 10
+                    return res.status(200).json("Cập nhật user thành công");    // 11
                 }
             }
             else {
-                return res.status(404).json('Không tìm thấy user!')
+                return res.status(404).json('Không tìm thấy user!')             // 12
             }
-        } catch (err) {
-            return res.status(400).json(`Có lỗi trong quá trình cập nhật user :  ${err}`)
+        } catch (err) {                                                         // 13
+            return res.status(400).json(`Có lỗi trong quá trình cập nhật user :  ${err}`)   //14
         }
     },
 
     lock: async (req, res) => {
         try {
-            const user = await User.findOne({_id: req.params.id});
-            if (user) {
-                user.isActived = false;
-                const result = await User.updateOne({_id: user._id}, user);
-                if (result) 
-                    res.status(200).json('KHóa người dùng thành công.');
+            const user = await User.findOne({_id: req.params.id});          // 1
+            if (user) {                                                     // 2
+                user.isActived = false;                                     // 3
+                const result = await User.updateOne({_id: user._id}, user); // 4
+                if (result)                                                 // 5
+                    res.status(200).json('Khóa người dùng thành công.');    // 6
                 else 
-                    res.status(500).json('Có lỗi khi khóa người dùng.');
+                    res.status(500).json('Có lỗi khi khóa người dùng.');    // 7
             }
             else 
-                res.status(404).json('Không tìm thấy người dùng.');
-        } catch (error) {
-            return res.status(500).json(`Có lỗi trong quá trình khóa user :  ${err}`)
+                res.status(404).json('Không tìm thấy người dùng.');         // 8
+        } catch (error) {                                                   // 9
+            return res.status(500).json(`Có lỗi trong quá trình khóa user :  ${err}`)   // 10
         }
     },
 
