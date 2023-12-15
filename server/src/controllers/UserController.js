@@ -12,20 +12,31 @@ const UserController = {
     getAllFaculty: (req, res) => {
         User.find({type: 'faculty'})
         .then ((users)=> res.status(200).json(users))
-        .catch(() => res.status(404).json('Không tìm thấy danh sách người dùng.'));
+        .catch(() => res.status(404).json('Không tìm thấy danh sách giảng viên.'));
     },
 
     getAllStudent: (req, res) => {
         User.find({type: 'student'})
         .then ((users)=> res.status(200).json(users))
-        .catch(() => res.status(404).json('Không tìm thấy danh sách người dùng.'));
+        .catch(() => res.status(404).json('Không tìm thấy danh sách sinh viên.'));
     },
 
-    getFacultyById: (req, res) => {
-        User.find({type: 'faculty'})
-        .then ((users)=> res.status(200).json(users))
-        .catch(() => res.status(404).json('Không tìm thấy danh sách người dùng.'));
+    getStudentByMajor: (req, res) => {
+        User.find({type:'student', major: req.params.major}) // tùy vào cách client gửi ntn
+        .then ((users) => res.status(200).json(users))
+        .catch(() => res.status(404).json('Không tìm thấy danh sách sinh viên.'));
     },
+
+    getFacultyByMajor: (req, res) => {
+        User.find({type:'faculty', major: req.params.major}) // tùy vào cách client gửi ntn
+        .then ((users) => res.status(200).json(users))
+        .catch(() => res.status(404).json('Không tìm thấy danh sách giảng viên.'));
+    },
+    // getFacultyById: (req, res) => {
+    //     User.find({type: 'faculty'})
+    //     .then ((users)=> res.status(200).json(users))
+    //     .catch(() => res.status(404).json('Không tìm thấy danh sách người dùng.'));
+    // },
 
     getById: (req, res) => {
         User.findOne({_id: req.params.id})

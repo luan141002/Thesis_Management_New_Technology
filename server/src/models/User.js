@@ -26,8 +26,6 @@ const FacultySchema = new Schema({
     facultyId:  { type: String, required: true },
     birthday:  { type: Date },
     major: { type:String, ref:'Major'}
-  }, {
-    discriminatorKey: 'type',
 });
 
 const StudentSchema = new Schema({
