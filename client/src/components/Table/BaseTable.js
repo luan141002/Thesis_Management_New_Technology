@@ -11,7 +11,7 @@ import DebouncedInput from "./DebouncedInput";
 import userService from "../../services/userServices";
 import thesisService from "../../services/thesisService";
 
-const BaseTable = ({ data, type }) => {
+const BaseTable = ({ data, type, setReloadPage }) => {
   const columnHelper = createColumnHelper();
   // initial columns if there is no data
 
@@ -40,6 +40,7 @@ const BaseTable = ({ data, type }) => {
                   e.preventDefault();
                   console.log(info.getValue());
                   await thesisService.approveThesisById(info.getValue());
+                  setReloadPage((state) => state + 1);
                 }}
               >
                 Approve
@@ -50,9 +51,24 @@ const BaseTable = ({ data, type }) => {
                 onClick={async (e) => {
                   e.preventDefault();
                   await thesisService.declineThesisById(info.getValue());
+                  setReloadPage((state) => state + 1);
                 }}
               >
                 Decline
+              </button>
+            </div>
+          )}
+          {type === "approvedTheses" && (
+            <div className="flex justify-center space-x-3 ">
+              <button
+                type="button"
+                className="bg-green-700 text-white h-[50px] w-[200px] hover:border-3  hover:hover:opacity-80"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  console.log("hihi");
+                }}
+              >
+                Assign lecturer reviews
               </button>
             </div>
           )}
@@ -63,6 +79,10 @@ const BaseTable = ({ data, type }) => {
   ];
   if (type === "theses") {
     const newColumns = columns.filter((column) => column.id !== "Edit");
+    columns = [...newColumns];
+  }
+  if (type === "approvedTheses" || type === "pendingTheses") {
+    let newColumns = columns.filter((column) => !(column.header === "Status"));
     columns = [...newColumns];
   }
   // config table

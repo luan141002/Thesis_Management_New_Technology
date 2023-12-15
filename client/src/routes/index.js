@@ -17,7 +17,6 @@ import Term from "../pages/admin/Term/Term";
 import Major from "../pages/admin/Major/Major";
 import RegisterAccount from "../pages/RegisterAccount";
 import HeadLecturerBusinessTable from "../components/Table/HeadLecturerBusinessTable.js";
-import ThesisTable from "../components/Table/StudentBussinessTable.js";
 
 // Route khong can dang nhap
 const publicRoutes = [
@@ -46,31 +45,37 @@ const publicRoutes = [
     type: "pendingTheses",
   },
   {
-    path: "/thesis",
-    component: ThesisTable,
+    path: "/head-lecturer/approved-thesis",
+    component: HeadLecturerBusinessTable,
     layout: AdminLayout,
-    type: "pendingTheses",
+    type: "approvedTheses",
   },
+  // {
+  //   path: "/thesis",
+  //   component: ThesisTable,
+  //   layout: AdminLayout,
+  //   type: "pendingTheses",
+  // },
 
-  {
-    path: "/lecturers",
-    component: ThesisTable,
-    layout: AdminLayout,
-    type: "lecturers",
-  },
-  {
-    path: "/thesis",
-    component: ThesisTable,
-    layout: AdminLayout,
-    type: "students",
-  },
+  // {
+  //   path: "/lecturers",
+  //   component: ThesisTable,
+  //   layout: AdminLayout,
+  //   type: "lecturers",
+  // },
+  // {
+  //   path: "/thesis",
+  //   component: ThesisTable,
+  //   layout: AdminLayout,
+  //   type: "students",
+  // },
 
-  {
-    path: "/lecturers",
-    component: ThesisTable,
-    layout: AdminLayout,
-    type: "lecturers",
-  },
+  // {
+  //   path: "/lecturers",
+  //   component: ThesisTable,
+  //   layout: AdminLayout,
+  //   type: "lecturers",
+  // },
 
   { path: "/instruction", component: Instruction, layout: DefaultLayout },
   { path: "/notifications", component: Notification, layout: DefaultLayout },

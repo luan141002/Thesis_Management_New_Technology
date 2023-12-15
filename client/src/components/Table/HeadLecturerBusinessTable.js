@@ -14,6 +14,8 @@ import thesisService from "../../services/thesisService.js";
 
 const Table = ({ type }) => {
   // initial columns if there is no data
+  const [reloadPage, setReloadPage] = useState(0);
+
   const [data, setData] = useState(() => {
     switch (type) {
       case "theses":
@@ -44,6 +46,20 @@ const Table = ({ type }) => {
           },
         ];
         break;
+      case "approvedTheses":
+        return [
+          {
+            title: "Thesis Title",
+            description: "Thesis Description",
+            major: "613b0c5eabf2c3001f4b4d6a", // ObjectId của Major
+            students: 2, // Mảng ObjectId của Student
+            adviser: "613b0c5eabf2c3001f4b4d6d", // ObjectId của Faculty
+            lecturerReviews: 2, // Mảng ObjectId của Faculty
+            remarks: "Thesis Remarks",
+            status: "New",
+          },
+        ];
+        break;
     }
   });
   const loadPage = async () => {
@@ -52,6 +68,7 @@ const Table = ({ type }) => {
       let result;
       switch (type) {
         case "theses":
+          console.log("da vo day");
           result = await thesisService.getThesisByLecturerId(account._id);
           console.log(result.length);
 
@@ -60,9 +77,9 @@ const Table = ({ type }) => {
             const processedResults = result.map((element) => ({
               title: element.title,
               description: element.description,
-              major: element.major, // ObjectId của Major
+              major: element.major.name, // ObjectId của Major
               students: element.authors.length, // Mảng ObjectId của Student
-              adviser: element.adviser, // ObjectId của Faculty
+              adviser: element.adviser.firstName, // ObjectId của Faculty
               lecturerReviews: element.panelists.length, // Mảng ObjectId của Faculty
               remarks: element.remarks,
               status: element.status,
@@ -94,9 +111,42 @@ const Table = ({ type }) => {
             const processedResults = result.map((element) => ({
               title: element.title,
               description: element.description,
-              major: element.major, // ObjectId của Major
+              major: element.major.name, // ObjectId của Major
               students: element.authors.length, // Mảng ObjectId của Student
-              adviser: element.adviser, // ObjectId của Faculty
+              adviser: element.adviser.firstName, // ObjectId của Faculty
+              lecturerReviews: element.panelists.length, // Mảng ObjectId của Faculty
+              remarks: element.remarks,
+              status: element._id,
+            }));
+            setData([...processedResults]);
+          } else {
+            console.log("vo day 2");
+            setData([
+              {
+                title: "Thesis Title",
+                description: "Thesis Description",
+                major: "613b0c5eabf2c3001f4b4d6a", // ObjectId của Major
+                students: 2, // Mảng ObjectId của Student
+                adviser: "613b0c5eabf2c3001f4b4d6d", // ObjectId của Faculty
+                lecturerReviews: 2, // Mảng ObjectId của Faculty
+                remarks: "Thesis Remarks",
+              },
+            ]);
+          }
+
+          break;
+        case "approvedTheses":
+          result = await thesisService.getApprovedThesisByMajor(account.major);
+          console.log(result);
+
+          if (result.length !== 0) {
+            console.log("vo day 1");
+            const processedResults = result.map((element) => ({
+              title: element.title,
+              description: element.description,
+              major: element.major.name, // ObjectId của Major
+              students: element.authors.length, // Mảng ObjectId của Student
+              adviser: element.adviser.firstName, // ObjectId của Faculty
               lecturerReviews: element.panelists.length, // Mảng ObjectId của Faculty
               remarks: element.remarks,
               status: element._id,
@@ -131,11 +181,11 @@ const Table = ({ type }) => {
 
   useMemo(() => {
     loadPage();
-  }, [type]);
+  }, [type, reloadPage]);
 
   return (
     <div className="p-2 max-w-8xl mx-auto text-white fill-gray-400 bg-gray-800">
-      <BaseTable data={data} type={type} />
+      <BaseTable data={data} type={type} setReloadPage={setReloadPage} />
     </div>
   );
 };

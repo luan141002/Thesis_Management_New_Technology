@@ -19,9 +19,9 @@ const thesisService = {
       console.error(error);
     }
   },
-  approveThesisById: async (id, data) => {
+  approveThesisById: async (id) => {
     try {
-      const respone = await axios.put(apiUrl + `/${id}/approve`, data);
+      const respone = await axios.put(apiUrl + `/${id}/approve`);
       console.log(respone);
       return respone.data;
     } catch (error) {
@@ -30,7 +30,7 @@ const thesisService = {
   },
   declineThesisById: async (id) => {
     try {
-      const respone = await axios.put(apiUrl + `/${id}/deny`, null);
+      const respone = await axios.put(apiUrl + `/${id}/deny`);
       console.log(respone);
       return respone.data;
     } catch (error) {
@@ -39,7 +39,15 @@ const thesisService = {
   },
   getPendingThesisByMajor: async (majorId) => {
     try {
-      const respone = await axios.get(apiUrl + `/pending?major=${majorId}`);
+      const respone = await axios.get(apiUrl + `/pending/${majorId}`);
+      return respone.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  getApprovedThesisByMajor: async (majorId) => {
+    try {
+      const respone = await axios.get(apiUrl + `/approved/${majorId}`);
       return respone.data;
     } catch (error) {
       console.error(error);
