@@ -47,7 +47,7 @@ const Header =  () => {
           >
             <Box /> {/* Magic space */}
             <Navigation />
-            {user? <AuthUser user={user}/>:<AuthNavigation />}
+            {user? <AuthNavigation />:<AuthUser user={user}/>}
           
             {visibleMenu && matchMobileView && (
               <IconButton

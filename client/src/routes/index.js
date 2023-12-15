@@ -1,5 +1,5 @@
 import DefaultLayout from "../layouts/DefaultLayout/DefaultLayout";
-import Instruction from "../pages/Instruction";
+import Instruction from "../pages/Instructions/Instruction";
 import ListFaculty from "../pages/ListFaculty";
 import ListThesis from "../pages/ListThesis";
 import Notification from "../pages/Notification";
@@ -16,6 +16,7 @@ import Thesis from "../pages/admin/Thesis/Thesis";
 import Term from "../pages/admin/Term/Term";
 import Major from "../pages/admin/Major/Major";
 import RegisterAccount from "../pages/RegisterAccount";
+import ViewTopic from "../pages/student/ViewTopic/ViewTopic";
 
 // Route khong can dang nhap
 const publicRoutes = [
@@ -26,8 +27,8 @@ const publicRoutes = [
     { path: '/list-thesis/:id', component: ThesisDetail, layout: DefaultLayout},
     { path: '/list-faculty', component: ListFaculty, layout: DefaultLayout},
     { path: '/list-faculty/:id', component: FacultyDetail, layout: DefaultLayout},
-
     { path: '/instruction', component: Instruction, layout: DefaultLayout},
+    { path: '/view-topic', component: ViewTopic, layout: DefaultLayout},
     { path: '/notifications', component: Notification, layout: DefaultLayout},
 
     // not found page
