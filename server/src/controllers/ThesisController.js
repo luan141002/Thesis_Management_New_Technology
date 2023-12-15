@@ -112,7 +112,7 @@ const ThesisController = {
             if (thesis) {
                 const panelists = req.body.panelists;
                 const thesisUpdated = {
-                    ...thesis,
+                    ...thesis._doc,
                     panelists: panelists
                 }
                 await Thesis.updateOne({_id: thesis._id}, thesisUpdated)
