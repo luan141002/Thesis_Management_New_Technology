@@ -192,7 +192,7 @@ const Table = ({ type }) => {
           <DebouncedInput
             value={globalFilter ?? ""}
             onChange={(value) => setGlobalFilter(String(value))}
-            className="p-2 bg-transparent outline-none border-b-2 w-1/5 focus:w-1/3 duration-300 border-indigo-500"
+            className="p-2 bg-transparent outline-none border-b-2 w-1/5 focus:w-1/3 duration-300 border-indigo-500 text-black"
             placeholder="Search all columns..."
           />
         </div>
@@ -252,7 +252,7 @@ const Table = ({ type }) => {
               </tr>
             ))
           ) : (
-            <tr className="text-center h-32">
+            <tr className="text-center h-32 text-black">
               <td colSpan={12}>No Record Found!</td>
             </tr>
           )}
