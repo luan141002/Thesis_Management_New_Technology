@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
+const MAX_AUTHORS = 2;
 // The backbone of the thesis management system
 const ThesisSchema = new Schema({
     title: { type: String, required: true },                                                    // Title of the thesis
@@ -10,11 +10,22 @@ const ThesisSchema = new Schema({
         ref: 'Major',
         required: true
     },   // Major of the thesis                                              // User-given description of the thesis
-    authors: { 
-        type: [Schema.Types.ObjectId], 
-        ref: 'Student', 
-        required: true 
-    },  // Authors of the thesis
+    authors: {
+        type: [
+          {
+            type: Schema.Types.ObjectId,
+            ref: 'Student',
+            required: true,
+          },
+        ],
+        validate: {
+          validator: function (authors) {
+            return authors.length <= MAX_AUTHORS;
+          },
+          message: `Số lượng authors không được vượt quá ${MAX_AUTHORS}.`,
+        },
+        // ...
+      },
     adviser: { 
         type: Schema.Types.ObjectId, 
         ref: 'Faculty', 
@@ -39,7 +50,7 @@ const ThesisSchema = new Schema({
         ],
         default: 'New'
     },
-    approved: { type: Boolean, required: true, default: true }
+    approved: { type: Boolean, required: true, default: false }
 }, 
 {
     timestamps: true
