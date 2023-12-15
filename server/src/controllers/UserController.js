@@ -10,14 +10,28 @@ const UserController = {
     },
 
     getAllFaculty: (req, res) => {
-        User.find({type: 'faculty'})
-        .then ((users)=> res.status(200).json(users))
+        Faculty.find({type: 'faculty'})
+        .populate('major', 'name')
+        .then ((users)=>{
+            const facultyList = users.map((user)=> ({
+               ...user._doc,
+               major: user.major.name
+            }))
+            res.status(200).json(facultyList)
+        })
         .catch(() => res.status(404).json('Không tìm thấy danh sách giảng viên.'));
     },
 
     getAllStudent: (req, res) => {
-        User.find({type: 'student'})
-        .then ((users)=> res.status(200).json(users))
+        Student.find({type: 'student'})
+        .populate('major', 'name')
+        .then ((users)=>{
+            const studentList = users.map((user)=> ({
+                ...user._doc,
+                major: user.major.name,
+            }))
+            res.status(200).json(studentList)
+        })
         .catch(() => res.status(404).json('Không tìm thấy danh sách sinh viên.'));
     },
 
