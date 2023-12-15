@@ -19,6 +19,14 @@ const thesisService = {
             console.error(error);
         }
     },
+    getStudentById: async (id, data) => {
+        try {
+            const respone = await axios.get(apiUrl + `/${id}/`, data);
+            return respone.data;
+        } catch (error) {
+            console.error(error);
+        }
+    },
     createThesis: async (data) => {
         try {
             const respone = await axios.post(apiUrl + '/', data);

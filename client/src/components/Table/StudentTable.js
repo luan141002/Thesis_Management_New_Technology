@@ -10,6 +10,7 @@ import {
 import DebouncedInput from "./DebouncedInput";
 import userService from "../../services/userServices";
 import BaseTable from "./BaseTable.js";
+import SearchIcon from './BaseTable';
 
 const Table = ({ type }) => {
   const columnHelper = createColumnHelper();
@@ -84,11 +85,10 @@ const Table = ({ type }) => {
   useEffect(() => {
     loadPage();
   }, []);
-
+  
   return (
-    <div className="p-2 max-w-8xl mx-auto text-white fill-gray-400">
-      <BaseTable data={data} />
-    </div>
+    <div><BaseTable data={data}/></div>
+    
   );
 };
 
