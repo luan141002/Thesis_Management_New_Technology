@@ -192,9 +192,9 @@ const Table = ({ type }) => {
           <DebouncedInput
             value={globalFilter ?? ""}
             onChange={(value) => setGlobalFilter(String(value))}
-            className="p-2 bg-transparent outline-none border-b-2 w-1/5 focus:w-1/3 duration-300 border-indigo-500 text-black"
+            className="p-2 bg-gray-600 outline-none border-b-2 w-1/5 focus:w-1/3 duration-300 border-indigo-500 text-black rounded-md "
             placeholder="Search all columns..."
-          />
+          />s
         </div>
 
         {/* {isPT && type === "exercises" && (
