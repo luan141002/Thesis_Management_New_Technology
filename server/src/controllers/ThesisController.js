@@ -1,6 +1,10 @@
 const Thesis = require('../models/Thesis');
 
 const ThesisController = {
+
+    approveThesis: (req, res) => {
+        
+    },
     
     getAll: (req, res) => {
         Thesis.find({})

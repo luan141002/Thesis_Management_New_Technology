@@ -7,7 +7,7 @@ import { Badge, Stack } from '@mui/material';
 import AuthUser from '../../../components/AuthUser/AuthUser';
 
 function Header() {
-    const user = JSON.parse(localStorage.getItem('token'));
+    const user = JSON.parse(localStorage.getItem('account')) || {};
     return (
         <>
             <AppBar

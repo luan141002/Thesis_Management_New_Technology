@@ -14,7 +14,7 @@ const Header =  () => {
   const [visibleMenu, setVisibleMenu] = useState(false)
   const { breakpoints } = useTheme()
   const matchMobileView = useMediaQuery(breakpoints.down('md'))
-  const user = JSON.parse(localStorage.getItem('token')) || "";
+  const user = localStorage.getItem('account') ? JSON.parse(localStorage.getItem('account')):  {};
   return (
     <Box sx={{ backgroundColor: 'background.paper' }}>
       <Container sx={{ py: { xs: 2, md: 3 } }}>

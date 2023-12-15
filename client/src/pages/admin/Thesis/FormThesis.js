@@ -19,11 +19,7 @@ import userService from '../../../services/userServices';
 import majorService from '../../../services/majorService';
 import thesisService from '../../../services/thesisService';
 
-const listStatus = [ 'New',
-                    'Endorse',
-                    'Redefense',
-                    'Pass',
-                    'Fail',];
+const listStatus = [ 'New','Endorse', 'Pass','Fail',];
 export default function FormThesis({handleClose, id, type}) {
     const [message, setMessage] = React.useState('');
     const [typeMessage, setTypeMessage] = React.useState('');
@@ -152,7 +148,7 @@ export default function FormThesis({handleClose, id, type}) {
                         value={major}
                         labelId="demo-controlled-open-select-label"
                         id="demo-controlled-open-select"
-                        label="Select Status"
+                        label="Select Major"
                         onChange={(e)=> setMajor(e.target.value)}
                     >
                         {majors.length> 0 && majors.map(major =>  (
