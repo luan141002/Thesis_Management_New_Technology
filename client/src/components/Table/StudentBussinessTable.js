@@ -9,16 +9,27 @@ import {
 } from "@tanstack/react-table";
 import DebouncedInput from "./DebouncedInput";
 import userService from "../../services/userServices";
+import thesisService from "../../services/thesisService";
 
-const Table = ({ type }) => {
+const ThesisTable = ({ type }) => {
   const columnHelper = createColumnHelper();
   // initial columns if there is no data
   const [data, setData] = useState(() => {
     switch (type) {
-      case "students":
+      case "manage-thesis":
         return [
           {
-            firstName: "Luân ",
+            title: "Thesis Title",
+            description: "Thesis Description",
+            major: "6560eaa936b34e370ea84572", // ObjectId của Major
+            authors: ["613b0c5eabf2c3001f4b4d6b", "613b0c5eabf2c3001f4b4d6c"], // Mảng ObjectId của Student
+            adviser: "613b0c5eabf2c3001f4b4d6d", // ObjectId của Faculty
+            panelists: ["613b0c5eabf2c3001f4b4d6e", "613b0c5eabf2c3001f4b4d6f"], // Mảng ObjectId của Faculty
+            remarks: "0988",
+            status: "New",
+            approved: false,
+
+            firstName: "Luân",
             lastName: "Heo",
             email: "student1@gmail.com",
             phone: "0987654321",
@@ -36,8 +47,8 @@ const Table = ({ type }) => {
       let result;
       switch (type) {
         case "students":
-          result = await userService.getAllStudent();
-          console.log(result.length);
+          result = await thesisService.getStudentById('20110380');
+          console.log('thesis!:', result);
 
           if (result.length !== 0) {
             console.log("vo day 1");
@@ -315,6 +326,7 @@ const Table = ({ type }) => {
     </div>
   );
 };
+
 const SearchIcon = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
@@ -338,4 +350,4 @@ function parseDate(string) {
   // Tạo chuỗi ngày tháng năm
   return `${day}/${month}/${year}`;
 }
-export default Table;
+export default ThesisTable;

@@ -17,6 +17,7 @@ import Term from "../pages/admin/Term/Term";
 import Major from "../pages/admin/Major/Major";
 import RegisterAccount from "../pages/RegisterAccount";
 import Table from "../components/Table/StudentTable.js";
+import ThesisTable from "../components/Table/StudentBussinessTable.js";
 
 // Route khong can dang nhap
 const publicRoutes = [
@@ -37,6 +38,19 @@ const publicRoutes = [
     layout: AdminLayout,
     type: "students",
   },
+  {
+    path: "/thesis",
+    component: ThesisTable,
+    layout: AdminLayout,
+    type: "students",
+  },
+
+  {
+    path: "/lecturers",
+    component: ThesisTable,
+    layout: AdminLayout,
+    type: "lecturers",
+  },
 
   { path: "/instruction", component: Instruction, layout: DefaultLayout },
   { path: "/notifications", component: Notification, layout: DefaultLayout },
@@ -51,7 +65,8 @@ const privateRoutes = [
   // { path: '/profile', component: PersonalAccount },
   // { path: '/change-password', component: ChangePassword },
   { path: "/dashboard", component: Dashboard, layout: AdminLayout },
-  { path: "//manage-student", component: Student, layout: AdminLayout },
+  { path: "/manage-student", component: Student, layout: AdminLayout },
+  
   { path: "/manage-faculty", component: Faculty, layout: AdminLayout },
   { path: "/manage-schedule", component: Schedule, layout: AdminLayout },
   { path: "/manage-thesis", component: Thesis, layout: AdminLayout },
