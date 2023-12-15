@@ -13,13 +13,14 @@ function App() {
                     if (!Layout) {
                       Layout = React.Fragment;
                     }
+                
                     return (
                         <Route
                             key={index}
                             path={route.path}
                             element={
-                                <Layout>
-                                    <Page />
+                                <Layout >
+                                    <Page  />
                                 </Layout>
                             }
                         ></Route>

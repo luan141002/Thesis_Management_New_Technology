@@ -5,8 +5,8 @@ import { Box, Container } from '@mui/material';
 function AdminLayout({ children }) {
     return (
         <div>
-            <Header></Header>
-            <Sidebar></Sidebar>
+            <Header/>
+            <Sidebar/>
             <Box
                 sx={{
                     padding: '64px 0px 64px 240px',
