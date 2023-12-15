@@ -17,12 +17,28 @@ const ThesisController = {
         }
     },
 
+    registerThesisForDean: async (req, res) => {
+        try {
+            const thesis = await Thesis.create({
+                ...req.body,
+                status: 'Endorse'
+            })
+            if (thesis) {
+                res.status(201).json(thesis);
+              } else {
+                throw new Error('Không thể tạo thesis.');
+              }
+        } catch (err) {
+            return res.status(400).json(`Có lỗi trong quá trình tạo thesis :  ${err}`)
+        }
+    },
+
     approveThesis: async (req, res) => {
         try {
             const thesis = await Thesis.findOne({_id: req.params.id});
             if (thesis) {
                 const thesisUpdated = {
-                    ...thesis,
+                    ...thesis._doc,
                     status: 'Endorse',
                     approved: true
                 }
@@ -42,7 +58,7 @@ const ThesisController = {
             const thesis = await Thesis.findOne({_id: req.params.id});
             if (thesis) {
                 const thesisUpdated = {
-                    ...thesis,
+                    ...thesis._doc,
                     status: 'Fail',
                     approved: false
                 }
@@ -59,6 +75,10 @@ const ThesisController = {
 
     getByFacultyId: (req, res) => {
         Thesis.find({adviser: req.params.adviserId})
+        .populate('authors', 'firstName lastName')
+        .populate('major', 'name')
+        .populate('adviser','firstName lastName')
+        .populate('panelists', 'firstName lastName')
         .then((theses) => {
            res.status(200).json(theses);
         })
@@ -70,6 +90,10 @@ const ThesisController = {
     getByStudentId: (req, res) => {
         const thesisList = [];
         Thesis.find({})
+        .populate('authors', 'firstName lastName')
+        .populate('major', 'name')
+        .populate('adviser','firstName lastName')
+        .populate('panelists', 'firstName lastName')
         .then((theses) => {
             theses.map((thesis)=>{
                 if (thesis.authors.includes(req.params.studentId))
@@ -88,7 +112,7 @@ const ThesisController = {
             if (thesis) {
                 const panelists = req.body.panelists;
                 const thesisUpdated = {
-                    ...thesis,
+                    ...thesis._doc,
                     panelists: panelists
                 }
                 await Thesis.updateOne({_id: thesis._id}, thesisUpdated)
@@ -103,25 +127,41 @@ const ThesisController = {
     },
 
     getAllPendingThesis: (req, res) => {
-        Thesis.find({status: 'New', approved: false})
+        Thesis.find({status: 'New', approved: false, major: req.params.major})
+        .populate('authors', 'firstName lastName')
+        .populate('major', 'name')
+        .populate('adviser','firstName lastName')
+        .populate('panelists', 'firstName lastName')
         .then ((theses)=> res.status(200).json(theses))
         .catch(() => res.status(404).json('Không tìm thấy danh sách luận văn.'));
     },
 
     getAllApprovalThesis: (req, res) => {
         Thesis.find({approved: true})
+        .populate('authors', 'firstName lastName')
+        .populate('major', 'name')
+        .populate('adviser','firstName lastName')
+        .populate('panelists', 'firstName lastName')
         .then ((theses)=> res.status(200).json(theses))
         .catch(() => res.status(404).json('Không tìm thấy danh sách luận văn.'));
     },
     
     getAll: (req, res) => {
         Thesis.find({})
+        .populate('authors', 'firstName lastName')
+        .populate('major', 'name')
+        .populate('adviser','firstName lastName')
+        .populate('panelists', 'firstName lastName')
         .then ((theses)=> res.status(200).json(theses))
         .catch(() => res.status(404).json('Không tìm thấy danh sách luận văn.'));
     },
 
     getById: (req, res) => {
         Thesis.findOne({_id: req.params.id})
+        .populate('authors', 'firstName lastName')
+        .populate('major', 'name')
+        .populate('adviser','firstName lastName')
+        .populate('panelists', 'firstName lastName')
         .then((thesis) => {
            res.status(200).json(thesis);
         })
