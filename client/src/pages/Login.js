@@ -27,8 +27,8 @@ export default function Login() {
         const isSignedIn = await authService.signIn(data);
         if (isSignedIn) {
             console.log(isSignedIn);
-            localStorage.setItem('token', JSON.stringify(isSignedIn))
-            navigate('/');
+            localStorage.setItem('account', JSON.stringify(isSignedIn))
+            navigate('/dashboard');
         }
         else {
             alert('Sai tài khoản hoặc mật khẩu!');

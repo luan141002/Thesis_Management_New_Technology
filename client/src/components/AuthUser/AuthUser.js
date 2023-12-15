@@ -59,7 +59,7 @@ function AuthUser({user}) {
         } else if (selectedSetting === 'Logout') {
           console.log(user);
           await authService.logout(user);
-          localStorage.removeItem('token');
+          localStorage.removeItem('account');
           navigate('/login');
         }
     };

@@ -27,32 +27,18 @@ const ThesisSchema = new Schema({
         required: true, 
         default: [] 
     },  // Panelists assigned to the thesis
-    remarks: { type: String },                                                        // Remarks for the thesis in general (could be replaced)
+    remarks: { type: String },  // Remarks for the thesis in general
     // Status of the thesis
     status: {
         type: String,
         enum: [
             'New',
-            'Endorse',
-            'Redefense',
+            'Endorse', // approve
             'Pass',
             'Fail',
         ],
         default: 'New'
     },
-    faculty_approval: [
-        {
-            faculty: { type: Schema.Types.ObjectId, ref: 'Faculty', required: true },
-            status: {
-                type: String,
-                enum: [
-                    'Approved',
-                    'Denied'
-                ],
-                default: 'Approved'
-            }
-        }
-    ],
     approved: { type: Boolean, required: true, default: true }
 }, 
 {
