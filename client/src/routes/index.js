@@ -16,37 +16,47 @@ import Thesis from "../pages/admin/Thesis/Thesis";
 import Term from "../pages/admin/Term/Term";
 import Major from "../pages/admin/Major/Major";
 import RegisterAccount from "../pages/RegisterAccount";
+import Table from "../components/Table/StudentTable.js";
 
 // Route khong can dang nhap
 const publicRoutes = [
-    { path: '/', component: Home, layout: DefaultLayout , },
-    { path: '/login', component: Login, },
-    { path: '/register-account', component: RegisterAccount, },
-    { path: '/list-thesis', component: ListThesis, layout: DefaultLayout},
-    { path: '/list-thesis/:id', component: ThesisDetail, layout: DefaultLayout},
-    { path: '/list-faculty', component: ListFaculty, layout: DefaultLayout},
-    { path: '/list-faculty/:id', component: FacultyDetail, layout: DefaultLayout},
+  { path: "/", component: Home, layout: DefaultLayout },
+  { path: "/login", component: Login },
+  { path: "/register-account", component: RegisterAccount },
+  { path: "/list-thesis", component: ListThesis, layout: DefaultLayout },
+  { path: "/list-thesis/:id", component: ThesisDetail, layout: DefaultLayout },
+  { path: "/list-faculty", component: ListFaculty, layout: DefaultLayout },
+  {
+    path: "/list-faculty/:id",
+    component: FacultyDetail,
+    layout: DefaultLayout,
+  },
+  {
+    path: "/students",
+    component: Table,
+    layout: AdminLayout,
+    type: "students",
+  },
 
-    { path: '/instruction', component: Instruction, layout: DefaultLayout},
-    { path: '/notifications', component: Notification, layout: DefaultLayout},
+  { path: "/instruction", component: Instruction, layout: DefaultLayout },
+  { path: "/notifications", component: Notification, layout: DefaultLayout },
 
-    // not found page
-    // { path: '/*', component: PageNotFound },
+  // not found page
+  // { path: '/*', component: PageNotFound },
 ];
 
 // Route can dang nhap
 const privateRoutes = [
-    // for authenticated
-    // { path: '/profile', component: PersonalAccount },
-    // { path: '/change-password', component: ChangePassword },
-    { path: '/dashboard', component: Dashboard, layout: AdminLayout },
-    { path: '//manage-student', component: Student, layout: AdminLayout },
-    { path: '/manage-faculty', component: Faculty, layout: AdminLayout },
-    { path: '/manage-schedule', component: Schedule, layout: AdminLayout },
-    { path: '/manage-thesis', component: Thesis, layout: AdminLayout },
-    { path: '/manage-term', component: Term, layout: AdminLayout },
-    { path: '/manage-major', component: Major, layout: AdminLayout },
-
+  // for authenticated
+  // { path: '/profile', component: PersonalAccount },
+  // { path: '/change-password', component: ChangePassword },
+  { path: "/dashboard", component: Dashboard, layout: AdminLayout },
+  { path: "//manage-student", component: Student, layout: AdminLayout },
+  { path: "/manage-faculty", component: Faculty, layout: AdminLayout },
+  { path: "/manage-schedule", component: Schedule, layout: AdminLayout },
+  { path: "/manage-thesis", component: Thesis, layout: AdminLayout },
+  { path: "/manage-term", component: Term, layout: AdminLayout },
+  { path: "/manage-major", component: Major, layout: AdminLayout },
 ];
 
 export { publicRoutes, privateRoutes };
