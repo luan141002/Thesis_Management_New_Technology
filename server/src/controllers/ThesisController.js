@@ -1,9 +1,117 @@
 const Thesis = require('../models/Thesis');
 
 const ThesisController = {
+    registerThesis: async (req, res) => {
+        try {
+            const thesis = await Thesis.create({
+                ...req.body,
+                status: 'New'
+            })
+            if (thesis) {
+                res.status(201).json(thesis);
+              } else {
+                throw new Error('Không thể tạo thesis.');
+              }
+        } catch (err) {
+            return res.status(400).json(`Có lỗi trong quá trình tạo thesis :  ${err}`)
+        }
+    },
 
-    approveThesis: (req, res) => {
-        
+    approveThesis: async (req, res) => {
+        try {
+            const thesis = await Thesis.findOne({_id: req.params.id});
+            if (thesis) {
+                const thesisUpdated = {
+                    ...thesis,
+                    status: 'Endorse',
+                    approved: true
+                }
+                await Thesis.updateOne({_id: thesis._id}, thesisUpdated)
+                return res.status(200).json("Cập nhật thesis thành công")
+            }
+            else {
+                return res.status(404).json('Không tìm thấy thesis!')
+            }
+        } catch (err) {
+            return res.status(400).json(`Có lỗi trong quá trình cập nhật thesis :  ${err}`)
+        }
+    },
+
+    denyThesis: async (req, res) => {
+        try {
+            const thesis = await Thesis.findOne({_id: req.params.id});
+            if (thesis) {
+                const thesisUpdated = {
+                    ...thesis,
+                    status: 'Fail',
+                    approved: false
+                }
+                await Thesis.updateOne({_id: thesis._id}, thesisUpdated)
+                return res.status(200).json("Cập nhật thesis thành công")
+            }
+            else {
+                return res.status(404).json('Không tìm thấy thesis!')
+            }
+        } catch (err) {
+            return res.status(400).json(`Có lỗi trong quá trình cập nhật thesis :  ${err}`)
+        }
+    },
+
+    getByFacultyId: (req, res) => {
+        Thesis.find({adviser: req.params.adviserId})
+        .then((theses) => {
+           res.status(200).json(theses);
+        })
+        .catch(()=>{
+            res.status(404).json('Không tìm thấy luận văn.');
+        })
+    },
+
+    getByStudentId: (req, res) => {
+        const thesisList = [];
+        Thesis.find({})
+        .then((theses) => {
+            theses.map((thesis)=>{
+                if (thesis.authors.includes(req.params.studentId))
+                    thesisList.push(thesis);
+            })
+           res.status(200).json(thesisList);
+        })
+        .catch(()=>{
+            res.status(404).json('Không tìm thấy luận văn.');
+        })
+    },
+
+    assignDefenseMember: async (req, res) => {
+        try {
+            const thesis = await Thesis.findOne({_id: req.params.id});
+            if (thesis) {
+                const panelists = req.body.panelists;
+                const thesisUpdated = {
+                    ...thesis,
+                    panelists: panelists
+                }
+                await Thesis.updateOne({_id: thesis._id}, thesisUpdated)
+                return res.status(200).json("Cập nhật thesis thành công")
+            }
+            else {
+                return res.status(404).json('Không tìm thấy thesis!')
+            }
+        } catch (err) {
+            return res.status(400).json(`Có lỗi trong quá trình cập nhật thesis :  ${err}`)
+        }
+    },
+
+    getAllPendingThesis: (req, res) => {
+        Thesis.find({status: 'New', approved: false})
+        .then ((theses)=> res.status(200).json(theses))
+        .catch(() => res.status(404).json('Không tìm thấy danh sách luận văn.'));
+    },
+
+    getAllApprovalThesis: (req, res) => {
+        Thesis.find({approved: true})
+        .then ((theses)=> res.status(200).json(theses))
+        .catch(() => res.status(404).json('Không tìm thấy danh sách luận văn.'));
     },
     
     getAll: (req, res) => {
