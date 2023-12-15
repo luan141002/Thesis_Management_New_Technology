@@ -16,7 +16,7 @@ import Thesis from "../pages/admin/Thesis/Thesis";
 import Term from "../pages/admin/Term/Term";
 import Major from "../pages/admin/Major/Major";
 import RegisterAccount from "../pages/RegisterAccount";
-import Table from "../components/Table/StudentTable.js";
+import HeadLecturerBusinessTable from "../components/Table/HeadLecturerBusinessTable.js";
 
 // Route khong can dang nhap
 const publicRoutes = [
@@ -31,11 +31,18 @@ const publicRoutes = [
     component: FacultyDetail,
     layout: DefaultLayout,
   },
+
   {
-    path: "/students",
-    component: Table,
+    path: "/head-lecturer/manage-thesis",
+    component: HeadLecturerBusinessTable,
     layout: AdminLayout,
-    type: "students",
+    type: "theses",
+  },
+  {
+    path: "/head-lecturer/pending-thesis",
+    component: HeadLecturerBusinessTable,
+    layout: AdminLayout,
+    type: "pendingTheses",
   },
 
   { path: "/instruction", component: Instruction, layout: DefaultLayout },

@@ -45,8 +45,8 @@ function Sidebar() {
         setSettings([
           { title: "Profile", link: "/faculty/profile" },
           { title: "Register Thesis", link: "/faculty/register-thesis" },
-          { title: "Manage Thesis", link: "/faculty/manage-thesis" },
-          { title: "Approval Thesis", link: "/faculty/approval-thesis" },
+          { title: "Manage Thesis", link: "/head-lecturer/manage-thesis" },
+          { title: "Approval Thesis", link: "/head-lecturer/pending-thesis" },
           { title: "Distribute Faculty", link: "/faculty/distribute-faculty" },
           { title: "Logout", link: "/logout" },
         ]);
