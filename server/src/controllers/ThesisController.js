@@ -38,7 +38,7 @@ const ThesisController = {
             const thesis = await Thesis.findOne({_id: req.params.id});
             if (thesis) {
                 const thesisUpdated = {
-                    ...thesis,
+                    ...thesis._doc,
                     status: 'Endorse',
                     approved: true
                 }
@@ -58,7 +58,7 @@ const ThesisController = {
             const thesis = await Thesis.findOne({_id: req.params.id});
             if (thesis) {
                 const thesisUpdated = {
-                    ...thesis,
+                    ...thesis._doc,
                     status: 'Fail',
                     approved: false
                 }
