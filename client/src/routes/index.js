@@ -16,8 +16,7 @@ import Thesis from "../pages/admin/Thesis/Thesis";
 import Term from "../pages/admin/Term/Term";
 import Major from "../pages/admin/Major/Major";
 import RegisterAccount from "../pages/RegisterAccount";
-import Table from "../components/Table/StudentTable.js";
-import ThesisTable from "../components/Table/StudentBussinessTable.js";
+import HeadLecturerBusinessTable from "../components/Table/HeadLecturerBusinessTable.js";
 
 // Route khong can dang nhap
 const publicRoutes = [
@@ -32,25 +31,51 @@ const publicRoutes = [
     component: FacultyDetail,
     layout: DefaultLayout,
   },
-  {
-    path: "/students",
-    component: Table,
-    layout: AdminLayout,
-    type: "students",
-  },
-  {
-    path: "/thesis",
-    component: ThesisTable,
-    layout: AdminLayout,
-    type: "students",
-  },
 
   {
-    path: "/lecturers",
-    component: ThesisTable,
+    path: "/head-lecturer/manage-thesis",
+    component: HeadLecturerBusinessTable,
     layout: AdminLayout,
-    type: "lecturers",
+    type: "theses",
   },
+  {
+    path: "/head-lecturer/pending-thesis",
+    component: HeadLecturerBusinessTable,
+    layout: AdminLayout,
+    type: "pendingTheses",
+  },
+  {
+    path: "/head-lecturer/approved-thesis",
+    component: HeadLecturerBusinessTable,
+    layout: AdminLayout,
+    type: "approvedTheses",
+  },
+  // {
+  //   path: "/thesis",
+  //   component: ThesisTable,
+  //   layout: AdminLayout,
+  //   type: "pendingTheses",
+  // },
+
+  // {
+  //   path: "/lecturers",
+  //   component: ThesisTable,
+  //   layout: AdminLayout,
+  //   type: "lecturers",
+  // },
+  // {
+  //   path: "/thesis",
+  //   component: ThesisTable,
+  //   layout: AdminLayout,
+  //   type: "students",
+  // },
+
+  // {
+  //   path: "/lecturers",
+  //   component: ThesisTable,
+  //   layout: AdminLayout,
+  //   type: "lecturers",
+  // },
 
   { path: "/instruction", component: Instruction, layout: DefaultLayout },
   { path: "/notifications", component: Notification, layout: DefaultLayout },
@@ -66,7 +91,7 @@ const privateRoutes = [
   // { path: '/change-password', component: ChangePassword },
   { path: "/dashboard", component: Dashboard, layout: AdminLayout },
   { path: "/manage-student", component: Student, layout: AdminLayout },
-  
+
   { path: "/manage-faculty", component: Faculty, layout: AdminLayout },
   { path: "/manage-schedule", component: Schedule, layout: AdminLayout },
   { path: "/manage-thesis", component: Thesis, layout: AdminLayout },

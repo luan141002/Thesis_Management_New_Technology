@@ -9,99 +9,82 @@ import {
 } from "@tanstack/react-table";
 import DebouncedInput from "./DebouncedInput";
 import userService from "../../services/userServices";
+import thesisService from "../../services/thesisService";
 
-const BaseTable = ({ data }) => {
+const BaseTable = ({ data, type, setReloadPage }) => {
   const columnHelper = createColumnHelper();
   // initial columns if there is no data
 
-  const columns = [
+  let columns = [
     columnHelper.accessor("", {
       id: "No",
       cell: (info) => <span>{info.row.index + 1}</span>,
       header: "No",
     }),
-    ...Object.keys(data[0])
-      ?.map((field) => {
-        return columnHelper.accessor(field, {
-          cell: (info) => <span>{info.getValue()}</span>,
-          header: camelToCapitalize(field),
-        });
-      })
-      .filter((field) => field.header !== "Edit"),
-    //    columnHelper.accessor("edit", {
-    //      id: "Edit",
-    //      cell: (info) => (
-    //        <div>
-    //          {isPT && type === "exercises" && (
-    //            <div className="flex justify-center space-x-3 ">
-    //              <button
-    //                type="button"
-    //                className="bg-green-700  text-white h-[30px] w-[90px] hover:border-3  hover:hover:opacity-80"
-    //                onClick={(e) => {
-    //                  e.preventDefault();
-    //                  if (type === "exercises") {
-    //                    setCurrentExercise(info.getValue());
-    //                    setOpenEditExerciseModel((state) => !state);
-    //                  }
-    //                }}
-    //              >
-    //                Edit
-    //              </button>
-    //              <button
-    //                type="button"
-    //                className="bg-gray-700 text-white h-[30px] w-[90px] hover:border-3  hover:opacity-80"
-    //                onClick={(e) => {
-    //                  e.preventDefault();
-    //                  if (type === "exercises") {
-    //                    setCurrentExercise(info.getValue());
-    //                    setOpenDeleteExerciseModal((state) => !state);
-    //                  }
-    //                }}
-    //              >
-    //                Delete
-    //              </button>
-    //            </div>
-    //          )}
-    //          {isAdmin && type === "pts" && (
-    //            <div className="flex justify-center space-x-3 ">
-    //              {/* <button
-    //                             type="button"
-    //                             className="bg-green-700  text-white h-[30px] w-[90px] hover:border-3  hover:hover:opacity-80"
-    //                             onClick={(e) => {
-    //                                 e.preventDefault();
-    //                                 if (type === 'pts') {
-    //                                     setCurrentTrainer(info.getValue());
-    //                                     setOpenEditTrainerModal(
-    //                                         (state) => !state,
-    //                                     );
-    //                                 }
-    //                             }}
-    //                         >
-    //                             Edit
-    //                         </button> */}
-    //              <button
-    //                type="button"
-    //                className="bg-gray-700 text-white h-[30px] w-[90px] hover:border-3  hover:opacity-80"
-    //                onClick={(e) => {
-    //                  e.preventDefault();
-    //                  if (type === "pts") {
-    //                    setCurrentTrainer(info.getValue());
-    //                    setOpenDeleteTrainerModal((state) => !state);
-    //                  }
-    //                }}
-    //              >
-    //                Delete
-    //              </button>
-    //            </div>
-    //          )}
-    //        </div>
-    //      ),
-    //      header:
-    //        (isPT && type === "exercises") || (isAdmin && type === "pts")
-    //          ? "Edit"
-    //          : "",
-    //    }),
+    ...Object.keys(data[0])?.map((field) => {
+      return columnHelper.accessor(field, {
+        cell: (info) => <span>{info.getValue()}</span>,
+        header: camelToCapitalize(field),
+      });
+    }),
+    columnHelper.accessor("status", {
+      id: "Edit",
+      cell: (info) => (
+        <div>
+          {type === "pendingTheses" && (
+            <div className="flex justify-center space-x-3 ">
+              <button
+                type="button"
+                className="bg-green-700  text-white h-[30px] w-[90px] hover:border-3  hover:hover:opacity-80"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  console.log(info.getValue());
+                  await thesisService.approveThesisById(info.getValue());
+                  setReloadPage((state) => state + 1);
+                }}
+              >
+                Approve
+              </button>
+              <button
+                type="button"
+                className="bg-gray-700 text-white h-[30px] w-[90px] hover:border-3  hover:opacity-80"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  await thesisService.declineThesisById(info.getValue());
+                  setReloadPage((state) => state + 1);
+                }}
+              >
+                Decline
+              </button>
+            </div>
+          )}
+          {type === "approvedTheses" && (
+            <div className="flex justify-center space-x-3 ">
+              <button
+                type="button"
+                className="bg-green-700 text-white h-[50px] w-[200px] hover:border-3  hover:hover:opacity-80"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  console.log("hihi");
+                }}
+              >
+                Assign lecturer reviews
+              </button>
+            </div>
+          )}
+        </div>
+      ),
+      header: "status",
+    }),
   ];
+  if (type === "theses") {
+    const newColumns = columns.filter((column) => column.id !== "Edit");
+    columns = [...newColumns];
+  }
+  if (type === "approvedTheses" || type === "pendingTheses") {
+    let newColumns = columns.filter((column) => !(column.header === "Status"));
+    columns = [...newColumns];
+  }
   // config table
   const [globalFilter, setGlobalFilter] = useState("");
 
