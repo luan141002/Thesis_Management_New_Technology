@@ -5,6 +5,7 @@ const ThesisController = {
     try {
       const thesis = await Thesis.create({
         ...req.body,
+        adviser:req.params.id,
         status: "New",
       });
       if (thesis) {
@@ -23,6 +24,7 @@ const ThesisController = {
     try {
       const thesis = await Thesis.create({
         ...req.body,
+        adviser:req.params.id,
         status: "Endorse",
       });
       if (thesis) {
