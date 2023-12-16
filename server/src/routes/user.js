@@ -3,6 +3,7 @@ const router = express.Router();
 const authToken = require('../middleware/authToken');
 const userController = require ('../controllers/UserController');
 
+router.put('/:id/update-profile', userController.updateProfile)
 router.get('/faculties/:major', userController.getFacultyByMajor);
 router.get('/faculties', userController.getAllFaculty);
 router.get('/students/:major', userController.getStudentByMajor);
