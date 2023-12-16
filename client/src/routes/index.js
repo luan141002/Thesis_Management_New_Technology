@@ -18,6 +18,7 @@ import Major from "../pages/admin/Major/Major";
 import RegisterAccount from "../pages/RegisterAccount";
 import HeadLecturerBusinessTable from "../components/Table/HeadLecturerBusinessTable.js";
 import StudentTable from "../components/Table/StudentTable.js";
+import Profile from "../components/Profile/Profile.js";
 
 // Route khong can dang nhap
 const publicRoutes = [
@@ -50,6 +51,11 @@ const publicRoutes = [
     component: HeadLecturerBusinessTable,
     layout: AdminLayout,
     type: "approvedTheses",
+  },
+  {
+    path: "/student/profile",
+    component: Profile,
+    layout: AdminLayout,
   },
   {
     path: "/student/assign-thesis",

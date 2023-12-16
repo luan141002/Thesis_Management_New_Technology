@@ -62,6 +62,32 @@ const UserController = {
         })
     },
 
+    updateProfile: async (req, res) => {
+        try {
+            const user = User.findOne({_id: req.params.id})
+            const {type} = req.body;                                    
+            if (user) { 
+                const userUpdated = {
+                    ...req.body,
+                    password: user.password
+                }
+                if (type === 'student'){
+                    await Student.updateOne({_id: user._id}, userUpdated);
+                    return res.status(200).json("Cập nhật user thành công");    //8
+                }
+                else if (type==='faculty') {                                    // 9
+                    await Faculty.updateOne({_id: user._id}, userUpdated)       // 10
+                    return res.status(200).json("Cập nhật user thành công");    // 11
+                }
+            }
+            else {
+                return res.status(404).json('Không tìm thấy user!')             // 12
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
     create: async (req, res) =>  {
         try {
             let isAdmin = false;                                    // 1
