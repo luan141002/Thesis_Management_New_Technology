@@ -47,14 +47,14 @@ const ThesisCardItem = ({ item }) => {
           onClick={()=>handlieClick(item._id)}>
             {item.title}
           </Typography>
-          <Typography sx={{ mt: 2, color: 'text.secondary' }}>{item.authors.length > 0 ? item.authors[0]:"chưa có tác giả"}</Typography>
-          <Typography sx={{ mb: 2, color: 'text.secondary' }}>{item.advisers}</Typography>
+          <Typography sx={{ mt: 2, color: 'text.secondary' }}>{item.authors.length > 0 ? item.authors[0].firstName:"chưa có tác giả"}</Typography>
+          <Typography sx={{ mb: 2, color: 'text.secondary' }}>{item.adviser.firstName}</Typography>
           <Typography sx={{ mb: 2, color: 'text.secondary' }} variant="subtitle1">
             {item.description}
           </Typography>
           <Box sx={{ '& img': { height: 26 } }}>
 
-            <Typography>{item.major}</Typography>
+            <Typography>{item.major.name}</Typography>
           </Box>
         </Box>
       </Box>
