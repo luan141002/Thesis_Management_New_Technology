@@ -57,11 +57,10 @@ export default function SettingsCard() {
   };
 
   const handleSubmit = async (data) => {
-    console.log('data:', data);
     const respone = await userService.updateProfile(user._id, data);
     console.log('res: ', respone);
     if (respone) {
-      console.log('update user ok rồi');
+      localStorage.setItem('account', JSON.stringify( await userService.getUserById(user._id)));
     }
   };
 

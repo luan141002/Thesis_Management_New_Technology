@@ -64,13 +64,15 @@ const UserController = {
 
     updateProfile: async (req, res) => {
         try {
-            const user = User.findOne({_id: req.params.id})
+            const user = await User.findOne({_id: req.params.id})
+            console.log('user ne :' ,user);
             const {type} = req.body;                                    
             if (user) { 
                 const userUpdated = {
                     ...req.body,
-                    password: user.password
+                    password: user._doc.password
                 }
+                console.log(userUpdated);
                 if (type === 'student'){
                     await Student.updateOne({_id: user._id}, userUpdated);
                     return res.status(200).json("Cập nhật user thành công");    //8

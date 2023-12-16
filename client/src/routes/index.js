@@ -33,7 +33,12 @@ const publicRoutes = [
     component: FacultyDetail,
     layout: DefaultLayout,
   },
-
+  
+  {
+    path: "/faculty/profile",
+    component: Profile,
+    layout: AdminLayout,
+  },
   {
     path: "/head-lecturer/manage-thesis",
     component: HeadLecturerBusinessTable,
