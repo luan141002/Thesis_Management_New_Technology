@@ -102,8 +102,10 @@ const ThesisController = {
       .populate("panelists", "firstName lastName")
       .then((theses) => {
         theses.map((thesis) => {
-          if (thesis.authors.includes(req.params.studentId))
-            thesisList.push(thesis);
+          const authorIds = thesis.authors.map((author) =>
+            author._id.toString()
+          );
+          if (authorIds.includes(req.params.studentId)) thesisList.push(thesis);
         });
         res.status(200).json(thesisList);
       })

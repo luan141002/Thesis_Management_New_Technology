@@ -72,6 +72,43 @@ const BaseTable = ({ data, type, setReloadPage }) => {
               </button>
             </div>
           )}
+          {type === "students-thesis" && (
+            <div className="flex justify-center space-x-3 ">
+              <button
+                type="button"
+                className="bg-green-700 text-white h-[40px] w-[120px] hover:border-3  hover:hover:opacity-80"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  console.log("hihi");
+                }}
+              >
+                Assign Thesis
+              </button>
+              <button
+                type="button"
+                className="bg-gray-700 text-white h-[40px] w-[120px] hover:border-3  hover:opacity-80"
+                onClick={async (e) => {
+                  e.preventDefault();
+                }}
+              >
+                View Thesis
+              </button>
+            </div>
+          )}
+          {type === "students-manage-thesis" && (
+            <div className="flex justify-center space-x-3 ">
+              <button
+                type="button"
+                className="bg-green-700 text-white h-[50px] w-[200px] hover:border-3  hover:hover:opacity-80"
+                onClick={async (e) => {
+                  e.preventDefault();
+                  console.log("hihi");
+                }}
+              >
+                Views details
+              </button>
+            </div>
+          )}
         </div>
       ),
       header: "status",

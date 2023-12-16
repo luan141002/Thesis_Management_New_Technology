@@ -36,7 +36,7 @@ function Sidebar() {
     if (role === "student")
       setSettings([
         { title: "Profile", link: "/student/profile" },
-        { title: "Register Thesis", link: "/student/register-thesis" },
+        { title: "Register Thesis", link: "/student/assign-thesis" },
         { title: "Manage Thesis", link: "/student/manage-thesis" },
         { title: "Logout", link: "/logout" },
       ]);
