@@ -127,15 +127,12 @@ const Table = ({ type }) => {
           break;
       }
     } catch (err) {
-      //   toast.error("Failed", {
-      //     position: toast.POSITION.TOP_RIGHT,
-      //   });
     }
   };
 
   useEffect(() => {
     loadPage();
-  }, []);
+  }, [type]);
 
   return (
     <div>

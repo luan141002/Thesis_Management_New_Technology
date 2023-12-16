@@ -36,6 +36,14 @@ const userService = {
             console.error(error);
         }
     },
+    updateProfile: async (id, data) => {
+        try {
+            const respone = await axios.put(apiUrl + `/${id}/update-profile`, data);
+            return respone;
+        } catch (error) {
+            console.log(error);
+        }
+    },
     createUser: async (data) => {
         try {
             const respone = await axios.post(apiUrl + '/', data);

@@ -1,10 +1,32 @@
 const Thesis = require("../models/Thesis");
 
 const ThesisController = {
-  registerThesis: async (req, res) => {
+
+  registerThesisForStudent: async (req, res) => {
+    try {
+    const thesis = await Thesis.findOne({ _id: req.params.id });
+      if (thesis) {
+        const thesisUpdated = {
+          ...req.body,
+          authors: [...req.body.authors]
+        };
+        await Thesis.updateOne({ _id: thesis._id }, thesisUpdated);
+        return res.status(200).json("Cập nhật thesis thành công");
+      } else {
+        return res.status(404).json("Không tìm thấy thesis!");
+      }
+    } catch (err) {
+      return res
+        .status(400)
+        .json(`Có lỗi trong quá trình cập nhật thesis :  ${err}`);
+    }
+  },
+
+  registerThesisForLecturer: async (req, res) => {
     try {
       const thesis = await Thesis.create({
         ...req.body,
+        adviser:req.params.lecturerId,
         status: "New",
       });
       if (thesis) {
@@ -23,6 +45,7 @@ const ThesisController = {
     try {
       const thesis = await Thesis.create({
         ...req.body,
+        adviser:req.params.lecturerId,
         status: "Endorse",
       });
       if (thesis) {

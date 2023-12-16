@@ -13,6 +13,7 @@ function ThesisDetail() {
             setThesis(data);
         }
         fetchThesis();
+        console.log(thesis);
     },[])
     return (
         <Box>
@@ -20,13 +21,13 @@ function ThesisDetail() {
             Title: {thesis.title}
         </div>
         <div>
-            Authors: {thesis.authors?.map((author)=>author+', ')}
+            Authors: {thesis.authors?.length> 0 && thesis.authors.map((author)=> author.firstName +', '+author.lastName)}
         </div>
         <div>
-            Adviser: {thesis.advisers}
+            Adviser: {thesis.adviser && thesis.adviser.firstName +" " + thesis.adviser.lastName}
         </div>
         <div>
-            Major: {thesis.major}
+            Major: {thesis.major?.name}
         </div>
         <div>
             Description: {thesis.description}
