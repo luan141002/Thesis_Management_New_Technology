@@ -10,11 +10,14 @@ import {
 import DebouncedInput from "./DebouncedInput";
 import userService from "../../services/userServices";
 import thesisService from "../../services/thesisService";
+import AssignLecturerReviewForm from "../Form/AssignLecturerReviewForm.js";
 
 const BaseTable = ({ data, type, setReloadPage }) => {
   const columnHelper = createColumnHelper();
   // initial columns if there is no data
-
+  const [openAssignLecturerReview, setOpenAssignLecturerReview] =
+    useState(false);
+  const [adviser, setAdviser] = useState();
   let columns = [
     columnHelper.accessor("", {
       id: "No",
@@ -65,7 +68,8 @@ const BaseTable = ({ data, type, setReloadPage }) => {
                 className="bg-green-700 text-white h-[50px] w-[200px] hover:border-3  hover:hover:opacity-80"
                 onClick={async (e) => {
                   e.preventDefault();
-                  console.log("hihi");
+                  setOpenAssignLecturerReview(true);
+                  setAdviser(info.getValue());
                 }}
               >
                 Assign lecturer reviews
@@ -263,6 +267,12 @@ const BaseTable = ({ data, type, setReloadPage }) => {
           ))}
         </select>
       </div>
+      {openAssignLecturerReview && (
+        <AssignLecturerReviewForm
+          currentThesis={adviser}
+          setOpenAssignLecturerReview={setOpenAssignLecturerReview}
+        />
+      )}
     </div>
   );
 };

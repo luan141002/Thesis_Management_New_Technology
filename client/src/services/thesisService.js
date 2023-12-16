@@ -11,7 +11,16 @@ const thesisService = {
       console.error(error);
     }
   },
+
   getAllThesisByStudentId: async (id) => {
+    try {
+      const respone = await axios.get(apiUrl + `/${id}/student`);
+      return respone.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  assignThesisForLecturer: async (id) => {
     try {
       const respone = await axios.get(apiUrl + `/${id}/student`);
       return respone.data;
