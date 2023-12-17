@@ -50,6 +50,9 @@ const ThesisSchema = new Schema({
         ],
         default: 'New'
     },
+    startDate: { type: Date },
+    endDate: { type: Date },
+    defenseDate: {type: Date },
     approved: { type: Boolean, required: true, default: false }
 }, 
 {
