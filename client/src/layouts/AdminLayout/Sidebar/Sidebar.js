@@ -38,6 +38,7 @@ function Sidebar() {
         { title: "Profile", link: "/student/profile" },
         { title: "Register Thesis", link: "/student/assign-thesis" },
         { title: "Manage Thesis", link: "/student/manage-thesis" },
+        { title: "Quản Lý tiến độ", link: "/student/update-task" },
         { title: "Logout", link: "/logout" },
       ]);
     else if (role === "faculty") {

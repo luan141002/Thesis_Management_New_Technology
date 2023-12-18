@@ -19,6 +19,7 @@ import RegisterAccount from "../pages/RegisterAccount";
 import HeadLecturerBusinessTable from "../components/Table/HeadLecturerBusinessTable.js";
 import StudentTable from "../components/Table/StudentTable.js";
 import Profile from "../components/Profile/Profile.js";
+import TaskManagement from "../pages/student/TaskManagement.js";
 
 // Route khong can dang nhap
 const publicRoutes = [
@@ -33,7 +34,7 @@ const publicRoutes = [
     component: FacultyDetail,
     layout: DefaultLayout,
   },
-  
+
   {
     path: "/faculty/profile",
     component: Profile,
@@ -71,6 +72,12 @@ const publicRoutes = [
   {
     path: "/student/manage-thesis",
     component: StudentTable,
+    layout: AdminLayout,
+    type: "students-manage-thesis",
+  },
+  {
+    path: "/student/update-task",
+    component: TaskManagement,
     layout: AdminLayout,
     type: "students-manage-thesis",
   },

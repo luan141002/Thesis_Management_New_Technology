@@ -11,7 +11,16 @@ const thesisService = {
       console.error(error);
     }
   },
+
   getAllThesisByStudentId: async (id) => {
+    try {
+      const respone = await axios.get(apiUrl + `/${id}/student`);
+      return respone.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  assignThesisForLecturer: async (id) => {
     try {
       const respone = await axios.get(apiUrl + `/${id}/student`);
       return respone.data;
@@ -72,6 +81,17 @@ const thesisService = {
   createThesis: async (data) => {
     try {
       const respone = await axios.post(apiUrl + "/", data);
+      return respone;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  assignDefenseLecturer: async (id, data) => {
+    try {
+      const respone = await axios.post(
+        apiUrl + `/${id}/assign-defense-member`,
+        data
+      );
       return respone;
     } catch (error) {
       console.log(error);
