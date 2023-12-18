@@ -126,8 +126,7 @@ const Table = ({ type }) => {
         default:
           break;
       }
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   useEffect(() => {

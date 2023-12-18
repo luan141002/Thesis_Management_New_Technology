@@ -86,6 +86,17 @@ const thesisService = {
       console.log(error);
     }
   },
+  assignDefenseLecturer: async (id, data) => {
+    try {
+      const respone = await axios.post(
+        apiUrl + `/${id}/assign-defense-member`,
+        data
+      );
+      return respone;
+    } catch (error) {
+      console.log(error);
+    }
+  },
   updateThesis: async (id, data) => {
     try {
       const respone = await axios.put(apiUrl + `/${id}`, data);

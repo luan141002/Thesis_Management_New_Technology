@@ -1,14 +1,13 @@
 const Thesis = require("../models/Thesis");
 
 const ThesisController = {
-
   registerThesisForStudent: async (req, res) => {
     try {
-    const thesis = await Thesis.findOne({ _id: req.params.id });
+      const thesis = await Thesis.findOne({ _id: req.params.id });
       if (thesis) {
         const thesisUpdated = {
           ...req.body,
-          authors: [...req.body.authors]
+          authors: [...req.body.authors],
         };
         await Thesis.updateOne({ _id: thesis._id }, thesisUpdated);
         return res.status(200).json("Cập nhật thesis thành công");
@@ -26,7 +25,7 @@ const ThesisController = {
     try {
       const thesis = await Thesis.create({
         ...req.body,
-        adviser:req.params.lecturerId,
+        adviser: req.params.lecturerId,
         status: "New",
       });
       if (thesis) {
@@ -45,7 +44,7 @@ const ThesisController = {
     try {
       const thesis = await Thesis.create({
         ...req.body,
-        adviser:req.params.lecturerId,
+        adviser: req.params.lecturerId,
         status: "Endorse",
       });
       if (thesis) {
@@ -146,6 +145,7 @@ const ThesisController = {
           ...thesis._doc,
           panelists: panelists,
         };
+
         await Thesis.updateOne({ _id: thesis._id }, thesisUpdated);
         return res.status(200).json("Cập nhật thesis thành công");
       } else {

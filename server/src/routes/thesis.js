@@ -3,11 +3,17 @@ const router = express.Router();
 const thesisController = require("../controllers/ThesisController");
 
 router.post("/:id/register", thesisController.registerThesisForStudent);
-router.post("/:lecturerId/register", thesisController.registerThesisForLecturer);
-router.post("/:lecturerId/register/dean", thesisController.registerThesisForDean);
+router.post(
+  "/:lecturerId/register",
+  thesisController.registerThesisForLecturer
+);
+router.post(
+  "/:lecturerId/register/dean",
+  thesisController.registerThesisForDean
+);
 router.put("/:id/approve", thesisController.approveThesis);
 router.put("/:id/deny", thesisController.denyThesis);
-router.post("/assign-defense-member", thesisController.assignDefenseMember);
+router.post("/:id/assign-defense-member", thesisController.assignDefenseMember);
 
 router.get("/pending/:major", thesisController.getAllPendingThesis);
 router.get("/approved/:major", thesisController.getAllApprovalThesis);

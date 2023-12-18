@@ -12,6 +12,26 @@ const AssignLecturerReviewForm = ({
   const [listLecturerReview, setListLecturerReview] = useState();
   const [adviser, setAdviser] = useState();
   const [formData, setFormData] = useState();
+
+  const [selectedLecturer, setSelectedLecturer] = useState();
+
+  const handleLecturerSelecting = (e) => {
+    setSelectedLecturer(e.target.value);
+  };
+
+  const onSubmit = async () => {
+    setFormData({
+      ...formData,
+      panelists: [...formData.panelists, selectedLecturer],
+    });
+    formData["defenseDate"] = new Date(selectedDate);
+    console.log(formData);
+    const response = await thesisService.assignDefenseLecturer(
+      formData._id,
+      formData
+    );
+    console.log(response);
+  };
   // get list lecturer reviews
   const loadPage = async () => {
     const listLecturer = await userService.getAllFaculty();
@@ -22,6 +42,10 @@ const AssignLecturerReviewForm = ({
     const listLecturerExceptCurrent = listLecturer.filter(
       (lecturer) => lecturer._id !== currentLecturerId
     );
+
+    const initialLecturer = listLecturerExceptCurrent[0]._id;
+    setSelectedLecturer(initialLecturer);
+
     console.log(thesis);
     setFormData(thesis);
     setAdviser(thesis.adviser);
@@ -29,8 +53,8 @@ const AssignLecturerReviewForm = ({
   };
   useEffect(() => {
     loadPage();
-  });
-  const [selectesDate, setSelectedDate] = useState("");
+  }, []);
+  const [selectedDate, setSelectedDate] = useState("");
   // show on select
   // current adviser  -  Lecturer review select -  date to reviews
   // current thesis
@@ -59,7 +83,7 @@ const AssignLecturerReviewForm = ({
           <div className="flex flex-col space-y-3">
             <label>Review Date</label>
             <DatePicker
-              selected={selectesDate}
+              selected={selectedDate}
               onChange={(date) => setSelectedDate(date)}
               dateFormat="dd-MM-yyyy"
               minDate={new Date()}
@@ -72,9 +96,12 @@ const AssignLecturerReviewForm = ({
           </div>
           <div className="flex flex-col space-y-3">
             <label>Lecturer Reviews</label>
-            <select className=" p-3 px-5 text-black">
+            <select
+              className=" p-3 px-5 text-black"
+              onChange={handleLecturerSelecting}
+            >
               {listLecturerReview?.map((lecturer) => (
-                <option>
+                <option value={lecturer._id}>
                   {lecturer?.firstName + " " + lecturer?.lastName}
                 </option>
               ))}
@@ -147,7 +174,12 @@ const AssignLecturerReviewForm = ({
             </div>
           </form>
         </div>
-        <div className="flex justify-end mt-4">
+        <div
+          className="flex justify-end mt-4"
+          onClick={() => {
+            onSubmit();
+          }}
+        >
           <button className="bg-blue-500 text-white px-5 py-3 rounded-md hover:bg-blue-600">
             Submit
           </button>
