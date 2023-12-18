@@ -145,6 +145,7 @@ const ThesisController = {
         const thesisUpdated = {
           ...thesis._doc,
           panelists: panelists,
+          defenseDate: req.body.defenDate
         };
         await Thesis.updateOne({ _id: thesis._id }, thesisUpdated);
         return res.status(200).json("Cập nhật thesis thành công");
