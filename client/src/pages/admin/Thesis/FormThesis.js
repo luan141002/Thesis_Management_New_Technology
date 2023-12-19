@@ -4,16 +4,17 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import Grid from '@mui/material/Grid';
-
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
-import ListSubheader from '@mui/material/ListSubheader';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
-import { useNavigate } from 'react-router-dom';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
 import ToastMessage from '../../../components/ToastMessage/ToastMessage';
 import userService from '../../../services/userServices';
 import majorService from '../../../services/majorService';
@@ -32,29 +33,39 @@ export default function FormThesis({handleClose, id, type}) {
     const [firstStudent, setFirstStudent] = React.useState('');
     const [secondStudent, setSecondStudent] = React.useState('');
     const [faculty, setFaculty] = React.useState('');
+    const [reviewer, setReviewer] = React.useState('');
     const [faculties, setFaculties] = React.useState([]);
     const [remark, setRemark] = React.useState('');
     const [status, setStatus] = React.useState('');
+    const [startDate, setStartDate] = React.useState(null);
+    const [endDate, setEndDate] = React.useState(null);
+    const [defenseDate, setDefenseDate] = React.useState(null);
+
 
     React.useEffect(() => {
         async function fetchData() {
-            const thesis = await thesisService.getThesisById(id);
             const students = await userService.getAllStudent();
             const faculties = await userService.getAllFaculty();
             const majors = await majorService.getAllMajor();
-            setThesis(thesis);
             setStudents(students);
             setFaculties(faculties);
             setMajors(majors);
             if (type === 'edit' ) {
+                const thesis = await thesisService.getThesisById(id);
+                console.log('thesis: ',thesis);
+                setThesis(thesis);
                 setTitle(thesis.title);
                 setDescription(thesis.description);
-                setMajor(thesis.major);
-                setFirstStudent(thesis.authors[0]);
-                setSecondStudent(thesis.authors[1]);
-                setFaculty(thesis.adviser);
+                setMajor(thesis.major?._id);
+                setFirstStudent(thesis.authors[0]?._id);
+                setSecondStudent(thesis.authors[1]?._id);
+                setFaculty(thesis.adviser?._id);
+                setReviewer(thesis.panelists[0]?._id);
                 setRemark(thesis.remarks);
                 setStatus(thesis.status);
+                setStartDate(dayjs(thesis.startDate)); // Convert to Dayjs object
+                setEndDate(dayjs(thesis.endDate));
+                setDefenseDate(dayjs(thesis.defenseDate));
             }
         }
         fetchData();
@@ -62,14 +73,19 @@ export default function FormThesis({handleClose, id, type}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
         const data = {
             title: title,
             description: description,
             major: major,
             authors: [firstStudent, secondStudent],
             adviser: faculty,
+            panelists: reviewer,
             remarks: remark,
             status: status,
+            startDate: startDate,
+            endDate: endDate,
+            defenseDate: defenseDate
         };
         if (type === 'create') {
             const respone = await thesisService.createThesis(data);
@@ -83,14 +99,19 @@ export default function FormThesis({handleClose, id, type}) {
                 setFirstStudent(null);
                 setSecondStudent(null);
                 setFaculty(null);
+                setReviewer(null);
                 setRemark('');
                 setStatus('');
+                setStartDate(null);
+                setEndDate(null);
+                setDefenseDate(null)
             } else {
                 setMessage('Tạo thesis thất bại');
                 setTypeMessage('error');
             }
         }
         else {
+            
             const respone = await thesisService.updateThesis(id, data);
             if (respone.status === 200) {
                 setMessage('Update thesis thành công');
@@ -236,6 +257,50 @@ export default function FormThesis({handleClose, id, type}) {
                         {listStatus.map(status =>  (
                         <MenuItem value={status}>{status}</MenuItem>
                         ))}
+                    </Select>
+                </FormControl>
+                <Box sx={{ mt:2, mb:2 }}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs} >
+                        <DatePicker
+                        sx={{ mr: 6 }}
+                        label="Select Start Date"
+                        value={startDate}
+                        onChange={(newDay)=> setStartDate(newDay)}
+                        renderInput={(params) => <TextField {...params} />}
+                        />
+                    </LocalizationProvider> 
+
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                        label="Select End Date"
+                        value={endDate}
+                        onChange={(newDay)=> setEndDate(newDay)}
+                        renderInput={(params) => <TextField {...params} />}
+                        />
+                    </LocalizationProvider> 
+                </Box>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                        label="Select Defense Date"
+                        value={defenseDate}
+                        onChange={(newDay)=> setDefenseDate(newDay)}
+                        renderInput={(params) => <TextField {...params} />}
+                        />
+                </LocalizationProvider> 
+                <FormControl sx={{  minWidth: '100%', mb:2 }}>
+                    <InputLabel htmlFor="grouped-select">Reviewer</InputLabel>
+                    <Select 
+                        labelId="demo-controlled-open-select-label"
+                        id="demo-controlled-open-select"
+                        value={reviewer}
+                        label="Select Reviewer"
+                        onChange={(e)=> setReviewer(e.target.value)}
+                    >
+
+                    {/* <ListSubheader>Category 1</ListSubheader> */}
+                    {faculties.length > 0 && faculties.map(faculty =>  (
+                        <MenuItem value={faculty._id}>{faculty.firstName +' '+ faculty.lastName}</MenuItem>
+                    ))}
                     </Select>
                 </FormControl>
                 
