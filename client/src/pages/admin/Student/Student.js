@@ -11,8 +11,8 @@ import DownloadIcon from '@mui/icons-material/Download';
 import AddIcon from '@mui/icons-material/Add';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import ToastMessage from '../../../components/ToastMessage/ToastMessage';
-import FormStudent from './FormStudent';
 import userService from '../../../services/userServices';
+import UserSubmitForm from '../../../components/Form/UserSubmitForm';
 
 export default function Student() {
     
@@ -63,9 +63,10 @@ export default function Student() {
     const [message, setMessage] = React.useState('');
     const [typeMessage, setTypeMessage] = React.useState('');
     const [students, setStudents] = React.useState([]);
-    const [formType, setFormType] = React.useState('');
+    const [formAction, setFormAction] = React.useState('');
     const [sId, setSId] = React.useState('');
     const [showForm, setShowForm] = React.useState(false);
+    const [title, setTitle] = React.useState('');
 
     React.useEffect(()=>{
         async function fetchStudent() {
@@ -79,12 +80,14 @@ export default function Student() {
         setShowForm(false);
     };
 
-    const handleAdd = async () => {
-        await setFormType('create');
+    const handleAdd = () => {
+        setFormAction('create');
+        setTitle('Add New Student');
         setShowForm(true);
     };
-    const handleEdit = async (id) => {
-        await setFormType('edit');
+    const handleEdit = (id) => {
+        setFormAction('edit');
+        setTitle('Update Student');
         setSId(id);
         setShowForm(true);
         console.log('Edit clicked for row with id:', id);
@@ -158,7 +161,8 @@ export default function Student() {
                         disableRowSelectionOnClick
                 />
             </Box>
-            {showForm && (<FormStudent handleClose={handleCloseForm} type={formType} id={sId}/>) }
+            {showForm && (<UserSubmitForm handleClose={handleCloseForm} actions={formAction} id={sId} title= {title} type="student"/>) }
+
             
         </Box>
     

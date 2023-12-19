@@ -13,6 +13,7 @@ import EditNoteIcon from '@mui/icons-material/EditNote';
 import ToastMessage from '../../../components/ToastMessage/ToastMessage';
 import FormFaculty from './FormFaculty';
 import userService from '../../../services/userServices';
+import UserSubmitForm from '../../../components/Form/UserSubmitForm';
 
 export default function Faculty() {
     
@@ -61,15 +62,15 @@ export default function Faculty() {
     ];
     const [message, setMessage] = React.useState('');
     const [typeMessage, setTypeMessage] = React.useState('');
-    const [facultys, setFacultys] = React.useState([]);
-    const [formType, setFormType] = React.useState('');
+    const [faculties, setFaculties] = React.useState([]);
+    const [formAction, setFormAction] = React.useState('');
     const [sId, setSId] = React.useState('');
     const [showForm, setShowForm] = React.useState(false);
-
+    const [title, setTitle] = React.useState('');
     React.useEffect(()=>{
         async function fetchFaculty() {
             const listFaculty = await userService.getAllFaculty();
-            setFacultys(listFaculty)
+            setFaculties(listFaculty)
         }
         fetchFaculty();
     },[showForm])
@@ -78,12 +79,14 @@ export default function Faculty() {
         setShowForm(false);
     };
 
-    const handleAdd = async () => {
-        await setFormType('create');
+    const handleAdd = () => {
+        setFormAction('create');
+        setTitle('Add New Faculty');
         setShowForm(true);
     };
-    const handleEdit = async (id) => {
-        await setFormType('edit');
+    const handleEdit = (id) => {
+        setFormAction('edit');
+        setTitle('Update Faculty');
         setSId(id);
         setShowForm(true);
         console.log('Edit clicked for row with id:', id);
@@ -98,8 +101,8 @@ export default function Faculty() {
                 setMessage('');
                 setTypeMessage('');
             }, 3000);
-            const updatedFacultys = facultys.filter((faculty) => faculty._id !== id);
-            setFacultys(updatedFacultys);
+            const updatedFaculties = faculties.filter((faculty) => faculty._id !== id);
+            setFaculties(updatedFaculties);
         } else {
             setMessage('Xóa user thất bại');
             setTypeMessage('error');
@@ -141,7 +144,7 @@ export default function Faculty() {
 
             <Box sx={{ height: 400, width: '100%' }}>
                 <DataGrid
-                        rows={facultys}
+                        rows={faculties}
                         getRowId={(row) => row._id}
                         columns={columns}
                         initialState={{
@@ -156,7 +159,7 @@ export default function Faculty() {
                         disableRowSelectionOnClick
                 />
             </Box>
-            {showForm && (<FormFaculty handleClose={handleCloseForm} type={formType} id={sId}/>) }
+            {showForm && (<UserSubmitForm handleClose={handleCloseForm} actions={formAction} id={sId} title= {title} type="faculty"/>) }
             
         </Box>
     
