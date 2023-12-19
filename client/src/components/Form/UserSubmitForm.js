@@ -12,7 +12,6 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import MenuItem from '@mui/material/MenuItem';
-import ToastMessage from '../../../components/ToastMessage/ToastMessage';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -21,12 +20,13 @@ import IconButton from '@mui/material/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useNavigate } from 'react-router-dom';
-import userService from '../../../services/userServices';
-import majorService from '../../../services/majorService';
+import ToastMessage from '../../components/ToastMessage/ToastMessage';
+import userService from '../../services/userServices';
+import majorService from '../../services/majorService';
 
 
 
-export default function UserSubmitForm({handleClose, id, type, actions}) {
+export default function UserSubmitForm({handleClose, id, type, actions, title}) {
     const [message, setMessage] = React.useState('');
     const [typeMessage, setTypeMessage] = React.useState('');
     const [user, setUser] = React.useState({});
@@ -141,12 +141,15 @@ export default function UserSubmitForm({handleClose, id, type, actions}) {
 
     React.useEffect(() => {
         async function fetchUser() {
-            const user = await userService.getUserById(id);
-            setUser(user);
             const majors = await majorService.getAllMajor();
             setMajors(majors);
-            if (type === 'edit' ) {
-                setStudentId({ value: user.userId || '', message: '' });
+            if (actions === 'edit' ) {
+                const user = await userService.getUserById(id);
+                setUser(user);
+                setUserId({ 
+                    value: user.studentId ? user.studentId : user.facultyId || '', 
+                    message: '' 
+                });
                 setFirstName({ value: user.firstName || '', message: '' });
                 setLastName({ value: user.lastName || '', message: '' });
                 setEmail({ value: user.email || '', message: '' });
@@ -157,18 +160,18 @@ export default function UserSubmitForm({handleClose, id, type, actions}) {
                 setMajor({ value: user.major || '', message: '' });
             }
         }
-        if(actions==="edit") {
-            fetchUser();
-        }
+        fetchUser();
         
     },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!checkError()) {
+            const userType = type ==='student' ? 'student' : 'faculty' ;
+            const idField = type ==='student' ? 'studentId' : 'facultyId' ;
             const data = {
-                studentId: userId.value,
-                type:'student',
+                [idField]: userId.value,
+                type:userType,
                 firstName: firstName.value,
                 lastName: lastName.value,
                 email: email.value,
@@ -178,11 +181,11 @@ export default function UserSubmitForm({handleClose, id, type, actions}) {
                 birthday: birthday,
                 major: major.value,
             };
-            if (type === 'create') {
+            if (actions === 'create') {
                 const respone = await userService.createUser(data);
                 // call api to create new user
                 if (respone.status === 201) {
-                    setMessage('Tạo student thành công');
+                    setMessage('Tạo user thành công');
                     setTypeMessage('success');
                     setFirstName({ value: '', message: '' });
                     setLastName({ value: '', message: '' });
@@ -191,21 +194,21 @@ export default function UserSubmitForm({handleClose, id, type, actions}) {
                     setAddress({ value: '', message: '' });
                     setPhone({ value: '', message: '' });
                     setBirthday(null);
-                    setStudentId({ value: '', message: '' });
+                    setUserId({ value: '', message: '' });
                     setMajor({ value: '', message: '' });
                 } else {
-                    setMessage('Tạo student thất bại');
+                    setMessage('Tạo user thất bại');
                     setTypeMessage('error');
                 }
             }
             else {
                 const respone = await userService.updateUser(id, data);
                 if (respone.status === 200) {
-                    setMessage('Update student thành công');
+                    setMessage('Update user thành công');
                     setTypeMessage('success');
                    
                 } else {
-                    setMessage('Update student thất bại');
+                    setMessage('Update user thất bại');
                     setTypeMessage('error');
                 }
             }
@@ -226,17 +229,17 @@ export default function UserSubmitForm({handleClose, id, type, actions}) {
         <Dialog open={true} onClose={handleClose}>
         <form onSubmit={handleSubmit}>
             {/* <DialogTitle>{type === 'create' ?'Add New Student':'Update Student'}</DialogTitle> */}
-            <DialogTitle>{type === 'create' ?'Add New Student':'Update Student'}</DialogTitle>
+            <DialogTitle>{title}</DialogTitle>
             <DialogContent sx={{ width:"600px" }}>
                 <ToastMessage message={message} type={typeMessage} />
                 <Box>
                     <TextField
-                      label="Student ID"
+                      label="ID"
                       required
                       value={userId.value}
                       error={userId.message ? true : false}
                       variant="outlined"
-                      placeholder="Enter Student ID"
+                      placeholder="Enter ID"
                       sx={{ width: '100%', mb: 2, mt:1 }}
                       onBlur={validateFirstName}
                       onChange={(e) =>
@@ -393,11 +396,11 @@ export default function UserSubmitForm({handleClose, id, type, actions}) {
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
                 {
-                    type === 'create' ? 
+                    actions === 'create' ? 
                     // (<Button type='submit'>Add</Button>) : 
                     // (<Button type='submit'>Update</Button>)
-                    (<Button type='submit'>{actions}</Button>) : 
-                    (<Button type='submit'>{actions}</Button>)
+                    (<Button type='submit'>Add</Button>) : 
+                    (<Button type='submit'>Update</Button>)
                 }
             </DialogActions>
             </form>
