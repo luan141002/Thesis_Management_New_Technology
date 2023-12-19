@@ -34,6 +34,11 @@ export default function Thesis() {
             field: 'adviser',
             headerName: 'Adviser',
             width: 300,
+            renderCell: (params) => (
+                <>
+                    {params.row.adviser.firstName + " " +params.row.adviser.lastName}
+                </>
+            ),
         },
         {
             field: 'remarks',
@@ -58,7 +63,7 @@ export default function Thesis() {
     ];
     const [message, setMessage] = React.useState('');
     const [typeMessage, setTypeMessage] = React.useState('');
-    const [thesiss, setThesiss] = React.useState([]);
+    const [theses, setTheses] = React.useState([]);
     const [formType, setFormType] = React.useState('');
     const [sId, setSId] = React.useState('');
     const [showForm, setShowForm] = React.useState(false);
@@ -66,7 +71,7 @@ export default function Thesis() {
     React.useEffect(()=>{
         async function fetchThesis() {
             const listThesis = await thesisService.getAllThesis();
-            setThesiss(listThesis)
+            setTheses(listThesis)
         }
         fetchThesis();
     },[showForm])
@@ -95,8 +100,8 @@ export default function Thesis() {
                 setMessage('');
                 setTypeMessage('');
             }, 3000);
-            const updatedThesiss = thesiss.filter((thesis) => thesis._id !== id);
-            setThesiss(updatedThesiss);
+            const updatedTheses = theses.filter((thesis) => thesis._id !== id);
+            setTheses(updatedTheses);
         } else {
             setMessage('Xóa thesis thất bại');
             setTypeMessage('error');
@@ -115,7 +120,7 @@ export default function Thesis() {
             >
                 
                 <Box>
-                    <Typography sx={{ fontSize: '2rem', fontWeight: 600 }}>Thesiss</Typography>
+                    <Typography sx={{ fontSize: '2rem', fontWeight: 600 }}>Theses</Typography>
                     <Stack spacing={1} direction="row">
                         <Button sx={{ fontSize: '1rem', textTransform: 'none' }}>
                             <UploadIcon sx={{ mr: 1 }} />
@@ -139,7 +144,7 @@ export default function Thesis() {
 
             <Box sx={{ height: 400, width: '100%' }}>
                 <DataGrid
-                        rows={thesiss}
+                        rows={theses}
                         getRowId={(row) => row._id}
                         columns={columns}
                         initialState={{

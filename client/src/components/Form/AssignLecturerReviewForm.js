@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import userService from "../../services/userServices";
 import DatePicker from "react-datepicker";
+import dayjs from "dayjs";
 import "react-datepicker/dist/react-datepicker.css";
 import thesisService from "../../services/thesisService";
 
@@ -12,9 +13,8 @@ const AssignLecturerReviewForm = ({
   const [listLecturerReview, setListLecturerReview] = useState();
   const [adviser, setAdviser] = useState();
   const [formData, setFormData] = useState();
-
   const [selectedLecturer, setSelectedLecturer] = useState();
-
+  const [selectedDate, setSelectedDate] = useState("");
   const handleLecturerSelecting = (e) => {
     setSelectedLecturer(e.target.value);
   };
@@ -49,12 +49,14 @@ const AssignLecturerReviewForm = ({
     console.log(thesis);
     setFormData(thesis);
     setAdviser(thesis.adviser);
+    // set defense date
+    // setSelectedDate(dayjs(thesis.defenseDate));
     setListLecturerReview(listLecturerExceptCurrent);
   };
   useEffect(() => {
     loadPage();
   }, []);
-  const [selectedDate, setSelectedDate] = useState("");
+
   // show on select
   // current adviser  -  Lecturer review select -  date to reviews
   // current thesis
