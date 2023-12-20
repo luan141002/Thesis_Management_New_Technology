@@ -12,9 +12,10 @@ import ToastMessage from "../ToastMessage/ToastMessage.js";
 import userService from "../../services/userServices";
 import thesisService from "../../services/thesisService";
 import AssignLecturerReviewForm from "../Form/AssignLecturerReviewForm.js";
+import { useNavigate } from 'react-router-dom';
 
 const BaseTable = ({ data, type, setReloadPage }) => {
-
+  const navigate = useNavigate();
   // get user
   const [user, setUser] = useState(localStorage.getItem('account')?JSON.parse(localStorage.getItem('account')):{});
   const [message, setMessage] = useState('');
@@ -72,7 +73,7 @@ const BaseTable = ({ data, type, setReloadPage }) => {
               <button
                 type="button"
                 className="bg-green-700 text-white h-[50px] w-[200px] hover:border-3  hover:hover:opacity-80"
-                onClick={async (e) => {
+                onClick={(e) => {
                   e.preventDefault();
                   setOpenAssignLecturerReview(true);
                   console.log(info.getValue());
@@ -90,7 +91,6 @@ const BaseTable = ({ data, type, setReloadPage }) => {
                 className="bg-green-700 text-white h-[40px] w-[120px] hover:border-3  hover:hover:opacity-80"
                 onClick={async (e) => {
                   e.preventDefault();
-            
                   const respone = await thesisService.registerThesisForStudent(info.getValue(), user);
                   if (respone?.isFull) {
                     console.log('full');
@@ -110,10 +110,10 @@ const BaseTable = ({ data, type, setReloadPage }) => {
               <button
                 type="button"
                 className="bg-gray-700 text-white h-[40px] w-[120px] hover:border-3  hover:opacity-80"
-                onClick={async (e) => {
+                onClick={(e) => {
                   e.preventDefault();
                   // console.log(info.getValue());
-                  console.log(info.getValue());
+                  navigate(`${info.getValue()}`);
                 }}
               >
                 View Thesis
@@ -125,9 +125,24 @@ const BaseTable = ({ data, type, setReloadPage }) => {
               <button
                 type="button"
                 className="bg-green-700 text-white h-[50px] w-[200px] hover:border-3  hover:hover:opacity-80"
-                onClick={async (e) => {
+                onClick={(e) => {
                   e.preventDefault();
-                  console.log("hihi");
+                  navigate(`${info.getValue()}`);
+                }}
+              >
+                Views details
+              </button>
+            </div>
+          )}
+          {type === "theses" && (
+            <div className="flex justify-center space-x-3 ">
+              <button
+                type="button"
+                className="bg-green-700 text-white h-[50px] w-[200px] hover:border-3  hover:hover:opacity-80"
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log(info.getValue());
+                  navigate(`${info.getValue()}`);
                 }}
               >
                 Views details
@@ -139,11 +154,12 @@ const BaseTable = ({ data, type, setReloadPage }) => {
       header: "status",
     }),
   ];
-  if (type === "theses") {
-    const newColumns = columns.filter((column) => column.id !== "Edit");
-    columns = [...newColumns];
-  }
-  if (type === "approvedTheses" || type === "pendingTheses" || type === "students-thesis") {
+  // if (type === "theses") {
+  //   const newColumns = columns.filter((column) => column.id !== "Edit");
+  //   columns = [...newColumns];
+  // }
+  if (type === "approvedTheses" || type === "pendingTheses" || type === "students-thesis" 
+  || type === "students-manage-thesis" || type === "theses" ) {
     let newColumns = columns.filter((column) => !(column.header === "Status"));
     columns = [...newColumns];
   }

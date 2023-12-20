@@ -8,8 +8,8 @@ const TaskSchema = new Schema({
         required: true 
     },
     description: { type: String },
-    start: {type: Date, required:true },
-    end: { type: Date, required: true },
+    startDate: {type: Date, required:true },
+    endDate: { type: Date, required: true },
     status: { 
         type: String,
         enum: [
@@ -19,6 +19,16 @@ const TaskSchema = new Schema({
         ],
         default: 'pending'
     },
+    files : [
+        {
+            name: { type:String },
+            path: { type:String, required: true},
+            submitter: {
+                type: Schema.Types.ObjectId,
+                ref: 'Student',
+            }
+        }
+    ],
     createdBy: { type: Schema.Types.ObjectId, ref: 'Faculty', required: true}
 }, 
 {
