@@ -20,6 +20,7 @@ const thesisService = {
       console.error(error);
     }
   },
+
   assignThesisForLecturer: async (id) => {
     try {
       const respone = await axios.get(apiUrl + `/${id}/student`);
@@ -73,6 +74,22 @@ const thesisService = {
   getThesisByLecturerId: async (id) => {
     try {
       const respone = await axios.get(apiUrl + `/${id}/faculty`);
+      return respone.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  registerThesisForStudent: async (id) => {
+    try {
+      const respone = await axios.put(apiUrl + `/${id}/join`);
+      return respone.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  registerThesis: async (id, data) => {
+    try {
+      const respone = await axios.post(apiUrl + `/${id}/register`, data);
       return respone.data;
     } catch (error) {
       console.error(error);

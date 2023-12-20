@@ -2,15 +2,9 @@ const express = require("express");
 const router = express.Router();
 const thesisController = require("../controllers/ThesisController");
 
-router.post("/:id/register", thesisController.registerThesisForStudent);
-router.post(
-  "/:lecturerId/register",
-  thesisController.registerThesisForLecturer
-);
-router.post(
-  "/:lecturerId/register/dean",
-  thesisController.registerThesisForDean
-);
+router.put("/:id/join", thesisController.registerThesisForStudent);
+router.post("/:lecturerId/register",thesisController.registerThesis);
+
 router.put("/:id/approve", thesisController.approveThesis);
 router.put("/:id/deny", thesisController.denyThesis);
 router.post("/:id/assign-defense-member", thesisController.assignDefenseMember);
