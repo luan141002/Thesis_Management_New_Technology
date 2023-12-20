@@ -14,6 +14,7 @@ import thesisService from "../../services/thesisService.js";
 import BaseTable from "./BaseTable.js";
 
 const Table = ({ type }) => {
+  const [reloadPage, setReloadPage] = useState(0);
   // initial columns if there is no data
   const [data, setData] = useState(() => {
     switch (type) {
@@ -67,7 +68,8 @@ const Table = ({ type }) => {
               adviser: element.adviser.firstName, // ObjectId của Faculty
               lecturerReviews: element.panelists.length, // Mảng ObjectId của Faculty
               remarks: element.remarks,
-              status: element.status,
+              status: element._id,
+              
             }));
             setData([...processedResults]);
           } else {
@@ -129,13 +131,13 @@ const Table = ({ type }) => {
     } catch (err) {}
   };
 
-  useEffect(() => {
+  useMemo(() => {
     loadPage();
-  }, [type]);
+  }, [type, reloadPage]);
 
   return (
     <div>
-      <BaseTable data={data} type={type} />
+      <BaseTable data={data} type={type} setReloadPage={setReloadPage}  />
     </div>
   );
 };

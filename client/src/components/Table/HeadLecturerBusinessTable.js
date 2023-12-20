@@ -190,15 +190,5 @@ const Table = ({ type }) => {
   );
 };
 
-function parseDate(string) {
-  const birthday = new Date(string);
 
-  // Lấy ngày, tháng, năm
-  const day = birthday.getDate();
-  const month = birthday.getMonth() + 1; // Ghi chú: getMonth trả về giá trị từ 0 đến 11
-  const year = birthday.getFullYear();
-
-  // Tạo chuỗi ngày tháng năm
-  return `${day}/${month}/${year}`;
-}
 export default Table;

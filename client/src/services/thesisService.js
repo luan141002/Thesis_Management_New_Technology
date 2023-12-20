@@ -79,12 +79,18 @@ const thesisService = {
       console.error(error);
     }
   },
-  registerThesisForStudent: async (id) => {
+  registerThesisForStudent: async (id, data) => {
     try {
-      const respone = await axios.put(apiUrl + `/${id}/join`);
+  
+      const respone = await axios.put(apiUrl + `/${id}/join`, data);
       return respone.data;
     } catch (error) {
-      console.error(error);
+      // console.log(error);
+      if (error.response.status === 400) {
+        return {
+          message: "Thesis đã đủ thành viên",
+        }
+      }
     }
   },
   registerThesis: async (id, data) => {
