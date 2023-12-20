@@ -19,8 +19,9 @@ import RegisterAccount from "../pages/RegisterAccount";
 import HeadLecturerBusinessTable from "../components/Table/HeadLecturerBusinessTable.js";
 import StudentTable from "../components/Table/StudentTable.js";
 import Profile from "../components/Profile/Profile.js";
-import TaskManagement from "../pages/student/TaskManagement.js";
 import RegisterThesisForm from "../components/Form/RegisterThesisForm.js";
+import ViewTopicDetail from "../pages/student/ViewTopicDetail/ViewTopicDetail.js";
+import AssignTask from "../pages/faculty/AssignTask/AssignTask.js";
 
 // Route khong can dang nhap
 const publicRoutes = [
@@ -47,16 +48,27 @@ const publicRoutes = [
   },
   ,
   {
-    path: "faculty/manage-thesis",
+    path: "/faculty/manage-thesis",
     component: HeadLecturerBusinessTable,
     layout: AdminLayout,
     type: "theses"
+  },
+  {
+    path: "/faculty/manage-thesis/:id",
+    component: AssignTask,
+    layout: AdminLayout,
   },
   {
     path: "/head-lecturer/manage-thesis",
     component: HeadLecturerBusinessTable,
     layout: AdminLayout,
     type: "theses",
+  },
+  ,
+  {
+    path: "/head-lecturer/manage-thesis/:id",
+    component: AssignTask,
+    layout: AdminLayout,
   },
   {
     path: "/head-lecturer/pending-thesis",
@@ -88,37 +100,10 @@ const publicRoutes = [
     type: "students-manage-thesis",
   },
   {
-    path: "/student/update-task",
-    component: TaskManagement,
+    path: "/student/manage-thesis/:id",
+    component: ViewTopicDetail,
     layout: AdminLayout,
-    type: "students-manage-thesis",
   },
-  // {
-  //   path: "/thesis",
-  //   component: ThesisTable,
-  //   layout: AdminLayout,
-  //   type: "pendingTheses",
-  // },
-
-  // {
-  //   path: "/lecturers",
-  //   component: ThesisTable,
-  //   layout: AdminLayout,
-  //   type: "lecturers",
-  // },
-  // {
-  //   path: "/thesis",
-  //   component: ThesisTable,
-  //   layout: AdminLayout,
-  //   type: "students",
-  // },
-
-  // {
-  //   path: "/lecturers",
-  //   component: ThesisTable,
-  //   layout: AdminLayout,
-  //   type: "lecturers",
-  // },
 
   { path: "/instruction", component: Instruction, layout: DefaultLayout },
   { path: "/notifications", component: Notification, layout: DefaultLayout },

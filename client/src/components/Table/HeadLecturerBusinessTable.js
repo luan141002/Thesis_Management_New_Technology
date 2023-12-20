@@ -82,7 +82,7 @@ const Table = ({ type }) => {
               adviser: element.adviser.firstName, // ObjectId của Faculty
               lecturerReviews: element.panelists.length, // Mảng ObjectId của Faculty
               remarks: element.remarks,
-              status: element.status,
+              status: element._id,
             }));
             setData([...processedResults]);
           } else {
