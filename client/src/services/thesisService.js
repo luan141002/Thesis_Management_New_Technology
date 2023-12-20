@@ -88,7 +88,7 @@ const thesisService = {
       // console.log(error);
       if (error.response.status === 400) {
         return {
-          message: "Thesis đã đủ thành viên",
+          isFull: true,
         }
       }
     }

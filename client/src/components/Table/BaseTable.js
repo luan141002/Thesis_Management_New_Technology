@@ -8,13 +8,17 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import DebouncedInput from "./DebouncedInput";
+import ToastMessage from "../ToastMessage/ToastMessage.js";
 import userService from "../../services/userServices";
 import thesisService from "../../services/thesisService";
 import AssignLecturerReviewForm from "../Form/AssignLecturerReviewForm.js";
 
 const BaseTable = ({ data, type, setReloadPage }) => {
+
   // get user
   const [user, setUser] = useState(localStorage.getItem('account')?JSON.parse(localStorage.getItem('account')):{});
+  const [message, setMessage] = useState('');
+  const [typeMessage, setTypeMessage] = useState('');
   const columnHelper = createColumnHelper();
   // initial columns if there is no data
   const [openAssignLecturerReview, setOpenAssignLecturerReview] =
@@ -88,8 +92,15 @@ const BaseTable = ({ data, type, setReloadPage }) => {
                   e.preventDefault();
             
                   const respone = await thesisService.registerThesisForStudent(info.getValue(), user);
-                  if (respone?.message) {
-                    console.log("Đã đủ thành viên !!!");
+                  if (respone?.isFull) {
+                    console.log('full');
+                    setMessage('Thesis đã đủ thành viên');
+                    setTypeMessage('warning');
+                    
+                    setTimeout(() => {
+                      setMessage('');
+                      setTypeMessage('');
+                      }, 2000);
                   }
                   setReloadPage((state) => state + 1);
                 }}
@@ -152,8 +163,10 @@ const BaseTable = ({ data, type, setReloadPage }) => {
   return (
     <div className="p-2 max-w-8xl mx-auto text-white fill-gray-400">
       <div className="flex justify-between mb-2">
+     
         <div className="w-full flex items-center gap-1">
           <SearchIcon />
+          
           <DebouncedInput
             value={globalFilter ?? ""}
             onChange={(value) => setGlobalFilter(String(value))}
@@ -161,7 +174,7 @@ const BaseTable = ({ data, type, setReloadPage }) => {
             placeholder="Search all columns..."
           />
         </div>
-
+        <ToastMessage message= {message} type={typeMessage}/>
         {/* {isPT && type === "exercises" && (
           <div>
             <button
