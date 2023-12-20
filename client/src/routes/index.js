@@ -45,6 +45,13 @@ const publicRoutes = [
     component: RegisterThesisForm,
     layout: AdminLayout,
   },
+  ,
+  {
+    path: "faculty/manage-thesis",
+    component: HeadLecturerBusinessTable,
+    layout: AdminLayout,
+    type: "theses"
+  },
   {
     path: "/head-lecturer/manage-thesis",
     component: HeadLecturerBusinessTable,

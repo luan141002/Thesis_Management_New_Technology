@@ -13,6 +13,8 @@ import thesisService from "../../services/thesisService";
 import AssignLecturerReviewForm from "../Form/AssignLecturerReviewForm.js";
 
 const BaseTable = ({ data, type, setReloadPage }) => {
+  // get user
+  const [user, setUser] = useState(localStorage.getItem('account')?JSON.parse(localStorage.getItem('account')):{});
   const columnHelper = createColumnHelper();
   // initial columns if there is no data
   const [openAssignLecturerReview, setOpenAssignLecturerReview] =
@@ -69,6 +71,7 @@ const BaseTable = ({ data, type, setReloadPage }) => {
                 onClick={async (e) => {
                   e.preventDefault();
                   setOpenAssignLecturerReview(true);
+                  console.log(info.getValue());
                   setAdviser(info.getValue());
                 }}
               >
@@ -83,7 +86,12 @@ const BaseTable = ({ data, type, setReloadPage }) => {
                 className="bg-green-700 text-white h-[40px] w-[120px] hover:border-3  hover:hover:opacity-80"
                 onClick={async (e) => {
                   e.preventDefault();
-                  console.log("hihi");
+            
+                  const respone = await thesisService.registerThesisForStudent(info.getValue(), user);
+                  if (respone?.message) {
+                    console.log("Đã đủ thành viên !!!");
+                  }
+                  setReloadPage((state) => state + 1);
                 }}
               >
                 Assign Thesis
@@ -93,6 +101,8 @@ const BaseTable = ({ data, type, setReloadPage }) => {
                 className="bg-gray-700 text-white h-[40px] w-[120px] hover:border-3  hover:opacity-80"
                 onClick={async (e) => {
                   e.preventDefault();
+                  // console.log(info.getValue());
+                  console.log(info.getValue());
                 }}
               >
                 View Thesis
@@ -122,7 +132,7 @@ const BaseTable = ({ data, type, setReloadPage }) => {
     const newColumns = columns.filter((column) => column.id !== "Edit");
     columns = [...newColumns];
   }
-  if (type === "approvedTheses" || type === "pendingTheses") {
+  if (type === "approvedTheses" || type === "pendingTheses" || type === "students-thesis") {
     let newColumns = columns.filter((column) => !(column.header === "Status"));
     columns = [...newColumns];
   }

@@ -23,7 +23,7 @@ export default function RegisterThesisForm() {
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [majors, setMajors] = React.useState([]);
-  const [major, setMajor] = React.useState("");
+  const [major, setMajor] = React.useState(JSON.parse(localStorage.getItem("account")).major);
   const [students, setStudents] = React.useState([]);
   const [firstStudent, setFirstStudent] = React.useState("");
   const [secondStudent, setSecondStudent] = React.useState("");
@@ -73,7 +73,6 @@ export default function RegisterThesisForm() {
       setTypeMessage("success");
       setTitle("");
       setDescription("");
-      setMajor(null);
       setFirstStudent(null);
       setSecondStudent(null);
       setStartDate(null);
@@ -126,6 +125,7 @@ export default function RegisterThesisForm() {
               labelId="demo-controlled-open-select-label"
               id="demo-controlled-open-select"
               label="Select Major"
+              disabled
               onChange={(e) => setMajor(e.target.value)}
             >
               {majors.length > 0 &&

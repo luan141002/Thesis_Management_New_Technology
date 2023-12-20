@@ -36,12 +36,19 @@ const ThesisController = {
     try {
       const thesis = await Thesis.findOne({ _id: req.params.id });
       if (thesis) {
-        const thesisUpdated = {
-          ...req.body,
-          authors: [...req.body.authors],
-        };
-        await Thesis.updateOne({ _id: thesis._id }, thesisUpdated);
-        return res.status(200).json("Cập nhật thesis thành công");
+        if (thesis?._doc.authors.length < 2){
+          const thesisUpdated = {
+            ...thesis._doc,
+            authors: [...thesis._doc.authors, req.body._id],
+          };
+          await Thesis.updateOne({ _id: thesis._id }, thesisUpdated);
+          return res.status(200).json("Cập nhật thesis thành công");
+        }
+        else {
+          return res
+        .status(400)
+        .json(`Có lỗi trong quá trình cập nhật thesis :  ${err}`);
+        }
       } else {
         return res.status(404).json("Không tìm thấy thesis!");
       }
