@@ -1,6 +1,37 @@
 const Thesis = require("../models/Thesis");
+const {User} = require("../models/User");
+
 
 const ThesisController = {
+  registerThesis : async(req, res) => {
+    const user = await User.findOne({_id: req.params.lecturerId});
+    if (user) {
+      if (user.type ==='faculty') {
+        let data = {
+          ...req.body,
+          status: "New",
+        }
+        if (user.isHeadDep) {
+          data = {
+            ...req.body,
+            status: "Endorse",
+            approved: true,
+          }
+        }
+        const thesis = await Thesis.create(data);
+        if (thesis) {
+          res.status(201).json(thesis)
+        }
+        else {
+          res.status(400).json('Có lỗi khi đăng kí thesis');
+        }
+      }
+    }
+    else {
+      res.status(404).json('Không tìm thấy user');
+    }
+
+  },
   registerThesisForStudent: async (req, res) => {
     try {
       const thesis = await Thesis.findOne({ _id: req.params.id });
@@ -18,44 +49,6 @@ const ThesisController = {
       return res
         .status(400)
         .json(`Có lỗi trong quá trình cập nhật thesis :  ${err}`);
-    }
-  },
-
-  registerThesisForLecturer: async (req, res) => {
-    try {
-      const thesis = await Thesis.create({
-        ...req.body,
-        adviser: req.params.lecturerId,
-        status: "New",
-      });
-      if (thesis) {
-        res.status(201).json(thesis);
-      } else {
-        throw new Error("Không thể tạo thesis.");
-      }
-    } catch (err) {
-      return res
-        .status(400)
-        .json(`Có lỗi trong quá trình tạo thesis :  ${err}`);
-    }
-  },
-
-  registerThesisForDean: async (req, res) => {
-    try {
-      const thesis = await Thesis.create({
-        ...req.body,
-        adviser: req.params.lecturerId,
-        status: "Endorse",
-      });
-      if (thesis) {
-        res.status(201).json(thesis);
-      } else {
-        throw new Error("Không thể tạo thesis.");
-      }
-    } catch (err) {
-      return res
-        .status(400)
-        .json(`Có lỗi trong quá trình tạo thesis :  ${err}`);
     }
   },
 
