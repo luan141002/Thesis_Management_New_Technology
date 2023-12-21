@@ -13,9 +13,12 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import authService from "../services/authServices";
+import { useDispatch } from "react-redux";
+import accountsSlices from "../redux/accountsSlice";
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -25,8 +28,9 @@ export default function Login() {
     };
     const isSignedIn = await authService.signIn(data);
     if (isSignedIn) {
-      console.log(isSignedIn);
-      localStorage.setItem("account", JSON.stringify(isSignedIn));
+      // console.log(isSignedIn);
+      dispatch(accountsSlices.actions.setAccount(isSignedIn));
+      // localStorage.setItem("account", JSON.stringify(isSignedIn));
       navigate("/dashboard");
     } else {
       alert("Sai tài khoản hoặc mật khẩu!");
@@ -109,7 +113,7 @@ export default function Login() {
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                  Forgot password?
+                  Forgot password ?
                 </Link>
               </Grid>
               <Grid item>

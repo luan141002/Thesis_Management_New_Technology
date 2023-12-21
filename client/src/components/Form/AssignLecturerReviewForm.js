@@ -4,6 +4,8 @@ import DatePicker from "react-datepicker";
 import dayjs from "dayjs";
 import "react-datepicker/dist/react-datepicker.css";
 import thesisService from "../../services/thesisService";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AssignLecturerReviewForm = ({
   currentLecturerId,
@@ -20,17 +22,26 @@ const AssignLecturerReviewForm = ({
   };
 
   const onSubmit = async () => {
-    setFormData({
-      ...formData,
-      panelists: [...formData.panelists, selectedLecturer],
-    });
-    formData["defenseDate"] = new Date(selectedDate);
-    console.log(formData);
-    const response = await thesisService.assignDefenseLecturer(
-      formData._id,
-      formData
-    );
-    console.log(response);
+    try {
+      setFormData({
+        ...formData,
+        panelists: [...formData.panelists, selectedLecturer],
+      });
+      formData["defenseDate"] = new Date(selectedDate);
+      console.log(formData);
+      const response = await thesisService.assignDefenseLecturer(
+        formData._id,
+        formData
+      );
+      console.log(response);
+      toast.success("Assign defense schedule successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } catch (err) {
+      toast.error("Assign defense schedule failed", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   };
   // get list lecturer reviews
   const loadPage = async () => {
@@ -187,6 +198,7 @@ const AssignLecturerReviewForm = ({
           </button>
         </div>
       </div>
+      <ToastContainer limit={2} />
     </div>
   );
 };

@@ -15,14 +15,16 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CustomInput from "../CustomInput/CustomInput";
 import userService from "../../../services/userServices";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 //APP
 export default function SettingsCard() {
   // STATES--------------------------------------------
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("account")) || {}
-  );
-
+  const [user, setUser] = useState(useSelector((state) => state.account) || {});
+  const account = useSelector((state) => state.account);
+  console.log(account);
   const handleUser = (event) => {
     setUser({ ...user, [event.target.name]: event.target.value });
   };
@@ -51,16 +53,28 @@ export default function SettingsCard() {
     update({ ...edit });
     if (edit.isEdit === true) {
       // call api edit profile
-      handleSubmit(user)
+      handleSubmit(user);
       console.log("user: ", user);
     }
   };
 
   const handleSubmit = async (data) => {
-    const respone = await userService.updateProfile(user._id, data);
-    console.log('res: ', respone);
-    if (respone) {
-      localStorage.setItem('account', JSON.stringify( await userService.getUserById(user._id)));
+    try {
+      const respone = await userService.updateProfile(user._id, data);
+      console.log("res: ", respone);
+      if (respone) {
+        localStorage.setItem(
+          "account",
+          JSON.stringify(await userService.getUserById(user._id))
+        );
+      }
+      toast.success("Update Profile successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } catch (err) {
+      toast.error("Update Profile failed", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   };
 
@@ -190,6 +204,7 @@ export default function SettingsCard() {
           </FormControl>
         </CardContent>
       </form>
+      <ToastContainer limit={2} />
     </Card>
   );
 }

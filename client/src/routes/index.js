@@ -51,7 +51,7 @@ const publicRoutes = [
     path: "/faculty/manage-thesis",
     component: HeadLecturerBusinessTable,
     layout: AdminLayout,
-    type: "theses"
+    type: "theses",
   },
   {
     path: "/faculty/manage-thesis/:id",
@@ -103,6 +103,13 @@ const publicRoutes = [
     path: "/student/manage-thesis/:id",
     component: ViewTopicDetail,
     layout: AdminLayout,
+    type: "manage-thesis",
+  },
+  {
+    path: "/student/assign-thesis/:id",
+    component: ViewTopicDetail,
+    layout: AdminLayout,
+    type: "assign-thesis",
   },
 
   { path: "/instruction", component: Instruction, layout: DefaultLayout },

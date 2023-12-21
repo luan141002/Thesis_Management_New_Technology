@@ -18,18 +18,22 @@ import { Link } from "react-router-dom";
 import { styled } from "@mui/material";
 import authService from "../../../services/authServices";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import accountsSlices from "../../../redux/accountsSlice";
 
 const StyledListItemIcon = styled(ListItemIcon)({
   minWidth: "40px",
 });
 function Sidebar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [settings, setSettings] = useState();
   const handleListItemClick = (index) => {
     setSelectedIndex(index);
   };
-  const account = JSON.parse(localStorage.getItem("account"));
+
+  const account = useSelector((state) => state.account);
 
   const role = account.type;
   useEffect(() => {
@@ -101,15 +105,17 @@ function Sidebar() {
           {settings?.map((setting, index) => {
             console.log(setting);
             return (
-              <Link Link to={`${setting.link}`}>
+              <Link
+                Link
+                to={`${setting.link !== "/logout" ? setting.link : "/login"}`}
+              >
                 <ListItem disablePadding>
                   <ListItemButton
                     selected={selectedIndex === 0}
                     onClick={async () => {
                       handleListItemClick(index);
                       if (setting.title === "Logout") {
-                        await authService.logout(account);
-                        localStorage.removeItem("account");
+                        dispatch(accountsSlices.actions.deleteAccount());
                         navigate("/login");
                       }
                     }}

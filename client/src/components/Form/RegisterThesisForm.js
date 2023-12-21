@@ -23,7 +23,9 @@ export default function RegisterThesisForm() {
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [majors, setMajors] = React.useState([]);
-  const [major, setMajor] = React.useState(JSON.parse(localStorage.getItem("account")).major);
+  const [major, setMajor] = React.useState(
+    JSON.parse(localStorage.getItem("account")).major
+  );
   const [students, setStudents] = React.useState([]);
   const [firstStudent, setFirstStudent] = React.useState("");
   const [secondStudent, setSecondStudent] = React.useState("");
@@ -48,7 +50,7 @@ export default function RegisterThesisForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const authors = [];
     if (firstStudent) {
       authors.push(firstStudent);

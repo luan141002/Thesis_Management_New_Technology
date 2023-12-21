@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import thesisService from "../../../services/thesisService";
 import SubmitTaskForm from "../../../components/Form/SubmitTaskForm";
 
-function ViewTopicDetail() {
+function ViewTopicDetail({ type }) {
   const { id } = useParams();
   const [thesis, setThesis] = useState();
   const [showForm, setShowForm] = useState(false);
@@ -22,7 +22,6 @@ function ViewTopicDetail() {
   const handleCloseForm = () => {
     setShowForm(false);
   };
-
 
   useEffect(() => {
     async function fetchData() {
@@ -51,37 +50,40 @@ function ViewTopicDetail() {
       </Button>
       {thesis && <CardThesis data={thesis} />}
 
-      {showForm && <SubmitTaskForm handleClose={handleCloseForm} task={selectedTask} />}
+      {showForm && (
+        <SubmitTaskForm handleClose={handleCloseForm} task={selectedTask} />
+      )}
 
       {/* Show list task */}
-      <List
-        sx={{
-          width: "100%",
-          //   maxWidth: 360,
-          bgcolor: "background.paper",
-          mt: 2,
-        }}
-        aria-label="contacts"
-      >
-        <Typography>Task:</Typography>
+      {type === "manage-thesis" && (
+        <List
+          sx={{
+            width: "100%",
+            //   maxWidth: 360,
+            bgcolor: "background.paper",
+            mt: 2,
+          }}
+          aria-label="contacts"
+        >
+          <Typography>Task:</Typography>
 
-        {tasks.length > 0 &&
-          tasks.map((task, index) => (
-            <ListItem disablePadding>
-              <ListItemButton
-                key={task._id}
-                onClick={() => {
-                  setSelectedTask(task._id)
-                  if (task.status !== "done")
-                    setShowForm(true);
-                }}
-              >
-                <ListItemText primary={index + 1 + ") " + task.description} />
-                <Typography>{task.status}</Typography>
-              </ListItemButton>
-            </ListItem>
-          ))}
-      </List>
+          {tasks.length > 0 &&
+            tasks.map((task, index) => (
+              <ListItem disablePadding>
+                <ListItemButton
+                  key={task._id}
+                  onClick={() => {
+                    setSelectedTask(task._id);
+                    if (task.status !== "done") setShowForm(true);
+                  }}
+                >
+                  <ListItemText primary={index + 1 + ") " + task.description} />
+                  <Typography>{task.status}</Typography>
+                </ListItemButton>
+              </ListItem>
+            ))}
+        </List>
+      )}
     </>
   );
 }
