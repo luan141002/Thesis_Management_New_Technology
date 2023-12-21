@@ -72,7 +72,8 @@ function ViewTopicDetail() {
                 key={task._id}
                 onClick={() => {
                   setSelectedTask(task._id)
-                  setShowForm(true);
+                  if (task.status !== "done")
+                    setShowForm(true);
                 }}
               >
                 <ListItemText primary={index + 1 + ") " + task.description} />
