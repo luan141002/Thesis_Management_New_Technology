@@ -34,7 +34,7 @@ const TaskController = {
                 const taskUpdated = {
                     ...task._doc,
                     status: 'done',
-                    files: req.body.files
+                    files: req.body
                 }
                 await Task.updateOne({_id: task._id}, taskUpdated)
                 return res.status(200).json("Cập nhật task thành công")
