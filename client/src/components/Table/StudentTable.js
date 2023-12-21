@@ -10,6 +10,8 @@ import {
 import DebouncedInput from "./DebouncedInput";
 import userService from "../../services/userServices";
 import thesisService from "../../services/thesisService.js";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import BaseTable from "./BaseTable.js";
 
@@ -56,7 +58,7 @@ const Table = ({ type }) => {
         case "students-thesis":
           console.log("da vo day");
           result = await thesisService.getApprovedThesisByMajor(account.major);
-          console.log(result.length);
+          console.log(result);
 
           if (result.length !== 0) {
             console.log("vo day 1");
@@ -69,7 +71,6 @@ const Table = ({ type }) => {
               lecturerReviews: element.panelists.length, // Mảng ObjectId của Faculty
               remarks: element.remarks,
               status: element._id,
-              
             }));
             setData([...processedResults]);
           } else {
@@ -90,7 +91,6 @@ const Table = ({ type }) => {
 
           break;
         case "students-manage-thesis":
-          console.log("da vo day");
           result = await thesisService.getAllThesisByStudentId(account._id);
           console.log(result);
 
@@ -128,7 +128,11 @@ const Table = ({ type }) => {
         default:
           break;
       }
-    } catch (err) {}
+    } catch (err) {
+      toast.error("Load Table failed", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   };
 
   useMemo(() => {
@@ -137,7 +141,8 @@ const Table = ({ type }) => {
 
   return (
     <div>
-      <BaseTable data={data} type={type} setReloadPage={setReloadPage}  />
+      <BaseTable data={data} type={type} setReloadPage={setReloadPage} />
+      <ToastContainer limit={2} />
     </div>
   );
 };

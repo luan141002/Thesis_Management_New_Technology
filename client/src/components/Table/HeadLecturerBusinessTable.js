@@ -11,6 +11,8 @@ import DebouncedInput from "./DebouncedInput.jsx";
 import userService from "../../services/userServices.js";
 import BaseTable from "./BaseTable.js";
 import thesisService from "../../services/thesisService.js";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Table = ({ type }) => {
   // initial columns if there is no data
@@ -173,9 +175,9 @@ const Table = ({ type }) => {
           break;
       }
     } catch (err) {
-      //   toast.error("Failed", {
-      //     position: toast.POSITION.TOP_RIGHT,
-      //   });
+      toast.error("Load Thesis Failed", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   };
 
@@ -186,9 +188,9 @@ const Table = ({ type }) => {
   return (
     <div className="p-2 max-w-8xl mx-auto text-white fill-gray-400 bg-gray-800">
       <BaseTable data={data} type={type} setReloadPage={setReloadPage} />
+      <ToastContainer limit={2} />
     </div>
   );
 };
-
 
 export default Table;
