@@ -28,7 +28,12 @@ const taskService = {
         }
     },
     submitTask: async (id, data) => {
-        // viết api cho cái này
+        try {
+            const respone = await axios.put(apiUrl + `/${id}/submit`, data);
+            return respone;
+        } catch (error) {
+            console.log(error);
+        }
     },
     createTask: async (data) => {
         try {

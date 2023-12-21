@@ -31,7 +31,7 @@ export default function CardThesis({data}) {
           Author 2: {data.authors?.length > 1 && data.authors[1]?.firstName + " " + data.authors[1]?.lastName }
         </Typography>
         <Typography variant="body2">
-          Reviewer: {data.panelists?.[0].firstName + " " +data.panelists?.[0].lastName }
+          Reviewer: {data.panelists?.length > 0 && data.panelists?.[0].firstName + " " +data.panelists?.[0].lastName }
         </Typography>
       </CardContent>
       

@@ -8,8 +8,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import StarIcon from "@mui/icons-material/Star";
-import AddTaskForm from "../../../components/Form/AddTaskForm";
 import taskService from "../../../services/taskService";
 import Typography from "@mui/material/Typography";
 import thesisService from "../../../services/thesisService";
@@ -25,9 +23,6 @@ function ViewTopicDetail() {
     setShowForm(false);
   };
 
-  const handleAdd = async () => {
-    setShowForm(true);
-  };
 
   useEffect(() => {
     async function fetchData() {
