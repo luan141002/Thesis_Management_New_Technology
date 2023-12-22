@@ -20,6 +20,7 @@ import authService from "../../../services/authServices";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import accountsSlices from "../../../redux/accountsSlice";
+import { GoogleLogout } from "react-google-login";
 
 const StyledListItemIcon = styled(ListItemIcon)({
   minWidth: "40px",
@@ -27,10 +28,16 @@ const StyledListItemIcon = styled(ListItemIcon)({
 function Sidebar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const CLIENT_ID =
+    "673103240557-13qqv9hdlmrt8ldiqvaviep1had1vftb.apps.googleusercontent.com";
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [settings, setSettings] = useState();
   const handleListItemClick = (index) => {
     setSelectedIndex(index);
+  };
+
+  const onSuccess = () => {
+    navigate("/login");
   };
 
   const account = useSelector((state) => state.account);
@@ -135,6 +142,13 @@ function Sidebar() {
               </Link>
             );
           })}
+          <div>
+            <GoogleLogout
+              clientId={CLIENT_ID}
+              buttonText="Logout"
+              onLogoutSuccess={onSuccess}
+            />
+          </div>
         </List>
       </Box>
     </Box>
