@@ -39,9 +39,10 @@ const FacultyCardItem = ({ item }) => {
             borderRadius: 3,
             height: 200,
             mb: 2,
+            
           }}
         >
-          <img src="https://img.freepik.com/free-vector/group-people-illustration-set_52683-33806.jpg?size=626&ext=jpg&ga=GA1.1.1788614524.1703203200&semt=ais" width={300} height={300} alt={item.name} />
+          <img src="https://cdn-icons-png.flaticon.com/512/860/860454.png" width={'60%'} height={'80%'} alt={item.name} />
         </Box>
         <Box sx={{ mb: 2 }}>
           <Typography component="h2" variant="h4" 

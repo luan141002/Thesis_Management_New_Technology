@@ -109,9 +109,10 @@ const ThesisCardItem = ({ item }) => {
             borderRadius: 3,
             height: 200, // Fixed height for the image
             mb: 2,
+            ml: 4
           }}
         >
-          <img src="https://cdn-icons-png.flaticon.com/512/6176/6176805.png" width={300} height={300} alt={item.title} />
+          <img src="https://cdn-icons-png.flaticon.com/512/5097/5097510.png" width={'70%'} height={'90%'} alt={item.title} />
         </Box>
         <Box sx={{ mb: 2 }}>
           <Typography
@@ -126,7 +127,7 @@ const ThesisCardItem = ({ item }) => {
             }}
             onClick={() => handleClick(item._id)}
           >
-            {item.title}
+            <strong>{item.title}</strong>
           </Typography>
           <Typography sx={{ mt: 2, color: 'text.secondary' }}>{item.authors.length > 0 ? item.authors[0].firstName : 'chưa có tác giả'}</Typography>
           <Typography sx={{ mb: 2, color: 'text.secondary' }}>{item.adviser.firstName}</Typography>

@@ -5,7 +5,7 @@ import { Box, Container } from '@mui/material';
 function AdminLayout({ children }) {
     return (
         <div>
-            <Header/>
+            {/* <Header/> */}
             <Sidebar/>
             <Box
                 sx={{
