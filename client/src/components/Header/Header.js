@@ -79,8 +79,14 @@ const Header =  () => {
   const user = localStorage.getItem('account') ? JSON.parse(localStorage.getItem('account')):  {};
   return (
     <Box sx={{ backgroundColor: 'background.paper' }}>
-      <Container sx={{ py: { xs: 2, md: 3 } }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <Box>
+          <img
+            src={"https://online.hcmute.edu.vn/Portlets/UIS_MySpace/Images/SPKT.jpg"}
+            width="100%"
+          />
+        </Box>
+      <Box sx={{ py: { xs: 2, md: 3 }, backgroundColor:'#00558d'}}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', ml: 12, mr: 12 }}>
           <Logo variant="primary" />
           <Box sx={{ ml: 'auto', display: { xs: 'inline-flex', md: 'none' } }}>
             <IconButton onClick={() => setVisibleMenu(!visibleMenu)}>
@@ -125,9 +131,14 @@ const Header =  () => {
             )}
           </Box>
         </Box>
-      </Container>
+      </Box>
     </Box>
   )
 }
 
 export default Header
+
+
+
+// image 
+// https://online.hcmute.edu.vn/Portlets/UIS_MySpace/Images/SPKT.jpg
