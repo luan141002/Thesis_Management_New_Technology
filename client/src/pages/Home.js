@@ -6,9 +6,6 @@ import Typography from '@mui/material/Typography'
 import { Button } from '@mui/material'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import {Link} from 'react-router-dom'
-
-
-
 const exps = [
   {
     label: 'Students',
@@ -41,6 +38,7 @@ const ExpItem = ({ item }) => {
 }
 
 function Home() {
+  
   return (
     <Box id="hero" sx={{ backgroundColor: 'background.paper', position: 'relative', pt: 4, pb: { xs: 8, md: 10 } }}>
       <Container maxWidth="lg">
@@ -137,8 +135,8 @@ function Home() {
                 </Typography>
               </Box>
               <Box sx={{ '& button': { mr: 2 } }}>
-                <Link to="#" spy={true} smooth={true} offset={0} duration={350}>
-                  <Button color="primary" size="large" variant="contained">
+                <Link to="/login" spy={true} smooth={true} offset={0} duration={350}>
+                  <Button color="primary" size="large" variant="contained" >
                     Get Started
                   </Button>
                 </Link>

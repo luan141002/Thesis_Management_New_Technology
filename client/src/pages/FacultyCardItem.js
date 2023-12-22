@@ -27,8 +27,10 @@ const FacultyCardItem = ({ item }) => {
           transition: (theme) => theme.transitions.create(['box-shadow']),
           '&:hover': {
             boxShadow: 2,
+            cursor:'pointer',
           },
         }}
+        onClick={()=>handlieClick(item._id)}
       >
         <Box
           sx={{
@@ -39,7 +41,7 @@ const FacultyCardItem = ({ item }) => {
             mb: 2,
           }}
         >
-          <img src="https://i.postimg.cc/3rnLfY4Y/download.png" width={300} height={300} alt={item.name} />
+          <img src="https://img.freepik.com/free-vector/group-people-illustration-set_52683-33806.jpg?size=626&ext=jpg&ga=GA1.1.1788614524.1703203200&semt=ais" width={300} height={300} alt={item.name} />
         </Box>
         <Box sx={{ mb: 2 }}>
           <Typography component="h2" variant="h4" 

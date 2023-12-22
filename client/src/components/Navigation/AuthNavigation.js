@@ -13,7 +13,7 @@ function AuthNavigation() {
         <Button disableHoverEffect={true} variant="outlined" onClick={handleSignIn}>
             Sign In
         </Button>
-        <Button disableHoverEffect={true}>Sign Up</Button>
+        {/* <Button disableHoverEffect={true}>Sign Up</Button> */}
         </Box>
     )
 }
