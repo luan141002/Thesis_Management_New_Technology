@@ -11,6 +11,7 @@ function DefaultLayout({ children }) {
             <Container sx={{ py: { xs: 2, md: 3 } }}>
                 {children}
             </Container>
+            
             <Footer />
         </Box>
     );

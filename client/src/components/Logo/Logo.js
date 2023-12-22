@@ -12,7 +12,7 @@ const Logo = ({ onClick, variant }) => {
       <Typography
         variant="h4"
         component="h1"
-        sx={{ fontWeight: 700, cursor:'pointer', '& span': { color: variant === 'primary' ? 'primary.main' : 'unset' } }}
+        sx={{ fontWeight: 700, cursor:'pointer', '& span': { color: variant === 'primary' ? 'white' : 'unset' } }}
         onClick={handleClick}
       >
         Thesis<span>forum</span>

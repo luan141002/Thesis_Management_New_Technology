@@ -42,7 +42,7 @@ function Navigation() {
           onClick={() => handleSelectLabel(label)}
           sx={{
             position: 'relative',
-            color: selectedLabel === label ? 'primary.main' : 'text.disabled',
+            color: selectedLabel === label ? '#ff6600' : 'white',
             cursor: 'pointer',
             fontWeight: 600,
             display: 'inline-flex',
@@ -52,7 +52,7 @@ function Navigation() {
             mb: { xs: 3, md: 0 },
             fontSize: { xs: '1.2rem', md: 'inherit' },
             '&:hover': {
-              color: 'primary.main',
+              color: '#ff6600;',
             },
           }}
         >

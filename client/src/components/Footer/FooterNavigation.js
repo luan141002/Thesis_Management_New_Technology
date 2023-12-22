@@ -27,24 +27,7 @@ export const headerNavigations  = [
       path: '/notifications', 
     },
 ]
-const courseMenu = [
-  {
-    label: 'UI/UX Design',
-    path: '#',
-  },
-  {
-    label: 'Mobile Development',
-    path: '#',
-  },
-  {
-    label: 'Machine Learning',
-    path: '#',
-  },
-  {
-    label: 'Web Development',
-    path: '#',
-  },
-]
+
 
 const pageMenu = headerNavigations
 
@@ -76,12 +59,7 @@ function NavigationItem ({ label, path }) {
 function FooterNavigation () {
   return (
     <Grid container spacing={2}>
-      <Grid item xs={12} md={4}>
-        <FooterSectionTitle title="Course" />
-        {courseMenu.map(({ label, path }, index) => (
-          <NavigationItem key={index + path} label={label} path={/* path */ '#'} />
-        ))}
-      </Grid>
+      
       <Grid item xs={12} md={4}>
         <FooterSectionTitle title="Menu" />
         {pageMenu.map(({ label, path }, index) => (

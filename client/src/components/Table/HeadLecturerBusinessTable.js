@@ -186,7 +186,7 @@ const Table = ({ type }) => {
   }, [type, reloadPage]);
 
   return (
-    <div className="p-2 max-w-8xl mx-auto text-white fill-gray-400 bg-gray-800">
+    <div className="p-2 max-w-8xl mx-auto text-white fill-gray-400 bg-gray-800 rounded-lg">
       <BaseTable data={data} type={type} setReloadPage={setReloadPage} />
       <ToastContainer limit={2} />
     </div>

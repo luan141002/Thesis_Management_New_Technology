@@ -6,9 +6,6 @@ import Typography from '@mui/material/Typography'
 import { Button } from '@mui/material'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import {Link} from 'react-router-dom'
-
-
-
 const exps = [
   {
     label: 'Students',
@@ -41,10 +38,16 @@ const ExpItem = ({ item }) => {
 }
 
 function Home() {
+  
   return (
     <Box id="hero" sx={{ backgroundColor: 'background.paper', position: 'relative', pt: 4, pb: { xs: 8, md: 10 } }}>
       <Container maxWidth="lg">
         <Grid container spacing={0} sx={{ flexDirection: { xs: 'column', md: 'unset' } }}>
+        <Grid item xs={12} md={5} sx={{ position: 'relative' }}>
+            <Box sx={{ lineHeight: 0, mr: 12 }}>
+              <img src="https://fit.hcmute.edu.vn/Resources/Images/SubDomain/fit/logo-cntt2021.png" width={490} height={489} alt="Hero img" />
+            </Box>
+          </Grid>
           <Grid item xs={12} md={7}>
             <Box
               sx={{
@@ -53,6 +56,7 @@ function Home() {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
+                ml: 2,
               }}
             >
               <Box sx={{ mb: 3 }}>
@@ -137,80 +141,19 @@ function Home() {
                 </Typography>
               </Box>
               <Box sx={{ '& button': { mr: 2 } }}>
-                <Link to="#" spy={true} smooth={true} offset={0} duration={350}>
-                  <Button color="primary" size="large" variant="contained">
+                <Link to="/login" spy={true} smooth={true} offset={0} duration={350}>
+                  <Button color="primary" size="large" variant="contained" >
                     Get Started
                   </Button>
                 </Link>
-                <Link to="#" spy={true} smooth={true} offset={0} duration={350}>
-                  <Button color="primary" size="large" variant="outlined" startIcon={<PlayArrowIcon />}>
-                    Watch Video
-                  </Button>
-                </Link>
+                
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={12} md={5} sx={{ position: 'relative' }}>
-            {/* Sertificate badge */}
-            <Box
-              sx={{
-                position: 'absolute',
-                bottom: 30,
-                left: { xs: 0, md: -150 },
-                boxShadow: 1,
-                borderRadius: 3,
-                px: 2,
-                py: 1.4,
-                zIndex: 1,
-                backgroundColor: 'background.paper',
-                display: 'flex',
-                alignItems: 'flex-start',
-                width: 280,
-              }}
-            >
-              <Box
-                sx={{
-                  boxShadow: 1,
-                  borderRadius: '50%',
-                  width: 44,
-                  height: 44,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  mr: 2,
-                  '& img': { width: '32px !important', height: 'auto' },
-                }}
-              >
-                <img src="https://i.postimg.cc/mDYsHfJn/certificate.png" alt="Certificate icon" width={50} height={50} />
-              </Box>
-              <Box>
-                <Typography
-                  component="h6"
-                  sx={{ color: 'secondary.main', fontSize: '1.1rem', fontWeight: 700, mb: 0.5 }}
-                >
-                  Certificate
-                </Typography>
-                <Typography variant="subtitle1" sx={{ color: 'text.secondary', lineHeight: 1.3 }}>
-                  There are certificates for all thesis.
-                </Typography>
-              </Box>
-            </Box>
-            <Box sx={{ lineHeight: 0 }}>
-              <img src="https://i.postimg.cc/k46y17qj/home-hero.jpg" width={490} height={489} alt="Hero img" />
-            </Box>
-          </Grid>
+          
         </Grid>
 
-        {/* Experience */}
-        <Box sx={{ boxShadow: 2, py: 4, px: 7, borderRadius: 4 }}>
-          <Grid container spacing={2}>
-            {exps.map((item) => (
-              <Grid key={item.value} item xs={12} md={4}>
-                <ExpItem item={item} />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
+        
       </Container>
     </Box>
   )

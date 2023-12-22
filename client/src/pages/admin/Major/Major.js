@@ -104,16 +104,7 @@ export default function Major() {
                 
                 <Box>
                     <Typography sx={{ fontSize: '2rem', fontWeight: 600 }}>Majors</Typography>
-                    <Stack spacing={1} direction="row">
-                        <Button sx={{ fontSize: '1rem', textTransform: 'none' }}>
-                            <UploadIcon sx={{ mr: 1 }} />
-                            Import
-                        </Button>
-                        <Button sx={{ fontSize: '1rem', textTransform: 'none' }}>
-                            <DownloadIcon sx={{ mr: 1 }} />
-                            Export
-                        </Button>
-                    </Stack>
+                    
                 </Box>
                 <Button
                     variant="contained"

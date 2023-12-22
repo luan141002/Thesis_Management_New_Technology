@@ -44,10 +44,10 @@ export default function Schedule() {
         width: 150,
         renderCell: (params) => (
             <>
-            <IconButton aria-label="edit" onClick={() => handleEdit(params.row._id)}>
+            <IconButton sx={{color: "#fff",}} aria-label="edit" onClick={() => handleEdit(params.row._id)}>
                 <EditNoteIcon />
             </IconButton>
-            <IconButton aria-label="delete" onClick={() => handleDelete(params.row._id)}>
+            <IconButton sx={{color: "#fff",}} aria-label="delete" onClick={() => handleDelete(params.row._id)}>
                 <DeleteIcon/>
             </IconButton>
             </>
@@ -114,16 +114,7 @@ export default function Schedule() {
                 
                 <Box>
                     <Typography sx={{ fontSize: '2rem', fontWeight: 600 }}>Schedules</Typography>
-                    <Stack spacing={1} direction="row">
-                        <Button sx={{ fontSize: '1rem', textTransform: 'none' }}>
-                            <UploadIcon sx={{ mr: 1 }} />
-                            Import
-                        </Button>
-                        <Button sx={{ fontSize: '1rem', textTransform: 'none' }}>
-                            <DownloadIcon sx={{ mr: 1 }} />
-                            Export
-                        </Button>
-                    </Stack>
+                    
                 </Box>
                 <Button
                     variant="contained"
@@ -135,7 +126,16 @@ export default function Schedule() {
                 </Button>
             </Box>
 
-            <Box sx={{ height: 400, width: '100%' }}>
+            <Box sx={{ height: 400, width: '100%', ".MuiDataGrid-columnHeaderTitle": {
+            color: "#fff",
+            fontWeight: "bold",
+            fontSize: "16px",
+          },
+          '.MuiDataGrid-cellContent': {
+            color: "#fff",
+            fontWeight: "bold",
+            fontSize: "16px",
+          } }}>
                 <DataGrid
                         rows={schedules}
                         getRowId={(row) => row._id}

@@ -24,7 +24,7 @@ function Instruction() {
   return (
     <Box>
       <Typography sx={{ textTransform: "capitalize", mb: 2 }}>
-        Click the button below to download the instruction file.
+        Download the instruction file.
       </Typography>
 
       {/* Download Button */}

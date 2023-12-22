@@ -221,7 +221,7 @@ export default function FormFaculty({handleClose, id, type}) {
         <React.Fragment>
         <Dialog open={true} onClose={handleClose}>
         <form onSubmit={handleSubmit}>
-            <DialogTitle>{type === 'create' ?'Add New Faculty':'Update Faculty'}</DialogTitle>
+            <DialogTitle sx={{ backgroundColor:'#dccaca'}}>{type === 'create' ?'Add New Faculty':'Update Faculty'}</DialogTitle>
             <DialogContent sx={{ width:"600px" }}>
                 <ToastMessage message={message} type={typeMessage} />
                 <Box>
