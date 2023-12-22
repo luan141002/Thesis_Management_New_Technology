@@ -23,7 +23,6 @@ import { useNavigate } from "react-router-dom";
 import ToastMessage from "../../components/ToastMessage/ToastMessage";
 import userService from "../../services/userServices";
 import majorService from "../../services/majorService";
-import { useSelector } from "react-redux";
 
 export default function UserSubmitForm({
   handleClose,
@@ -35,7 +34,6 @@ export default function UserSubmitForm({
   const [message, setMessage] = React.useState("");
   const [typeMessage, setTypeMessage] = React.useState("");
   const [user, setUser] = React.useState({});
-  const account = useSelector((state) => state.account);
 
   const [userId, setUserId] = React.useState({
     value: "",
@@ -73,39 +71,94 @@ export default function UserSubmitForm({
     message: "",
   });
   const navigate = useNavigate();
+  const validateId = () => {
+    const idValue = userId.value;
 
-  const validateFirstName = () => {
-    if (firstName.value.trim() === "") {
+    // Check if the ID contains special characters or is not a letter
+    const hasSpecialCharacters = /[^a-zA-Z\d]/.test(idValue);
+
+    // Check if the ID length is not more than 5 characters
+    const isTooLong = idValue.length > 10;
+
+    if (hasSpecialCharacters) {
+      setUserId((prevId) => ({
+        ...prevId,
+        message: "ID không được chứa kí đặc biệt",
+      }));
+    } else if (idValue.trim() === "") {
+      setUserId((prevId) => ({
+        ...prevId,
+        message: "Vui lòng nhập Student ID",
+      }));
+    } else if (isTooLong) {
+      setUserId((prevId) => ({
+        ...prevId,
+        message: "ID không được quá 10 kí tự",
+      }));
+    } else {
+      setUserId((prevId) => ({
+        ...prevId,
+        message: "",
+      }));
+    }
+  };
+
+  const specialCharRegexForFLName = /[\d!@#$%^&*()_+={};':"\\|,.<>/?`~]+/;
+
+  const validateFName = () => {
+    if (/\d/.test(firstName.value)) {
+      setFirstName({
+        ...firstName,
+        message: "Không Được Tồn Tại Số Trong Tên!",
+      });
+      return false;
+    } else if (specialCharRegexForFLName.test(firstName.value)) {
+      setFirstName({
+        ...firstName,
+        message: "Không Được Tồn Tại Kí Tự Đặc Biệt Trong Tên!",
+      });
+      return false;
+    } else if (firstName.value.trim() === "") {
       setFirstName({
         ...firstName,
         message: "Vui lòng nhập first name",
       });
+      return false;
     }
-    setFirstName({ ...firstName, message: "" });
+    setFirstName({
+      ...firstName,
+      message: "",
+    });
+    return true;
   };
-  const validateLastName = () => {
-    if (lastName.value.trim() === "") {
+
+  const validateLName = () => {
+    if (/\d/.test(lastName.value)) {
       setLastName({
         ...lastName,
-        message: "Vui lòng nhập last name",
+        message: "Không Được Tồn Tại Số Trong Tên!",
       });
-    }
-    setLastName({ ...lastName, message: "" });
-  };
-  const validateEmail = () => {
-    if (email.value.trim() === "") {
-      setEmail({
-        ...email,
-        message: "Vui lòng nhập email",
+      return false;
+    } else if (specialCharRegexForFLName.test(lastName.value)) {
+      setLastName({
+        ...lastName,
+        message: "Không Được Tồn Tại Kí Tự Đặc Biệt Trong Tên!",
       });
-    } else {
-      let validEmail = email.value
-        .toLowerCase()
-        .match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
-      if (validEmail) setEmail({ ...email, message: "" });
-      else setEmail({ ...email, message: "Email không hợp lệ" });
+      return false;
+    } else if (lastName.value.trim() === "") {
+      setLastName({
+        ...lastName,
+        message: "Vui lòng nhập first name",
+      });
+      return false;
     }
+    setLastName({
+      ...lastName,
+      message: "",
+    });
+    return true;
   };
+
   const validatePassword = () => {
     if (password.value === "") {
       setPassword({
@@ -122,17 +175,73 @@ export default function UserSubmitForm({
     }
   };
   const validatePhone = () => {
-    if (phone.value === "") {
+    const phoneValue = phone.value;
+
+    // Check if the phone number contains special characters
+    const hasSpecialCharacters = /[^\d]/.test(phoneValue);
+
+    if (phoneValue === "") {
+      setPhone({
+        ...phone,
+        message: "",
+      });
+    } else if (hasSpecialCharacters) {
+      setPhone({
+        ...phone,
+        message: "Phone Number không chứa kí tự đặc biệt",
+      });
+    } else if (phoneValue.length === 10) {
       setPhone({
         ...phone,
         message: "",
       });
     } else {
-      let validPhone = phone.value.match(/(0[3|5|7|8|9])+([0-9]{8})\b/g);
-      if (validPhone) setPhone({ ...phone, message: "" });
-      else setPhone({ ...phone, message: "Phone Number không hợp lệ" });
+      setPhone({
+        ...phone,
+        message: "Phone Number phải có độ dài 10 số",
+      });
     }
   };
+
+  const validateEmail = () => {
+    if (email.value.trim() === "") {
+      // empty
+      setEmail({
+        ...email,
+        message: "Please enter an email address.",
+      });
+      return false;
+    } else {
+      let validEmail = email.value
+        .toLowerCase()
+        .match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/); // @ and .
+      if (validEmail) {
+        // Additional check for Gmail
+        if (email.value.toLowerCase().endsWith("@gmail.com")) {
+          setEmail({
+            ...email,
+            message: "",
+          });
+          return true;
+        } else {
+          setEmail({
+            ...email,
+            message: "Must includes @gmail.com in your email",
+          });
+          return false;
+        }
+      } else {
+        setEmail({
+          ...email,
+          message:
+            "Invalid email address. Email does not contain special characters",
+        });
+        return false;
+      }
+    }
+  };
+
+  // end section validation data
 
   const handleShowPassword = () => {
     setPassword({ ...password, isShow: !password.isShow });
@@ -156,9 +265,8 @@ export default function UserSubmitForm({
       const majors = await majorService.getAllMajor();
       setMajors(majors);
       if (actions === "edit") {
-        console.log(account);
-        // const user = await userService.getUserById(id);
-        setUser(account);
+        const user = await userService.getUserById(id);
+        setUser(user);
         setUserId({
           value: user.studentId ? user.studentId : user.facultyId || "",
           message: "",
@@ -176,11 +284,23 @@ export default function UserSubmitForm({
     fetchUser();
   }, []);
 
+  // submit form actions
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!checkError()) {
+    const isOver80YearsOld = birthday && dayjs().diff(birthday, "years") > 80;
+    const isUnder18YearsOld = birthday && dayjs().diff(birthday, "years") < 18;
+    if (isOver80YearsOld && isUnder18YearsOld && !message) {
+      setMessage("Vui lòng kiểm tra lại tuổi 1");
+      setTypeMessage("warning");
+    }
+
+    if (!checkError() && !isOver80YearsOld && !isUnder18YearsOld) {
       const userType = type === "student" ? "student" : "faculty";
       const idField = type === "student" ? "studentId" : "facultyId";
+      // Calculate age based on selected birth date
+      // Check if the person is over 80 years old based on the selected birthday
+
       const data = {
         [idField]: userId.value,
         type: userType,
@@ -248,14 +368,17 @@ export default function UserSubmitForm({
                 error={userId.message ? true : false}
                 variant="outlined"
                 placeholder="Enter ID"
-                sx={{ width: "100%", mb: 2, mt: 1 }}
-                onBlur={validateFirstName}
+                sx={{ width: "100%", mt: 1 }}
+                onBlur={validateId}
                 onChange={(e) =>
                   setUserId({ ...userId, value: e.target.value })
                 }
               />
-              <FormHelperText error>{firstName.message}</FormHelperText>
+              <FormHelperText sx={{ mb: 2 }} error>
+                {userId.message}
+              </FormHelperText>
             </Box>
+
             <Box>
               <TextField
                 label="First Name"
@@ -264,14 +387,21 @@ export default function UserSubmitForm({
                 error={firstName.message ? true : false}
                 variant="outlined"
                 placeholder="Enter First Name"
-                sx={{ width: "100%", mb: 2 }}
-                onBlur={validateFirstName}
+                sx={{ width: "100%" }}
+                // onBlur={() =>
+
+                //     validateFirstNameNumber()
+                // }
+                onBlur={validateFName}
                 onChange={(e) =>
                   setFirstName({ ...firstName, value: e.target.value })
                 }
               />
-              <FormHelperText error>{firstName.message}</FormHelperText>
+              <FormHelperText error sx={{ mb: 2 }}>
+                {firstName.message}
+              </FormHelperText>
             </Box>
+
             <Box>
               <TextField
                 label="Last Name"
@@ -280,13 +410,15 @@ export default function UserSubmitForm({
                 error={lastName.message ? true : false}
                 variant="outlined"
                 placeholder="Enter Last Name"
-                sx={{ width: "100%", mb: 2 }}
-                onBlur={validateLastName}
+                sx={{ width: "100%" }}
+                onBlur={validateLName}
                 onChange={(e) =>
                   setLastName({ ...lastName, value: e.target.value })
                 }
               />
-              <FormHelperText error>{lastName.message}</FormHelperText>
+              <FormHelperText sx={{ mb: 2 }} error>
+                {lastName.message}{" "}
+              </FormHelperText>
             </Box>
             <Box>
               <TextField
@@ -360,21 +492,40 @@ export default function UserSubmitForm({
                 error={address.message ? true : false}
                 variant="outlined"
                 placeholder="Enter Address"
-                sx={{ width: "100%", mb: 2 }}
+                sx={{ width: "100%" }}
+                // onBlur={validateAddress}
                 onChange={(e) =>
                   setAddress({ ...address, value: e.target.value })
                 }
               />
-              <FormHelperText error>{address.message}</FormHelperText>
+              <FormHelperText error sx={{ mb: 2 }}>
+                {address.message}
+              </FormHelperText>
             </Box>
+
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Select Birth Date"
                 value={birthday}
-                onChange={(newDay) => setBirthday(newDay)}
+                onChange={(newDay) => {
+                  setBirthday(newDay);
+
+                  // Check if the person is over 80 years old
+                  const isOver80YearsOld = dayjs().diff(newDay, "years") > 80;
+                  const isUnder18YearsOld = dayjs().diff(newDay, "years") < 18;
+                  console.log("Lơn hơn tam muoi tủi? ", isOver80YearsOld);
+                  // If over 80, show a message
+                  if (isOver80YearsOld || isUnder18YearsOld) {
+                    // You can set a state variable or display a message using a different mechanism
+                    // console.log('Person is over 80 years old');
+                    setMessage("Vui lòng kiểm tra lại tuổi!");
+                    setTypeMessage("warning");
+                  }
+                }}
                 renderInput={(params) => <TextField {...params} />}
               />
             </LocalizationProvider>
+
             <FormControl sx={{ minWidth: "100%", mt: 2 }}>
               <InputLabel htmlFor="grouped-select">Major</InputLabel>
               <Select
