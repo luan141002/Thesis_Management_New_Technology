@@ -18,17 +18,17 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import accountsSlices from "../../../redux/accountsSlice";
 import { GoogleLogout } from "react-google-login";
-import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
-import ScheduleSendIcon from '@mui/icons-material/ScheduleSend';
-import PersonIcon from '@mui/icons-material/Person';
-import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
-import TerminalIcon from '@mui/icons-material/Terminal';
-import LogoutIcon from '@mui/icons-material/Logout';
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import PortraitIcon from '@mui/icons-material/Portrait';
-import TopicIcon from '@mui/icons-material/Topic';
-import ApprovalIcon from '@mui/icons-material/Approval';
-import ApartmentIcon from '@mui/icons-material/Apartment';
+import PsychologyAltIcon from "@mui/icons-material/PsychologyAlt";
+import ScheduleSendIcon from "@mui/icons-material/ScheduleSend";
+import PersonIcon from "@mui/icons-material/Person";
+import SettingsEthernetIcon from "@mui/icons-material/SettingsEthernet";
+import TerminalIcon from "@mui/icons-material/Terminal";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
+import PortraitIcon from "@mui/icons-material/Portrait";
+import TopicIcon from "@mui/icons-material/Topic";
+import ApprovalIcon from "@mui/icons-material/Approval";
+import ApartmentIcon from "@mui/icons-material/Apartment";
 const StyledListItemIcon = styled(ListItemIcon)({
   minWidth: "40px",
 });
@@ -54,17 +54,37 @@ function Sidebar() {
     if (role === "student")
       setSettings([
         { title: "Profile", link: "/student/profile", icon2: PortraitIcon },
-        { title: "Register Thesis", link: "/student/assign-thesis", icon2: AppRegistrationIcon },
-        { title: "Manage Thesis", link: "/student/manage-thesis", icon2: TopicIcon },
+        {
+          title: "Register Thesis",
+          link: "/student/assign-thesis",
+          icon2: AppRegistrationIcon,
+        },
+        {
+          title: "Manage Thesis",
+          link: "/student/manage-thesis",
+          icon2: TopicIcon,
+        },
         { title: "Logout", link: "/logout", icon2: LogoutIcon },
       ]);
     else if (role === "faculty") {
       if (account.isHeadDep)
         setSettings([
-          { title: "Profile", link: "/faculty/profile" ,icon2: PortraitIcon},
-          { title: "Register Thesis", link: "/faculty/register-thesis" ,icon2: AppRegistrationIcon },
-          { title: "Manage Thesis", link: "/head-lecturer/manage-thesis",icon2: TopicIcon },
-          { title: "Approval Thesis", link: "/head-lecturer/pending-thesis", icon2: ApprovalIcon },
+          { title: "Profile", link: "/faculty/profile", icon2: PortraitIcon },
+          {
+            title: "Register Thesis",
+            link: "/faculty/register-thesis",
+            icon2: AppRegistrationIcon,
+          },
+          {
+            title: "Manage Thesis",
+            link: "/head-lecturer/manage-thesis",
+            icon2: TopicIcon,
+          },
+          {
+            title: "Approval Thesis",
+            link: "/head-lecturer/pending-thesis",
+            icon2: ApprovalIcon,
+          },
           {
             title: "Distribute Faculty",
             link: "/head-lecturer/approved-thesis",
@@ -74,26 +94,39 @@ function Sidebar() {
         ]);
       else
         setSettings([
-          { title: "Profile", link: "/faculty/profile" ,icon2: PortraitIcon},
-          { title: "Register Thesis", link: "/faculty/register-thesis", icon2: AppRegistrationIcon },
-          { title: "Manage Thesis", link: "/faculty/manage-thesis",icon2: TopicIcon },
+          { title: "Profile", link: "/faculty/profile", icon2: PortraitIcon },
+          {
+            title: "Register Thesis",
+            link: "/faculty/register-thesis",
+            icon2: AppRegistrationIcon,
+          },
+          {
+            title: "Manage Thesis",
+            link: "/faculty/manage-thesis",
+            icon2: TopicIcon,
+          },
           { title: "Logout", link: "/logout", icon2: LogoutIcon },
         ]);
     } else if (role === "admin") {
       setSettings([
-        { title: "Dashboard", link: "/dashboard", icon2:EqualizerIcon},
-        { title: "Manage Student", link: "/manage-student", icon2:PersonIcon},
-        { title: "Manage Lecturer", link: "/manage-faculty",  icon2: PsychologyAltIcon},
-        { title: "Manage Schedule", link: "/manage-schedule", icon2: ScheduleSendIcon  },
-        { title: "Manage Thesis", link: "/manage-thesis", icon2: TopicIcon},
-        { title: "Manage Term", link: "/manage-term", icon2:TerminalIcon },
-        { title: "Logout", link: "/logout" , icon2: LogoutIcon},
-        
+        { title: "Dashboard", link: "/dashboard", icon2: EqualizerIcon },
+        { title: "Manage Student", link: "/manage-student", icon2: PersonIcon },
+        {
+          title: "Manage Lecturer",
+          link: "/manage-faculty",
+          icon2: PsychologyAltIcon,
+        },
+        {
+          title: "Manage Schedule",
+          link: "/manage-schedule",
+          icon2: ScheduleSendIcon,
+        },
+        { title: "Manage Thesis", link: "/manage-thesis", icon2: TopicIcon },
+        { title: "Manage Term", link: "/manage-term", icon2: TerminalIcon },
+        { title: "Logout", link: "/logout", icon2: LogoutIcon },
       ]);
     }
   }, []);
-
-  
 
   const drawer = (
     <Box height="100%" sx={{ backgroundColor: "rgb(28,37,54)" }}>
@@ -121,7 +154,8 @@ function Sidebar() {
       <Box sx={{ overflow: "auto" }}>
         <List sx={{ ml: "8px" }}>
           {settings?.map((setting, index) => {
-            const IconComponent = setting.icon2 !== "EqualizerIcon" ? setting.icon2 : EqualizerIcon;
+            const IconComponent =
+              setting.icon2 !== "EqualizerIcon" ? setting.icon2 : EqualizerIcon;
             console.log(setting);
             return (
               <Link Link to={`${setting.link}`}>
@@ -138,7 +172,6 @@ function Sidebar() {
                     }}
                   >
                     <StyledListItemIcon sx={{ minWidth: "40px" }}>
-                      
                       <IconComponent fontSize="medium" sx={{ color: "#fff" }} />
                     </StyledListItemIcon>
                     <ListItemText
@@ -153,13 +186,20 @@ function Sidebar() {
               </Link>
             );
           })}
-          <div>
+          <Box
+            sx={{width: "100%"}}
+            className="btn-logout"
+          >
+
             <GoogleLogout
+              className="btn-log"
               clientId={CLIENT_ID}
               buttonText="Logout"
               onLogoutSuccess={onSuccess}
+              
             />
-          </div>
+          </Box>
+
         </List>
       </Box>
     </Box>
