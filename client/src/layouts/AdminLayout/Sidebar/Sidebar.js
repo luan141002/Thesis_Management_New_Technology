@@ -18,28 +18,29 @@ import { Link } from "react-router-dom";
 import { styled } from "@mui/material";
 import authService from "../../../services/authServices";
 import { useNavigate } from "react-router-dom";
-import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
-import ScheduleSendIcon from '@mui/icons-material/ScheduleSend';
-import PersonIcon from '@mui/icons-material/Person';
-import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
-import TerminalIcon from '@mui/icons-material/Terminal';
-import LogoutIcon from '@mui/icons-material/Logout';
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import PortraitIcon from '@mui/icons-material/Portrait';
-import TopicIcon from '@mui/icons-material/Topic';
-import ApprovalIcon from '@mui/icons-material/Approval';
-import ApartmentIcon from '@mui/icons-material/Apartment';
+import { useSelector, useDispatch } from "react-redux";
+import accountsSlices from "../../../redux/accountsSlice";
+import { GoogleLogout } from "react-google-login";
+
 const StyledListItemIcon = styled(ListItemIcon)({
   minWidth: "40px",
 });
 function Sidebar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const CLIENT_ID =
+    "673103240557-13qqv9hdlmrt8ldiqvaviep1had1vftb.apps.googleusercontent.com";
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [settings, setSettings] = useState();
   const handleListItemClick = (index) => {
     setSelectedIndex(index);
   };
-  const account = JSON.parse(localStorage.getItem("account"));
+
+  const onSuccess = () => {
+    navigate("/login");
+  };
+
+  const account = useSelector((state) => state.account);
 
   const role = account.type;
   useEffect(() => {
@@ -145,6 +146,13 @@ function Sidebar() {
               </Link>
             );
           })}
+          <div>
+            <GoogleLogout
+              clientId={CLIENT_ID}
+              buttonText="Logout"
+              onLogoutSuccess={onSuccess}
+            />
+          </div>
         </List>
       </Box>
     </Box>

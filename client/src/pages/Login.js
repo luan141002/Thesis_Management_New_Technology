@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -15,10 +15,15 @@ import { useNavigate } from "react-router-dom";
 import authService from "../services/authServices";
 import { useDispatch } from "react-redux";
 import accountsSlices from "../redux/accountsSlice";
+import { GoogleLogin } from "react-google-login";
+import { touchRippleClasses } from "@mui/material";
+import { gapi } from "gapi-script";
 
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const CLIENT_ID =
+    "673103240557-13qqv9hdlmrt8ldiqvaviep1had1vftb.apps.googleusercontent.com";
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -35,6 +40,37 @@ export default function Login() {
     } else {
       alert("Sai tài khoản hoặc mật khẩu!");
     }
+  };
+
+  useEffect(() => {
+    console.log(CLIENT_ID);
+    function start() {
+      gapi.client.init({
+        clientId: CLIENT_ID,
+        scope: "https://www.googleapis.com/auth/userinfo.profile",
+      });
+    }
+    gapi.load("client:auth2", start);
+  });
+
+  const onSuccess = async (res) => {
+    console.log(res.profileObj);
+    const data = {
+      email: res.profileObj.email,
+      password: res.profileObj.googleId,
+    };
+    const isSignedIn = await authService.signIn(data);
+    if (isSignedIn) {
+      // console.log(isSignedIn);
+      dispatch(accountsSlices.actions.setAccount(isSignedIn));
+      // localStorage.setItem("account", JSON.stringify(isSignedIn));
+      navigate("/dashboard");
+    } else {
+      alert("Sai tài khoản hoặc mật khẩu!");
+    }
+  };
+  const onFailure = (res) => {
+    alert("Sai tài khoản hoặc mật khẩu!");
   };
 
   return (
@@ -121,7 +157,15 @@ export default function Login() {
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
-            </Grid> */}
+            </Grid>
+            <GoogleLogin
+              clientId={CLIENT_ID}
+              buttonText="Login with google"
+              onSuccess={onSuccess}
+              onFailure={onFailure}
+              cookiePolicy={"single_host_origin"}
+              isSignedIn={true}
+            />
           </Box>
         </Box>
       </Grid>
