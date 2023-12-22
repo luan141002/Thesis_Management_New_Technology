@@ -84,8 +84,8 @@ export default function FormSchedule({handleClose, id, type}) {
         <React.Fragment>
         <Dialog open={true} onClose={handleClose}>
         <form onSubmit={handleSubmit}>
-            <DialogTitle>{type === 'create' ?'Add New Schedule':'Update Schedule'}</DialogTitle>
-            <DialogContent sx={{ width:"600px" }}>
+            <DialogTitle sx={{ backgroundColor:'#dccaca'}}>{type === 'create' ?'Add New Schedule':'Update Schedule'}</DialogTitle>
+            <DialogContent sx={{ width:"600px" , backgroundColor:'#dccaca'}}>
                 <ToastMessage message={message} type={typeMessage} />
 
                 <Box>
@@ -134,7 +134,7 @@ export default function FormSchedule({handleClose, id, type}) {
                 </LocalizationProvider> 
 
             </DialogContent>
-            <DialogActions>
+            <DialogActions sx={{ backgroundColor:'#dccaca'}}>
             <Button onClick={handleClose}>Cancel</Button>
             {
                 type === 'create' ? 

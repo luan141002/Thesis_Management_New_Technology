@@ -342,6 +342,8 @@ export default function UserSubmitForm({
           setTypeMessage("error");
         }
       }
+
+
     } else {
       setMessage("Vui lòng kiểm tra các trường đã nhập");
       setTypeMessage("error");
@@ -353,26 +355,39 @@ export default function UserSubmitForm({
   };
 
   return (
-    <React.Fragment>
+    <Box>
       <Dialog open={true} onClose={handleClose}>
         <form onSubmit={handleSubmit}>
           {/* <DialogTitle>{type === 'create' ?'Add New Student':'Update Student'}</DialogTitle> */}
-          <DialogTitle>{title}</DialogTitle>
-          <DialogContent sx={{ width: "600px" }}>
+          <DialogTitle
+            sx={{ backgroundColor:'#dccaca'}}
+          >
+            {title}
+          </DialogTitle>
+          <DialogContent
+            sx={{
+              width: "600px",
+              backgroundColor:'#dccaca'
+            }}
+          >
             <ToastMessage message={message} type={typeMessage} />
             <Box>
               <TextField
+                
                 label="ID"
+                
                 required
                 value={userId.value}
                 error={userId.message ? true : false}
                 variant="outlined"
                 placeholder="Enter ID"
-                sx={{ width: "100%", mt: 1 }}
+                sx={{ width: "100%", mt: 1, color: "#fff"  }}
                 onBlur={validateId}
                 onChange={(e) =>
                   setUserId({ ...userId, value: e.target.value })
                 }
+                
+              
               />
               <FormHelperText sx={{ mb: 2 }} error>
                 {userId.message}
@@ -381,6 +396,7 @@ export default function UserSubmitForm({
 
             <Box>
               <TextField
+              
                 label="First Name"
                 required
                 value={firstName.value}
@@ -404,6 +420,7 @@ export default function UserSubmitForm({
 
             <Box>
               <TextField
+              
                 label="Last Name"
                 required
                 value={lastName.value}
@@ -422,6 +439,7 @@ export default function UserSubmitForm({
             </Box>
             <Box>
               <TextField
+              
                 label="Email"
                 required
                 sx={{ width: "100%" }}
@@ -438,6 +456,7 @@ export default function UserSubmitForm({
             </Box>
             <Box>
               <TextField
+              
                 id="validation-outlined-input"
                 label="Password"
                 value={password.value}
@@ -471,6 +490,7 @@ export default function UserSubmitForm({
             </Box>
             <Box>
               <TextField
+              
                 id="validation-outlined-input"
                 label="Phone Number"
                 value={phone.value}
@@ -487,6 +507,7 @@ export default function UserSubmitForm({
             </Box>
             <Box>
               <TextField
+              
                 label="Address"
                 value={address.value}
                 error={address.message ? true : false}
@@ -542,7 +563,9 @@ export default function UserSubmitForm({
               </Select>
             </FormControl>
           </DialogContent>
-          <DialogActions>
+          <DialogActions
+            sx={{ backgroundColor:'#dccaca'}}
+          >
             <Button onClick={handleClose}>Cancel</Button>
             {actions === "create" ? (
               // (<Button type='submit'>Add</Button>) :
@@ -554,6 +577,6 @@ export default function UserSubmitForm({
           </DialogActions>
         </form>
       </Dialog>
-    </React.Fragment>
+    </Box>
   );
 }

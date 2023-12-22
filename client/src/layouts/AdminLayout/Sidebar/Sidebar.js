@@ -122,7 +122,7 @@ function Sidebar() {
           icon2: ScheduleSendIcon,
         },
         { title: "Manage Thesis", link: "/manage-thesis", icon2: TopicIcon },
-        { title: "Manage Term", link: "/manage-term", icon2: TerminalIcon },
+        // { title: "Manage Term", link: "/manage-term", icon2: TerminalIcon },
         { title: "Logout", link: "/logout", icon2: LogoutIcon },
       ]);
     }

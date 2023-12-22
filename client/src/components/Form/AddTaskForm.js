@@ -64,7 +64,7 @@ function AddTaskForm({ handleClose, thesis }) {
       <Dialog open={true} onClose={handleClose}>
         <form onSubmit={handleSubmit}>
           <DialogTitle>{"New Task"}</DialogTitle>
-          <DialogContent sx={{ width: "600px" }}>
+          <DialogContent sx={{ width: "600px", backgroundColor:'#dccaca' }}>
             <ToastMessage message={message} type={typeMessage} />
             <Box>
               <TextField
