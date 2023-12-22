@@ -67,6 +67,8 @@ export default function RegisterThesisForm() {
       endDate: endDate,
     };
 
+
+
     const respone = await thesisService.registerThesis(faculty._id, data);
     console.log(respone);
     // call api to create new user
@@ -91,11 +93,12 @@ export default function RegisterThesisForm() {
   };
 
   return (
-    <Box>
+    <Box >
       <Typography sx={{ fontSize: "2rem", fontWeight: 600 }}>
         Register Thesis
       </Typography>
-      <Paper sx={{ mt: 4, mb: 4, padding: 1.5, borderRadius: 4 }}>
+      {/* sx={{ backgroundColor:'#dccaca'}} */}
+      <Paper sx={{ mt: 4, mb: 4, padding: 1.5, borderRadius: 4,  backgroundColor:'#dccaca' }}>
         <ToastMessage message={message} type={typeMessage} />
         <form onSubmit={handleSubmit}>
           <Box>

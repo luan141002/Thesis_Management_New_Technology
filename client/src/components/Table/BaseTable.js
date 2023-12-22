@@ -177,8 +177,8 @@ const BaseTable = ({ data, type, setReloadPage }) => {
     getPaginationRowModel: getPaginationRowModel(),
   });
   return (
-    <div className="p-2 max-w-8xl mx-auto text-white fill-gray-400">
-      <div className="flex justify-between mb-2">
+    <div className="p-2 max-w-8xl mx-auto text-white fill-gray-400 rounded-lg">
+      <div className="flex justify-between mb-2 rounded-lg" >
      
         <div className="w-full flex items-center gap-1">
           <SearchIcon />
@@ -239,7 +239,7 @@ const BaseTable = ({ data, type, setReloadPage }) => {
                 `}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="px-3.5 py-2 text-center">
+                  <td key={cell.id} className=" py-3 text-center">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
