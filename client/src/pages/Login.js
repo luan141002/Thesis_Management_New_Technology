@@ -157,7 +157,7 @@ export default function Login() {
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
-            </Grid>
+          </Grid>*/}
             <GoogleLogin
               clientId={CLIENT_ID}
               buttonText="Login with google"

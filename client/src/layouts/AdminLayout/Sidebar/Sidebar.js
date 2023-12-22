@@ -3,10 +3,7 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import Drawer from "@mui/material/Drawer";
 import EqualizerIcon from "@mui/icons-material/Equalizer";
-import PeopleIcon from "@mui/icons-material/People";
-import LocalMallIcon from "@mui/icons-material/LocalMall";
-import CategoryIcon from "@mui/icons-material/Category";
-import ReceiptIcon from "@mui/icons-material/Receipt";
+
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -21,7 +18,17 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import accountsSlices from "../../../redux/accountsSlice";
 import { GoogleLogout } from "react-google-login";
-
+import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
+import ScheduleSendIcon from '@mui/icons-material/ScheduleSend';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
+import TerminalIcon from '@mui/icons-material/Terminal';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import PortraitIcon from '@mui/icons-material/Portrait';
+import TopicIcon from '@mui/icons-material/Topic';
+import ApprovalIcon from '@mui/icons-material/Approval';
+import ApartmentIcon from '@mui/icons-material/Apartment';
 const StyledListItemIcon = styled(ListItemIcon)({
   minWidth: "40px",
 });
