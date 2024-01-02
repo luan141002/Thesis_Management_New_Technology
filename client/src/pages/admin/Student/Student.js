@@ -1,91 +1,73 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import React, { useState, useEffect } from "react";
+import { Box, Stack, Typography, Button, IconButton } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import UploadIcon from "@mui/icons-material/Upload";
-import DownloadIcon from "@mui/icons-material/Download";
-import AddIcon from "@mui/icons-material/Add";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import ToastMessage from "../../../components/ToastMessage/ToastMessage";
-import userService from "../../../services/userServices";
-import UserSubmitForm from "../../../components/Form/UserSubmitForm";
+import AddIcon from "@mui/icons-material/Add";
 
-export default function Student() {
+import ToastMessage from "../../../components/ToastMessage/ToastMessage.js";
+import userService from "../../../services/userServices.js";
+import UserSubmitForm from "../../../components/Form/UserSubmitForm.js";
+
+const StudentTable = () => {
   const columns = [
-    // { field: 'id', headerName: 'ID', width: 60 },
     { field: "studentId", headerName: "Student ID", width: 100 },
-    {
-      field: "firstName",
-      headerName: "First name",
-      width: 200,
-    },
-    {
-      field: "lastName",
-      headerName: "Last name",
-      width: 200,
-    },
-    {
-      field: "birthday",
-      headerName: "Birthday",
-      width: 150,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      width: 200,
-    },
-    {
-      field: "major",
-      headerName: "Major",
-      width: 150,
-    },
+    { field: "firstName", headerName: "First Name", width: 200 },
+    { field: "lastName", headerName: "Last Name", width: 200 },
+    { field: "birthday", headerName: "Birthday", width: 200 },
+    { field: "email", headerName: "Email", width: 200 },
+    { field: "major", headerName: "Major", width: 200 },
     {
       field: "action",
       headerName: "Action",
       width: 150,
-      renderCell: (params) => (
-        <>
-          <IconButton
-            aria-label="edit"
-            sx={{color: "#fff",}}
-            onClick={() => handleEdit(params.row._id)}
-          >
-            <EditNoteIcon />
-          </IconButton>
-          <IconButton
-          sx={{color: "#fff",}}
-            aria-label="delete"
-            onClick={() => handleDelete(params.row._id)}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </>
-      ),
+      renderCell: (params) => {
+        return (
+          <>
+            <IconButton
+              aria-label="edit"
+              onClick={() => handleEdit(params.row._id)}
+            >
+              <EditNoteIcon />
+            </IconButton>
+            <IconButton
+              aria-label="delete"
+              onClick={() => handleDelete(params.row._id)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </>
+        );
+      },
     },
   ];
-  const [message, setMessage] = React.useState("");
-  const [typeMessage, setTypeMessage] = React.useState("");
-  const [students, setStudents] = React.useState([]);
-  const [formAction, setFormAction] = React.useState("");
-  const [sId, setSId] = React.useState("");
-  const [showForm, setShowForm] = React.useState(false);
-  const [title, setTitle] = React.useState("");
 
-  React.useEffect(() => {
+  const handleDelete = async (id) => {
+    const response = await userService.deleteUser(id);
+    if (response.status === 204) {
+      console.log("delete user thành công");
+      const updatedStudent = students.filter((student) => student._id !== id);
+      setStudents(updatedStudent);
+    } else {
+      console.log("delete user thất bại ");
+    }
+  };
+
+  const [message, setMessage] = useState("");
+  const [typeMessage, setTypeMessage] = useState("");
+  const [students, setStudents] = useState([]);
+  const [formAction, setFormAction] = useState("");
+  const [sId, setSId] = useState("");
+  const [showForm, setShowForm] = useState(false);
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
     async function fetchStudent() {
       const listStudent = await userService.getAllStudent();
       setStudents(listStudent);
     }
     fetchStudent();
   }, [showForm]);
-
-  const handleCloseForm = () => {
-    setShowForm(false);
-  };
 
   const handleAdd = () => {
     setFormAction("create");
@@ -94,83 +76,47 @@ export default function Student() {
   };
   const handleEdit = (id) => {
     setFormAction("edit");
-    setTitle("Update Student");
-    setSId(id);
+    setTitle("Edit Student");
     setShowForm(true);
-    console.log("Edit clicked for row with id:", id);
+    setSId(id);
   };
-  const handleDelete = async (id) => {
-    const respone = await userService.deleteUser(id);
-    console.log(respone);
-    if (respone.status === 204) {
-      setMessage("Xóa user thành công");
-      setTypeMessage("success");
-      setTimeout(() => {
-        setMessage("");
-        setTypeMessage("");
-      }, 3000);
-      const updatedStudents = students.filter((student) => student._id !== id);
-      setStudents(updatedStudents);
-    } else {
-      setMessage("Xóa user thất bại");
-      setTypeMessage("error");
-    }
+  const handleClose = () => {
+    setShowForm(false);
   };
+
   return (
     <Box>
-      <ToastMessage message={message} type={typeMessage} />
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "16px",
+          mb: 4,
         }}
       >
         <Box>
+          {" "}
           <Typography sx={{ fontSize: "2rem", fontWeight: 600 }}>
-            Students
+            {" "}
+            Student{" "}
           </Typography>
         </Box>
         <Button
           variant="contained"
-          startIcon={<AddIcon />}
-          sx={{
-            fontSize: "1rem",
-            borderRadius: 2.5,
-            textTransform: "capitalize",
-          }}
-          onClick={handleAdd}
+          sx={{ fontSize: "1rem" }}
+          onClick={() => handleAdd()}
         >
-          Add
+          ADD
         </Button>
       </Box>
-
-      <Box
-        sx={{
-          height: 400,
-          width: "100%",
-          ".MuiDataGrid-columnHeaderTitle": {
-            color: "#fff",
-            fontWeight: "bold",
-            fontSize: "16px",
-          },
-          '.MuiDataGrid-cellContent': {
-            color: "#fff",
-            fontWeight: "bold",
-            fontSize: "16px",
-          }
-        }}
-      >
+      <Box sx={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={students}
           getRowId={(row) => row._id}
           columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 5,
-              },
+          pagination={{
+            paginationMode: {
+              pageSize: 5,
             },
           }}
           pageSizeOptions={[5]}
@@ -180,7 +126,7 @@ export default function Student() {
       </Box>
       {showForm && (
         <UserSubmitForm
-          handleClose={handleCloseForm}
+          handleClose={handleClose}
           actions={formAction}
           id={sId}
           title={title}
@@ -189,4 +135,6 @@ export default function Student() {
       )}
     </Box>
   );
-}
+};
+
+export default StudentTable;

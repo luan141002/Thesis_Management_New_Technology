@@ -158,15 +158,17 @@ function Sidebar() {
               setting.icon2 !== "EqualizerIcon" ? setting.icon2 : EqualizerIcon;
             console.log(setting);
             return (
-              <Link Link to={`${setting.link}`}>
+              <Link
+                Link
+                to={`${setting.link === "/logout" ? "/login" : setting.link}`}
+              >
                 <ListItem disablePadding>
                   <ListItemButton
                     selected={selectedIndex === 0}
                     onClick={async () => {
                       handleListItemClick(index);
                       if (setting.title === "Logout") {
-                        await authService.logout(account);
-                        localStorage.removeItem("account");
+                        dispatch(accountsSlices.actions.deleteAccount());
                         navigate("/login");
                       }
                     }}
@@ -186,20 +188,14 @@ function Sidebar() {
               </Link>
             );
           })}
-          <Box
-            sx={{width: "100%"}}
-            className="btn-logout"
-          >
-
+          <Box sx={{ width: "100%" }} className="btn-logout">
             <GoogleLogout
               className="btn-log"
               clientId={CLIENT_ID}
               buttonText="Logout"
               onLogoutSuccess={onSuccess}
-              
             />
           </Box>
-
         </List>
       </Box>
     </Box>

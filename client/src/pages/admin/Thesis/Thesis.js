@@ -34,13 +34,14 @@ export default function Thesis() {
       headerName: "Adviser",
       width: 200,
       renderCell: (params) => (
-        
-        <Box sx={{color: "#fff",fontWeight:'bold', fontSize:'16px'}}>{params.row.adviser.firstName + " " + params.row.adviser.lastName}</Box>
+        <Box sx={{ color: "black", fontWeight: "bold", fontSize: "16px" }}>
+          {params.row.adviser.firstName + " " + params.row.adviser.lastName}
+        </Box>
       ),
     },
     {
       field: "remarks",
-      marginLeft:'30px',
+      marginLeft: "30px",
       headerName: "Remark",
       width: 150,
     },
@@ -51,14 +52,14 @@ export default function Thesis() {
       renderCell: (params) => (
         <>
           <IconButton
-          sx={{color:'#fff'}}
+            sx={{ color: "black" }}
             aria-label="edit"
             onClick={() => handleEdit(params.row._id)}
           >
             <EditNoteIcon />
           </IconButton>
           <IconButton
-          sx={{color:'#fff'}}
+            sx={{ color: "black" }}
             aria-label="delete"
             onClick={() => handleDelete(params.row._id)}
           >
@@ -158,13 +159,15 @@ export default function Thesis() {
         sx={{
           height: 400,
           width: "100%",
+          color: "black",
+          backgroundColor: "white",
           ".MuiDataGrid-columnHeaderTitle": {
-            color: "#fff",
+            color: "black",
             fontWeight: "bold",
             fontSize: "16px",
           },
           ".MuiDataGrid-cellContent": {
-            color: "#fff",
+            color: "black",
             fontWeight: "bold",
             fontSize: "16px",
           },

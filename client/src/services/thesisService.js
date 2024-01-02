@@ -58,6 +58,7 @@ const thesisService = {
   getPendingThesisByMajor: async (majorId) => {
     try {
       const respone = await axios.get(apiUrl + `/pending/${majorId}`);
+      console.log(respone.data);
       return respone.data;
     } catch (error) {
       console.error(error);
@@ -81,7 +82,6 @@ const thesisService = {
   },
   registerThesisForStudent: async (id, data) => {
     try {
-  
       const respone = await axios.put(apiUrl + `/${id}/join`, data);
       return respone.data;
     } catch (error) {
@@ -89,7 +89,7 @@ const thesisService = {
       if (error.response.status === 400) {
         return {
           isFull: true,
-        }
+        };
       }
     }
   },

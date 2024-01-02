@@ -105,6 +105,7 @@ const Table = ({ type }) => {
 
           break;
         case "pendingTheses":
+          console.log(account.major);
           result = await thesisService.getPendingThesisByMajor(account.major);
           console.log(result);
 
@@ -139,6 +140,7 @@ const Table = ({ type }) => {
           break;
         case "approvedTheses":
           result = await thesisService.getApprovedThesisByMajor(account.major);
+          result = result.filter((thesis) => thesis.panelists.length === 0);
           console.log(result);
 
           if (result.length !== 0) {

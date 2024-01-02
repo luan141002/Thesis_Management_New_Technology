@@ -225,10 +225,10 @@ export default function FormStudent({ handleClose, id, type }) {
         backgroundRepeat: "none-repeat",
       }}
     >
-      <React.Fragment >
+      <React.Fragment>
         <Dialog open={true} onClose={handleClose}>
           <form onSubmit={handleSubmit}>
-            <DialogTitle sx={{ backgroundColor:'#dccaca'}}>
+            <DialogTitle sx={{ backgroundColor: "#dccaca" }}>
               {type === "create" ? "Add New Student" : "Update Student"}
             </DialogTitle>
             <DialogContent sx={{ width: "600px" }}>

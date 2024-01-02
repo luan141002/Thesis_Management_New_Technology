@@ -21,7 +21,8 @@ export default function CardThesis({ data }) {
         </Typography>
         <Typography variant="body2">
           Author 1 (Leader):{" "}
-          {data.authors?.[0].firstName + " " + data.authors?.[0].lastName}
+          {data.authors?.length > 1 &&
+            data.authors[0]?.firstName + " " + data.authors[0]?.lastName}
         </Typography>
         <Typography variant="body2">
           Author 2:{" "}

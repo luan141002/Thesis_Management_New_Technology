@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 import userService from "../../services/userServices";
-import DatePicker from "react-datepicker";
-import dayjs from "dayjs";
+// import DatePicker from "react-datepicker";
+// import dayjs from "dayjs";
 import "react-datepicker/dist/react-datepicker.css";
 import thesisService from "../../services/thesisService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
+import { TextField } from "@mui/material";
 
 const AssignLecturerReviewForm = ({
   currentLecturerId,
@@ -16,17 +22,20 @@ const AssignLecturerReviewForm = ({
   const [adviser, setAdviser] = useState();
   const [formData, setFormData] = useState();
   const [selectedLecturer, setSelectedLecturer] = useState();
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState();
   const handleLecturerSelecting = (e) => {
     setSelectedLecturer(e.target.value);
   };
 
   const onSubmit = async () => {
     try {
+      console.log(selectedDate);
+      console.log(selectedLecturer);
       setFormData({
         ...formData,
         panelists: [...formData.panelists, selectedLecturer],
       });
+      formData["panelists"] = [...formData.panelists, selectedLecturer];
       formData["defenseDate"] = new Date(selectedDate);
       console.log(formData);
       const response = await thesisService.assignDefenseLecturer(
@@ -60,7 +69,7 @@ const AssignLecturerReviewForm = ({
     console.log(thesis);
     setFormData(thesis);
     setAdviser(thesis.adviser);
-    // set defense date
+    // set defense datefd
     // setSelectedDate(dayjs(thesis.defenseDate));
     setListLecturerReview(listLecturerExceptCurrent);
   };
@@ -89,13 +98,13 @@ const AssignLecturerReviewForm = ({
           <div className="flex flex-col space-y-3 ">
             <label>Adviser</label>
             <input
-              className="text-black p-3"
+              className="text-black p-3 rounded-md"
               value={adviser?.firstName + " " + adviser?.lastName}
             />
           </div>
           <div className="flex flex-col space-y-3">
             <label>Review Date</label>
-            <DatePicker
+            {/* <DatePicker
               selected={selectedDate}
               onChange={(date) => setSelectedDate(date)}
               dateFormat="dd-MM-yyyy"
@@ -105,12 +114,23 @@ const AssignLecturerReviewForm = ({
               // isClearable
               className="text-black p-3"
               showYearDropdown
-            />
+            /> */}
+
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Select Start Date"
+                value={selectedDate}
+                onChange={(newDay) => setSelectedDate(newDay)}
+                renderInput={(params) => (
+                  <TextField {...params} sx={{ backgroundColor: "white" }} />
+                )}
+              />
+            </LocalizationProvider>
           </div>
-          <div className="flex flex-col space-y-3">
+          <div className="flex flex-col space-y-3 rounded-md">
             <label>Lecturer Reviews</label>
             <select
-              className=" p-3 px-5 text-black"
+              className=" p-3 px-5 w-[200px] text-black rounded-md "
               onChange={handleLecturerSelecting}
             >
               {listLecturerReview?.map((lecturer) => (
@@ -191,9 +211,10 @@ const AssignLecturerReviewForm = ({
           className="flex justify-end mt-4"
           onClick={() => {
             onSubmit();
+            setOpenAssignLecturerReview(false);
           }}
         >
-          <button className="bg-blue-500 text-white px-5 py-3 rounded-md hover:bg-blue-600">
+          <button className="bg-blue-900 text-white px-5 w-[180px] py-3 rounded-md hover:bg-blue-600 font-semibold">
             Submit
           </button>
         </div>

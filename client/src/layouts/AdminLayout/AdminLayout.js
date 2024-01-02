@@ -6,9 +6,9 @@ function AdminLayout({ children }) {
   return (
     <Box
       sx={{
-        backgroundImage: `url('https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8M3x8fGVufDB8fHx8fA%3D%3D')`,
-        backgroundRepeat:'no-repeat',
-        backgroundSize:'cover'
+        backgroundImage: `url('https://png.pngtree.com/thumb_back/fh260/background/20210916/pngtree-cream-solid-color-wallpaper-background-image_901363.jpg')`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
       }}
     >
       {/* <Header/> */}
@@ -18,9 +18,9 @@ function AdminLayout({ children }) {
           padding: "64px 0px 640px 240px",
           width: "100%",
           overflow: "auto",
-          backgroundImage: `url('https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8M3x8fGVufDB8fHx8fA%3D%3D')`,
-          backgroundRepeat:'no-repeat',
-          backgroundSize:'cover'
+          backgroundImage: `url('https://png.pngtree.com/thumb_back/fh260/background/20210916/pngtree-cream-solid-color-wallpaper-background-image_901363.jpg')`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
         }}
       >
         <Container sx={{ paddingTop: "64px", margin: 0 }} maxWidth="false">
